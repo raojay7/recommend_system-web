@@ -39,7 +39,7 @@ public class AccountController {
     }
 
     @RequestMapping("logOut")
-    public ModelAndView logOut(HttpSession session){//注销账户
+    public ModelAndView logOut(HttpSession session){//用户注销
         ModelAndView mav = new ModelAndView();
         session.invalidate();
         mav.setViewName("redirect:home");//直接跳转到首页
