@@ -94,6 +94,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -105,6 +110,16 @@
                 <configuration>
                     <port>8080</port>
                     <path>/</path>
+                </configuration>
+            </plugin>
+            <!-- mybits dao层 自动生成代码 插件 -->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
                 </configuration>
             </plugin>
         </plugins>
@@ -129,6 +144,7 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
+
     </build>
 
 </project>
