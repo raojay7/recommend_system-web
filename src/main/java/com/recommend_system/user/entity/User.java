@@ -3,7 +3,7 @@ package com.recommend_system.user.entity;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String userId;
+    private Integer userId;
 
     private Integer userType;
 
@@ -21,14 +21,16 @@ public class User implements Serializable {
 
     private String presentAddress;
 
+    private String school;
+
     private static final long serialVersionUID = 1L;
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getUserType() {
@@ -93,5 +95,13 @@ public class User implements Serializable {
 
     public void setPresentAddress(String presentAddress) {
         this.presentAddress = presentAddress == null ? null : presentAddress.trim();
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school == null ? null : school.trim();
     }
 }

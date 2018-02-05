@@ -3,22 +3,30 @@ package com.recommend_system.company.entity;
 import java.io.Serializable;
 
 public class Company implements Serializable {
-    private String companyId;
+    private Integer companyId;
 
     private String address;
+
+    private String companyNature;
+
+    private String companyScale;
+
+    private String companyIndustry;
 
     private String companyHomepage;
 
     private String companyName;
 
+    private String city;
+
     private static final long serialVersionUID = 1L;
 
-    public String getCompanyId() {
+    public Integer getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId == null ? null : companyId.trim();
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public String getAddress() {
@@ -27,6 +35,30 @@ public class Company implements Serializable {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public String getCompanyNature() {
+        return companyNature;
+    }
+
+    public void setCompanyNature(String companyNature) {
+        this.companyNature = companyNature == null ? null : companyNature.trim();
+    }
+
+    public String getCompanyScale() {
+        return companyScale;
+    }
+
+    public void setCompanyScale(String companyScale) {
+        this.companyScale = companyScale == null ? null : companyScale.trim();
+    }
+
+    public String getCompanyIndustry() {
+        return companyIndustry;
+    }
+
+    public void setCompanyIndustry(String companyIndustry) {
+        this.companyIndustry = companyIndustry == null ? null : companyIndustry.trim();
     }
 
     public String getCompanyHomepage() {
@@ -43,5 +75,13 @@ public class Company implements Serializable {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName == null ? null : companyName.trim();
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city == null ? null : city.trim();
     }
 }

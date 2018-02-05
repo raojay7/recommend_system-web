@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.recommend_system.user.dao.UserMapper" >
   <resultMap id="BaseResultMap" type="com.recommend_system.user.entity.User" >
-    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_type" property="userType" jdbcType="INTEGER" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
@@ -11,29 +11,31 @@
     <result column="education" property="education" jdbcType="INTEGER" />
     <result column="professional" property="professional" jdbcType="VARCHAR" />
     <result column="present_address" property="presentAddress" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    user_id, user_type, user_name, password, gender, age, education, professional, present_address
+    user_id, user_type, user_name, password, gender, age, education, professional, present_address, 
+    school
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_user
-    where user_id = #{userId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_user
-    where user_id = #{userId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.recommend_system.user.entity.User" >
     insert into t_user (user_id, user_type, user_name, 
       password, gender, age, 
-      education, professional, present_address
-      )
-    values (#{userId,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
+      education, professional, present_address, 
+      school)
+    values (#{userId,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, 
-      #{education,jdbcType=INTEGER}, #{professional,jdbcType=VARCHAR}, #{presentAddress,jdbcType=VARCHAR}
-      )
+      #{education,jdbcType=INTEGER}, #{professional,jdbcType=VARCHAR}, #{presentAddress,jdbcType=VARCHAR}, 
+      #{school,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.recommend_system.user.entity.User" >
     insert into t_user
@@ -65,10 +67,13 @@
       <if test="presentAddress != null" >
         present_address,
       </if>
+      <if test="school != null" >
+        school,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="userType != null" >
         #{userType,jdbcType=INTEGER},
@@ -93,6 +98,9 @@
       </if>
       <if test="presentAddress != null" >
         #{presentAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -123,8 +131,11 @@
       <if test="presentAddress != null" >
         present_address = #{presentAddress,jdbcType=VARCHAR},
       </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
     </set>
-    where user_id = #{userId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.recommend_system.user.entity.User" >
     update t_user
@@ -135,7 +146,8 @@
       age = #{age,jdbcType=INTEGER},
       education = #{education,jdbcType=INTEGER},
       professional = #{professional,jdbcType=VARCHAR},
-      present_address = #{presentAddress,jdbcType=VARCHAR}
-    where user_id = #{userId,jdbcType=VARCHAR}
+      present_address = #{presentAddress,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

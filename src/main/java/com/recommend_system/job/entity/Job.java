@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Job implements Serializable {
-    private String jobId;
+    private Integer jobId;
 
     private String jobName;
 
@@ -12,7 +12,7 @@ public class Job implements Serializable {
 
     private Integer salaryMax;
 
-    private String education;
+    private Integer education;
 
     private String workplace;
 
@@ -24,26 +24,34 @@ public class Job implements Serializable {
 
     private Date ctime;
 
-    private String jobNature;
+    private Integer jobNature;
 
-    private String companyId;
+    private Integer companyId;
 
     private String welfare;
 
     private String workcity;
 
-    private String jobfindUrl;
+    private String ageMin;
+
+    private String ageMax;
+
+    private Integer needGender;
+
+    private String language;
+
+    private String tag;
 
     private String specification;
 
     private static final long serialVersionUID = 1L;
 
-    public String getJobId() {
+    public Integer getJobId() {
         return jobId;
     }
 
-    public void setJobId(String jobId) {
-        this.jobId = jobId == null ? null : jobId.trim();
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
 
     public String getJobName() {
@@ -70,12 +78,12 @@ public class Job implements Serializable {
         this.salaryMax = salaryMax;
     }
 
-    public String getEducation() {
+    public Integer getEducation() {
         return education;
     }
 
-    public void setEducation(String education) {
-        this.education = education == null ? null : education.trim();
+    public void setEducation(Integer education) {
+        this.education = education;
     }
 
     public String getWorkplace() {
@@ -118,20 +126,20 @@ public class Job implements Serializable {
         this.ctime = ctime;
     }
 
-    public String getJobNature() {
+    public Integer getJobNature() {
         return jobNature;
     }
 
-    public void setJobNature(String jobNature) {
-        this.jobNature = jobNature == null ? null : jobNature.trim();
+    public void setJobNature(Integer jobNature) {
+        this.jobNature = jobNature;
     }
 
-    public String getCompanyId() {
+    public Integer getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId == null ? null : companyId.trim();
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public String getWelfare() {
@@ -150,12 +158,44 @@ public class Job implements Serializable {
         this.workcity = workcity == null ? null : workcity.trim();
     }
 
-    public String getJobfindUrl() {
-        return jobfindUrl;
+    public String getAgeMin() {
+        return ageMin;
     }
 
-    public void setJobfindUrl(String jobfindUrl) {
-        this.jobfindUrl = jobfindUrl == null ? null : jobfindUrl.trim();
+    public void setAgeMin(String ageMin) {
+        this.ageMin = ageMin == null ? null : ageMin.trim();
+    }
+
+    public String getAgeMax() {
+        return ageMax;
+    }
+
+    public void setAgeMax(String ageMax) {
+        this.ageMax = ageMax == null ? null : ageMax.trim();
+    }
+
+    public Integer getNeedGender() {
+        return needGender;
+    }
+
+    public void setNeedGender(Integer needGender) {
+        this.needGender = needGender;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language == null ? null : language.trim();
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag == null ? null : tag.trim();
     }
 
     public String getSpecification() {

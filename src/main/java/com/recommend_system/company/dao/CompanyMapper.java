@@ -3,13 +3,13 @@ package com.recommend_system.company.dao;
 import com.recommend_system.company.entity.Company;
 
 public interface CompanyMapper {
-    int deleteByPrimaryKey(String companyId);
+    int deleteByPrimaryKey(Integer companyId);
 
     int insert(Company record);
 
     int insertSelective(Company record);
 
-    Company selectByPrimaryKey(String companyId);
+    Company selectByPrimaryKey(Integer companyId);
 
     int updateByPrimaryKeySelective(Company record);
 

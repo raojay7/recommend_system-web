@@ -2,29 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.recommend_system.company.dao.CompanyMapper" >
   <resultMap id="BaseResultMap" type="com.recommend_system.company.entity.Company" >
-    <id column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <id column="company_id" property="companyId" jdbcType="INTEGER" />
     <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="company_nature" property="companyNature" jdbcType="VARCHAR" />
+    <result column="company_scale" property="companyScale" jdbcType="VARCHAR" />
+    <result column="company_industry" property="companyIndustry" jdbcType="VARCHAR" />
     <result column="company_homepage" property="companyHomepage" jdbcType="VARCHAR" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    company_id, address, company_homepage, company_name
+    company_id, address, company_nature, company_scale, company_industry, company_homepage, 
+    company_name, city
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_company
-    where company_id = #{companyId,jdbcType=VARCHAR}
+    where company_id = #{companyId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_company
-    where company_id = #{companyId,jdbcType=VARCHAR}
+    where company_id = #{companyId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.recommend_system.company.entity.Company" >
-    insert into t_company (company_id, address, company_homepage, 
-      company_name)
-    values (#{companyId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{companyHomepage,jdbcType=VARCHAR}, 
-      #{companyName,jdbcType=VARCHAR})
+    insert into t_company (company_id, address, company_nature, 
+      company_scale, company_industry, company_homepage, 
+      company_name, city)
+    values (#{companyId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{companyNature,jdbcType=VARCHAR}, 
+      #{companyScale,jdbcType=VARCHAR}, #{companyIndustry,jdbcType=VARCHAR}, #{companyHomepage,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.recommend_system.company.entity.Company" >
     insert into t_company
@@ -35,25 +42,49 @@
       <if test="address != null" >
         address,
       </if>
+      <if test="companyNature != null" >
+        company_nature,
+      </if>
+      <if test="companyScale != null" >
+        company_scale,
+      </if>
+      <if test="companyIndustry != null" >
+        company_industry,
+      </if>
       <if test="companyHomepage != null" >
         company_homepage,
       </if>
       <if test="companyName != null" >
         company_name,
       </if>
+      <if test="city != null" >
+        city,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="companyId != null" >
-        #{companyId,jdbcType=VARCHAR},
+        #{companyId,jdbcType=INTEGER},
       </if>
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNature != null" >
+        #{companyNature,jdbcType=VARCHAR},
+      </if>
+      <if test="companyScale != null" >
+        #{companyScale,jdbcType=VARCHAR},
+      </if>
+      <if test="companyIndustry != null" >
+        #{companyIndustry,jdbcType=VARCHAR},
       </if>
       <if test="companyHomepage != null" >
         #{companyHomepage,jdbcType=VARCHAR},
       </if>
       <if test="companyName != null" >
         #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -63,20 +94,36 @@
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
       </if>
+      <if test="companyNature != null" >
+        company_nature = #{companyNature,jdbcType=VARCHAR},
+      </if>
+      <if test="companyScale != null" >
+        company_scale = #{companyScale,jdbcType=VARCHAR},
+      </if>
+      <if test="companyIndustry != null" >
+        company_industry = #{companyIndustry,jdbcType=VARCHAR},
+      </if>
       <if test="companyHomepage != null" >
         company_homepage = #{companyHomepage,jdbcType=VARCHAR},
       </if>
       <if test="companyName != null" >
         company_name = #{companyName,jdbcType=VARCHAR},
       </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
     </set>
-    where company_id = #{companyId,jdbcType=VARCHAR}
+    where company_id = #{companyId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.recommend_system.company.entity.Company" >
     update t_company
     set address = #{address,jdbcType=VARCHAR},
+      company_nature = #{companyNature,jdbcType=VARCHAR},
+      company_scale = #{companyScale,jdbcType=VARCHAR},
+      company_industry = #{companyIndustry,jdbcType=VARCHAR},
       company_homepage = #{companyHomepage,jdbcType=VARCHAR},
-      company_name = #{companyName,jdbcType=VARCHAR}
-    where company_id = #{companyId,jdbcType=VARCHAR}
+      company_name = #{companyName,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR}
+    where company_id = #{companyId,jdbcType=INTEGER}
   </update>
 </mapper>
