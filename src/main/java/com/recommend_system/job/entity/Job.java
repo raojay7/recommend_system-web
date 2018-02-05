@@ -1,4 +1,4 @@
-package com.recommend_system.user.entity;
+package com.recommend_system.job.entity;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,6 +1,6 @@
-package com.recommend_system.user.dao;
+package com.recommend_system.company.dao;
 
-import com.recommend_system.user.entity.Company;
+import com.recommend_system.company.entity.Company;
 
 public interface CompanyMapper {
     int deleteByPrimaryKey(String companyId);
