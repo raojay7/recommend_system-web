@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.recommend_system.user.dao.JobMapper" >
+  <resultMap id="BaseResultMap" type="com.recommend_system.user.entity.Job" >
+    <id column="job_id" property="jobId" jdbcType="VARCHAR" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+    <result column="salary_min" property="salaryMin" jdbcType="INTEGER" />
+    <result column="salary_max" property="salaryMax" jdbcType="INTEGER" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="workplace" property="workplace" jdbcType="VARCHAR" />
+    <result column="workexperience_min" property="workexperienceMin" jdbcType="INTEGER" />
+    <result column="workexperience_max" property="workexperienceMax" jdbcType="INTEGER" />
+    <result column="need_num" property="needNum" jdbcType="INTEGER" />
+    <result column="ctime" property="ctime" jdbcType="DATE" />
+    <result column="job_nature" property="jobNature" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="welfare" property="welfare" jdbcType="VARCHAR" />
+    <result column="workcity" property="workcity" jdbcType="VARCHAR" />
+    <result column="jobfind_url" property="jobfindUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.recommend_system.user.entity.Job" extends="BaseResultMap" >
+    <result column="specification" property="specification" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    job_id, job_name, salary_min, salary_max, education, workplace, workexperience_min, 
+    workexperience_max, need_num, ctime, job_nature, company_id, welfare, workcity, jobfind_url
+  </sql>
+  <sql id="Blob_Column_List" >
+    specification
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_job
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_job
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.recommend_system.user.entity.Job" >
+    insert into t_job (job_id, job_name, salary_min, 
+      salary_max, education, workplace, 
+      workexperience_min, workexperience_max, need_num, 
+      ctime, job_nature, company_id, 
+      welfare, workcity, jobfind_url, 
+      specification)
+    values (#{jobId,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, #{salaryMin,jdbcType=INTEGER}, 
+      #{salaryMax,jdbcType=INTEGER}, #{education,jdbcType=VARCHAR}, #{workplace,jdbcType=VARCHAR}, 
+      #{workexperienceMin,jdbcType=INTEGER}, #{workexperienceMax,jdbcType=INTEGER}, #{needNum,jdbcType=INTEGER}, 
+      #{ctime,jdbcType=DATE}, #{jobNature,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, 
+      #{welfare,jdbcType=VARCHAR}, #{workcity,jdbcType=VARCHAR}, #{jobfindUrl,jdbcType=VARCHAR}, 
+      #{specification,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.recommend_system.user.entity.Job" >
+    insert into t_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        job_id,
+      </if>
+      <if test="jobName != null" >
+        job_name,
+      </if>
+      <if test="salaryMin != null" >
+        salary_min,
+      </if>
+      <if test="salaryMax != null" >
+        salary_max,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="workplace != null" >
+        workplace,
+      </if>
+      <if test="workexperienceMin != null" >
+        workexperience_min,
+      </if>
+      <if test="workexperienceMax != null" >
+        workexperience_max,
+      </if>
+      <if test="needNum != null" >
+        need_num,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="jobNature != null" >
+        job_nature,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="welfare != null" >
+        welfare,
+      </if>
+      <if test="workcity != null" >
+        workcity,
+      </if>
+      <if test="jobfindUrl != null" >
+        jobfind_url,
+      </if>
+      <if test="specification != null" >
+        specification,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryMin != null" >
+        #{salaryMin,jdbcType=INTEGER},
+      </if>
+      <if test="salaryMax != null" >
+        #{salaryMax,jdbcType=INTEGER},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="workplace != null" >
+        #{workplace,jdbcType=VARCHAR},
+      </if>
+      <if test="workexperienceMin != null" >
+        #{workexperienceMin,jdbcType=INTEGER},
+      </if>
+      <if test="workexperienceMax != null" >
+        #{workexperienceMax,jdbcType=INTEGER},
+      </if>
+      <if test="needNum != null" >
+        #{needNum,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=DATE},
+      </if>
+      <if test="jobNature != null" >
+        #{jobNature,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="welfare != null" >
+        #{welfare,jdbcType=VARCHAR},
+      </if>
+      <if test="workcity != null" >
+        #{workcity,jdbcType=VARCHAR},
+      </if>
+      <if test="jobfindUrl != null" >
+        #{jobfindUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null" >
+        #{specification,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.recommend_system.user.entity.Job" >
+    update t_job
+    <set >
+      <if test="jobName != null" >
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryMin != null" >
+        salary_min = #{salaryMin,jdbcType=INTEGER},
+      </if>
+      <if test="salaryMax != null" >
+        salary_max = #{salaryMax,jdbcType=INTEGER},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="workplace != null" >
+        workplace = #{workplace,jdbcType=VARCHAR},
+      </if>
+      <if test="workexperienceMin != null" >
+        workexperience_min = #{workexperienceMin,jdbcType=INTEGER},
+      </if>
+      <if test="workexperienceMax != null" >
+        workexperience_max = #{workexperienceMax,jdbcType=INTEGER},
+      </if>
+      <if test="needNum != null" >
+        need_num = #{needNum,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=DATE},
+      </if>
+      <if test="jobNature != null" >
+        job_nature = #{jobNature,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="welfare != null" >
+        welfare = #{welfare,jdbcType=VARCHAR},
+      </if>
+      <if test="workcity != null" >
+        workcity = #{workcity,jdbcType=VARCHAR},
+      </if>
+      <if test="jobfindUrl != null" >
+        jobfind_url = #{jobfindUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null" >
+        specification = #{specification,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.recommend_system.user.entity.Job" >
+    update t_job
+    set job_name = #{jobName,jdbcType=VARCHAR},
+      salary_min = #{salaryMin,jdbcType=INTEGER},
+      salary_max = #{salaryMax,jdbcType=INTEGER},
+      education = #{education,jdbcType=VARCHAR},
+      workplace = #{workplace,jdbcType=VARCHAR},
+      workexperience_min = #{workexperienceMin,jdbcType=INTEGER},
+      workexperience_max = #{workexperienceMax,jdbcType=INTEGER},
+      need_num = #{needNum,jdbcType=INTEGER},
+      ctime = #{ctime,jdbcType=DATE},
+      job_nature = #{jobNature,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      welfare = #{welfare,jdbcType=VARCHAR},
+      workcity = #{workcity,jdbcType=VARCHAR},
+      jobfind_url = #{jobfindUrl,jdbcType=VARCHAR},
+      specification = #{specification,jdbcType=LONGVARCHAR}
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.recommend_system.user.entity.Job" >
+    update t_job
+    set job_name = #{jobName,jdbcType=VARCHAR},
+      salary_min = #{salaryMin,jdbcType=INTEGER},
+      salary_max = #{salaryMax,jdbcType=INTEGER},
+      education = #{education,jdbcType=VARCHAR},
+      workplace = #{workplace,jdbcType=VARCHAR},
+      workexperience_min = #{workexperienceMin,jdbcType=INTEGER},
+      workexperience_max = #{workexperienceMax,jdbcType=INTEGER},
+      need_num = #{needNum,jdbcType=INTEGER},
+      ctime = #{ctime,jdbcType=DATE},
+      job_nature = #{jobNature,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      welfare = #{welfare,jdbcType=VARCHAR},
+      workcity = #{workcity,jdbcType=VARCHAR},
+      jobfind_url = #{jobfindUrl,jdbcType=VARCHAR}
+    where job_id = #{jobId,jdbcType=VARCHAR}
+  </update>
+</mapper>
