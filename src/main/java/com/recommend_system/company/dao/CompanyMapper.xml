@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.recommend_system.user.dao.CompanyMapper" >
-  <resultMap id="BaseResultMap" type="com.recommend_system.user.entity.Company" >
+<mapper namespace="com.recommend_system.company.dao.CompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.recommend_system.company.entity.Company" >
     <id column="company_id" property="companyId" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="company_homepage" property="companyHomepage" jdbcType="VARCHAR" />
@@ -20,13 +20,13 @@
     delete from t_company
     where company_id = #{companyId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.recommend_system.user.entity.Company" >
+  <insert id="insert" parameterType="com.recommend_system.company.entity.Company" >
     insert into t_company (company_id, address, company_homepage, 
       company_name)
     values (#{companyId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{companyHomepage,jdbcType=VARCHAR}, 
       #{companyName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.recommend_system.user.entity.Company" >
+  <insert id="insertSelective" parameterType="com.recommend_system.company.entity.Company" >
     insert into t_company
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="companyId != null" >
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.recommend_system.user.entity.Company" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.recommend_system.company.entity.Company" >
     update t_company
     <set >
       <if test="address != null" >
@@ -72,7 +72,7 @@
     </set>
     where company_id = #{companyId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.recommend_system.user.entity.Company" >
+  <update id="updateByPrimaryKey" parameterType="com.recommend_system.company.entity.Company" >
     update t_company
     set address = #{address,jdbcType=VARCHAR},
       company_homepage = #{companyHomepage,jdbcType=VARCHAR},

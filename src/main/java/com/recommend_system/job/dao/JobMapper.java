@@ -1,6 +1,6 @@
-package com.recommend_system.user.dao;
+package com.recommend_system.job.dao;
 
-import com.recommend_system.user.entity.Job;
+import com.recommend_system.job.entity.Job;
 
 public interface JobMapper {
     int deleteByPrimaryKey(String jobId);
