@@ -25,6 +25,64 @@
   <resultMap id="ResultMapWithBLOBs" type="com.recommend_system.job.entity.Job" extends="BaseResultMap" >
     <result column="specification" property="specification" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
   <sql id="Base_Column_List" >
     job_id, job_name, salary_min, salary_max, education, workplace, workexperience_min, 
     workexperience_max, need_num, ctime, job_nature, company_id, welfare, workcity, age_min, 
@@ -33,6 +91,38 @@
   <sql id="Blob_Column_List" >
     specification
   </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.recommend_system.job.entity.JobExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.recommend_system.job.entity.JobExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -44,6 +134,12 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_job
     where job_id = #{jobId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.recommend_system.job.entity.JobExample" >
+    delete from t_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
   </delete>
   <insert id="insert" parameterType="com.recommend_system.job.entity.Job" >
     insert into t_job (job_id, job_name, salary_min, 
@@ -188,6 +284,131 @@
       </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.recommend_system.job.entity.JobExample" resultType="java.lang.Integer" >
+    select count(*) from t_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_job
+    <set >
+      <if test="record.jobId != null" >
+        job_id = #{record.jobId,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobName != null" >
+        job_name = #{record.jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salaryMin != null" >
+        salary_min = #{record.salaryMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.salaryMax != null" >
+        salary_max = #{record.salaryMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.education != null" >
+        education = #{record.education,jdbcType=INTEGER},
+      </if>
+      <if test="record.workplace != null" >
+        workplace = #{record.workplace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workexperienceMin != null" >
+        workexperience_min = #{record.workexperienceMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.workexperienceMax != null" >
+        workexperience_max = #{record.workexperienceMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.needNum != null" >
+        need_num = #{record.needNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.ctime != null" >
+        ctime = #{record.ctime,jdbcType=DATE},
+      </if>
+      <if test="record.jobNature != null" >
+        job_nature = #{record.jobNature,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.welfare != null" >
+        welfare = #{record.welfare,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workcity != null" >
+        workcity = #{record.workcity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ageMin != null" >
+        age_min = #{record.ageMin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ageMax != null" >
+        age_max = #{record.ageMax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.needGender != null" >
+        need_gender = #{record.needGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.language != null" >
+        language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tag != null" >
+        tag = #{record.tag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specification != null" >
+        specification = #{record.specification,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_job
+    set job_id = #{record.jobId,jdbcType=INTEGER},
+      job_name = #{record.jobName,jdbcType=VARCHAR},
+      salary_min = #{record.salaryMin,jdbcType=INTEGER},
+      salary_max = #{record.salaryMax,jdbcType=INTEGER},
+      education = #{record.education,jdbcType=INTEGER},
+      workplace = #{record.workplace,jdbcType=VARCHAR},
+      workexperience_min = #{record.workexperienceMin,jdbcType=INTEGER},
+      workexperience_max = #{record.workexperienceMax,jdbcType=INTEGER},
+      need_num = #{record.needNum,jdbcType=INTEGER},
+      ctime = #{record.ctime,jdbcType=DATE},
+      job_nature = #{record.jobNature,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=INTEGER},
+      welfare = #{record.welfare,jdbcType=VARCHAR},
+      workcity = #{record.workcity,jdbcType=VARCHAR},
+      age_min = #{record.ageMin,jdbcType=VARCHAR},
+      age_max = #{record.ageMax,jdbcType=VARCHAR},
+      need_gender = #{record.needGender,jdbcType=INTEGER},
+      language = #{record.language,jdbcType=VARCHAR},
+      tag = #{record.tag,jdbcType=VARCHAR},
+      specification = #{record.specification,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_job
+    set job_id = #{record.jobId,jdbcType=INTEGER},
+      job_name = #{record.jobName,jdbcType=VARCHAR},
+      salary_min = #{record.salaryMin,jdbcType=INTEGER},
+      salary_max = #{record.salaryMax,jdbcType=INTEGER},
+      education = #{record.education,jdbcType=INTEGER},
+      workplace = #{record.workplace,jdbcType=VARCHAR},
+      workexperience_min = #{record.workexperienceMin,jdbcType=INTEGER},
+      workexperience_max = #{record.workexperienceMax,jdbcType=INTEGER},
+      need_num = #{record.needNum,jdbcType=INTEGER},
+      ctime = #{record.ctime,jdbcType=DATE},
+      job_nature = #{record.jobNature,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=INTEGER},
+      welfare = #{record.welfare,jdbcType=VARCHAR},
+      workcity = #{record.workcity,jdbcType=VARCHAR},
+      age_min = #{record.ageMin,jdbcType=VARCHAR},
+      age_max = #{record.ageMax,jdbcType=VARCHAR},
+      need_gender = #{record.needGender,jdbcType=INTEGER},
+      language = #{record.language,jdbcType=VARCHAR},
+      tag = #{record.tag,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.recommend_system.job.entity.Job" >
     update t_job
     <set >
