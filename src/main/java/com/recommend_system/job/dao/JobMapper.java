@@ -3,13 +3,13 @@ package com.recommend_system.job.dao;
 import com.recommend_system.job.entity.Job;
 
 public interface JobMapper {
-    int deleteByPrimaryKey(String jobId);
+    int deleteByPrimaryKey(Integer jobId);
 
     int insert(Job record);
 
     int insertSelective(Job record);
 
-    Job selectByPrimaryKey(String jobId);
+    Job selectByPrimaryKey(Integer jobId);
 
     int updateByPrimaryKeySelective(Job record);
 
