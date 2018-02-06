@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.recommend_system.company.dao.CompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.recommend_system.company.entity.Company" >
+    <id column="company_id" property="companyId" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="company_nature" property="companyNature" jdbcType="VARCHAR" />
+    <result column="company_scale" property="companyScale" jdbcType="VARCHAR" />
+    <result column="company_industry" property="companyIndustry" jdbcType="VARCHAR" />
+    <result column="company_homepage" property="companyHomepage" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    company_id, address, company_nature, company_scale, company_industry, company_homepage, 
+    company_name, city
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.recommend_system.company.entity.CompanyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_company
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_company
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.recommend_system.company.entity.CompanyExample" >
+    delete from t_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.recommend_system.company.entity.Company" >
+    insert into t_company (company_id, address, company_nature, 
+      company_scale, company_industry, company_homepage, 
+      company_name, city)
+    values (#{companyId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{companyNature,jdbcType=VARCHAR}, 
+      #{companyScale,jdbcType=VARCHAR}, #{companyIndustry,jdbcType=VARCHAR}, #{companyHomepage,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.recommend_system.company.entity.Company" >
+    insert into t_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="companyNature != null" >
+        company_nature,
+      </if>
+      <if test="companyScale != null" >
+        company_scale,
+      </if>
+      <if test="companyIndustry != null" >
+        company_industry,
+      </if>
+      <if test="companyHomepage != null" >
+        company_homepage,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNature != null" >
+        #{companyNature,jdbcType=VARCHAR},
+      </if>
+      <if test="companyScale != null" >
+        #{companyScale,jdbcType=VARCHAR},
+      </if>
+      <if test="companyIndustry != null" >
+        #{companyIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="companyHomepage != null" >
+        #{companyHomepage,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.recommend_system.company.entity.CompanyExample" resultType="java.lang.Integer" >
+    select count(*) from t_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_company
+    <set >
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyNature != null" >
+        company_nature = #{record.companyNature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyScale != null" >
+        company_scale = #{record.companyScale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyIndustry != null" >
+        company_industry = #{record.companyIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyHomepage != null" >
+        company_homepage = #{record.companyHomepage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_company
+    set company_id = #{record.companyId,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      company_nature = #{record.companyNature,jdbcType=VARCHAR},
+      company_scale = #{record.companyScale,jdbcType=VARCHAR},
+      company_industry = #{record.companyIndustry,jdbcType=VARCHAR},
+      company_homepage = #{record.companyHomepage,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.recommend_system.company.entity.Company" >
+    update t_company
+    <set >
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNature != null" >
+        company_nature = #{companyNature,jdbcType=VARCHAR},
+      </if>
+      <if test="companyScale != null" >
+        company_scale = #{companyScale,jdbcType=VARCHAR},
+      </if>
+      <if test="companyIndustry != null" >
+        company_industry = #{companyIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="companyHomepage != null" >
+        company_homepage = #{companyHomepage,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.recommend_system.company.entity.Company" >
+    update t_company
+    set address = #{address,jdbcType=VARCHAR},
+      company_nature = #{companyNature,jdbcType=VARCHAR},
+      company_scale = #{companyScale,jdbcType=VARCHAR},
+      company_industry = #{companyIndustry,jdbcType=VARCHAR},
+      company_homepage = #{companyHomepage,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR}
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
+</mapper>
