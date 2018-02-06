@@ -1,4 +1,4 @@
-package com.recommend_system.user.service.service.imp;
+package com.recommend_system.user.service.imp;
 
 import com.recommend_system.user.dao.UserMapper;
 import com.recommend_system.user.entity.User;

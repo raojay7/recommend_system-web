@@ -1,6 +1,6 @@
 package com.recommend_system.user.controller;
 
-import com.recommend_system.user.entity.UserJobIntension;
+//import com.recommend_system.user.entity.UserJobIntension;
 import com.recommend_system.user.service.UserJobIntensionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("User")
 public class UserJobIntensionController {
-    @Autowired
+    /*@Autowired
     UserJobIntensionService userJobIntensionService;
 
     @RequestMapping("setIntension")
@@ -27,5 +27,5 @@ public class UserJobIntensionController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("intension");//增加完跳转到个人求职意愿页面
         return mav;
-    }
+    }*/
 }
