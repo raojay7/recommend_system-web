@@ -3,6 +3,7 @@
 <mapper namespace="com.recommend_system.job.dao.JobMapper" >
   <resultMap id="BaseResultMap" type="com.recommend_system.job.entity.Job" >
     <id column="job_id" property="jobId" jdbcType="INTEGER" />
+    <result column="company_id" property="companyId" jdbcType="INTEGER" />
     <result column="job_name" property="jobName" jdbcType="VARCHAR" />
     <result column="salary_min" property="salaryMin" jdbcType="INTEGER" />
     <result column="salary_max" property="salaryMax" jdbcType="INTEGER" />
@@ -13,7 +14,6 @@
     <result column="need_num" property="needNum" jdbcType="INTEGER" />
     <result column="ctime" property="ctime" jdbcType="DATE" />
     <result column="job_nature" property="jobNature" jdbcType="INTEGER" />
-    <result column="company_id" property="companyId" jdbcType="INTEGER" />
     <result column="welfare" property="welfare" jdbcType="VARCHAR" />
     <result column="workcity" property="workcity" jdbcType="VARCHAR" />
     <result column="age_min" property="ageMin" jdbcType="VARCHAR" />
@@ -84,9 +84,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    job_id, job_name, salary_min, salary_max, education, workplace, workexperience_min, 
-    workexperience_max, need_num, ctime, job_nature, company_id, welfare, workcity, age_min, 
-    age_max, need_gender, language, tag
+    job_id, company_id, job_name, salary_min, salary_max, education, workplace, workexperience_min, 
+    workexperience_max, need_num, ctime, job_nature, welfare, workcity, age_min, age_max, 
+    need_gender, language, tag
   </sql>
   <sql id="Blob_Column_List" >
     specification
@@ -142,17 +142,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.recommend_system.job.entity.Job" >
-    insert into t_job (job_id, job_name, salary_min, 
-      salary_max, education, workplace, 
-      workexperience_min, workexperience_max, need_num, 
-      ctime, job_nature, company_id, 
+    insert into t_job (job_id, company_id, job_name, 
+      salary_min, salary_max, education, 
+      workplace, workexperience_min, workexperience_max, 
+      need_num, ctime, job_nature, 
       welfare, workcity, age_min, 
       age_max, need_gender, language, 
       tag, specification)
-    values (#{jobId,jdbcType=INTEGER}, #{jobName,jdbcType=VARCHAR}, #{salaryMin,jdbcType=INTEGER}, 
-      #{salaryMax,jdbcType=INTEGER}, #{education,jdbcType=INTEGER}, #{workplace,jdbcType=VARCHAR}, 
-      #{workexperienceMin,jdbcType=INTEGER}, #{workexperienceMax,jdbcType=INTEGER}, #{needNum,jdbcType=INTEGER}, 
-      #{ctime,jdbcType=DATE}, #{jobNature,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, 
+    values (#{jobId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{jobName,jdbcType=VARCHAR}, 
+      #{salaryMin,jdbcType=INTEGER}, #{salaryMax,jdbcType=INTEGER}, #{education,jdbcType=INTEGER}, 
+      #{workplace,jdbcType=VARCHAR}, #{workexperienceMin,jdbcType=INTEGER}, #{workexperienceMax,jdbcType=INTEGER}, 
+      #{needNum,jdbcType=INTEGER}, #{ctime,jdbcType=DATE}, #{jobNature,jdbcType=INTEGER}, 
       #{welfare,jdbcType=VARCHAR}, #{workcity,jdbcType=VARCHAR}, #{ageMin,jdbcType=VARCHAR}, 
       #{ageMax,jdbcType=VARCHAR}, #{needGender,jdbcType=INTEGER}, #{language,jdbcType=VARCHAR}, 
       #{tag,jdbcType=VARCHAR}, #{specification,jdbcType=LONGVARCHAR})
@@ -162,6 +162,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="jobId != null" >
         job_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
       </if>
       <if test="jobName != null" >
         job_name,
@@ -193,9 +196,6 @@
       <if test="jobNature != null" >
         job_nature,
       </if>
-      <if test="companyId != null" >
-        company_id,
-      </if>
       <if test="welfare != null" >
         welfare,
       </if>
@@ -224,6 +224,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="jobId != null" >
         #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=INTEGER},
       </if>
       <if test="jobName != null" >
         #{jobName,jdbcType=VARCHAR},
@@ -254,9 +257,6 @@
       </if>
       <if test="jobNature != null" >
         #{jobNature,jdbcType=INTEGER},
-      </if>
-      <if test="companyId != null" >
-        #{companyId,jdbcType=INTEGER},
       </if>
       <if test="welfare != null" >
         #{welfare,jdbcType=VARCHAR},
@@ -296,6 +296,9 @@
       <if test="record.jobId != null" >
         job_id = #{record.jobId,jdbcType=INTEGER},
       </if>
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
       <if test="record.jobName != null" >
         job_name = #{record.jobName,jdbcType=VARCHAR},
       </if>
@@ -325,9 +328,6 @@
       </if>
       <if test="record.jobNature != null" >
         job_nature = #{record.jobNature,jdbcType=INTEGER},
-      </if>
-      <if test="record.companyId != null" >
-        company_id = #{record.companyId,jdbcType=INTEGER},
       </if>
       <if test="record.welfare != null" >
         welfare = #{record.welfare,jdbcType=VARCHAR},
@@ -361,6 +361,7 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update t_job
     set job_id = #{record.jobId,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=INTEGER},
       job_name = #{record.jobName,jdbcType=VARCHAR},
       salary_min = #{record.salaryMin,jdbcType=INTEGER},
       salary_max = #{record.salaryMax,jdbcType=INTEGER},
@@ -371,7 +372,6 @@
       need_num = #{record.needNum,jdbcType=INTEGER},
       ctime = #{record.ctime,jdbcType=DATE},
       job_nature = #{record.jobNature,jdbcType=INTEGER},
-      company_id = #{record.companyId,jdbcType=INTEGER},
       welfare = #{record.welfare,jdbcType=VARCHAR},
       workcity = #{record.workcity,jdbcType=VARCHAR},
       age_min = #{record.ageMin,jdbcType=VARCHAR},
@@ -387,6 +387,7 @@
   <update id="updateByExample" parameterType="map" >
     update t_job
     set job_id = #{record.jobId,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=INTEGER},
       job_name = #{record.jobName,jdbcType=VARCHAR},
       salary_min = #{record.salaryMin,jdbcType=INTEGER},
       salary_max = #{record.salaryMax,jdbcType=INTEGER},
@@ -397,7 +398,6 @@
       need_num = #{record.needNum,jdbcType=INTEGER},
       ctime = #{record.ctime,jdbcType=DATE},
       job_nature = #{record.jobNature,jdbcType=INTEGER},
-      company_id = #{record.companyId,jdbcType=INTEGER},
       welfare = #{record.welfare,jdbcType=VARCHAR},
       workcity = #{record.workcity,jdbcType=VARCHAR},
       age_min = #{record.ageMin,jdbcType=VARCHAR},
@@ -412,6 +412,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.recommend_system.job.entity.Job" >
     update t_job
     <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
       <if test="jobName != null" >
         job_name = #{jobName,jdbcType=VARCHAR},
       </if>
@@ -442,9 +445,6 @@
       <if test="jobNature != null" >
         job_nature = #{jobNature,jdbcType=INTEGER},
       </if>
-      <if test="companyId != null" >
-        company_id = #{companyId,jdbcType=INTEGER},
-      </if>
       <if test="welfare != null" >
         welfare = #{welfare,jdbcType=VARCHAR},
       </if>
@@ -474,7 +474,8 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.recommend_system.job.entity.Job" >
     update t_job
-    set job_name = #{jobName,jdbcType=VARCHAR},
+    set company_id = #{companyId,jdbcType=INTEGER},
+      job_name = #{jobName,jdbcType=VARCHAR},
       salary_min = #{salaryMin,jdbcType=INTEGER},
       salary_max = #{salaryMax,jdbcType=INTEGER},
       education = #{education,jdbcType=INTEGER},
@@ -484,7 +485,6 @@
       need_num = #{needNum,jdbcType=INTEGER},
       ctime = #{ctime,jdbcType=DATE},
       job_nature = #{jobNature,jdbcType=INTEGER},
-      company_id = #{companyId,jdbcType=INTEGER},
       welfare = #{welfare,jdbcType=VARCHAR},
       workcity = #{workcity,jdbcType=VARCHAR},
       age_min = #{ageMin,jdbcType=VARCHAR},
@@ -497,7 +497,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.recommend_system.job.entity.Job" >
     update t_job
-    set job_name = #{jobName,jdbcType=VARCHAR},
+    set company_id = #{companyId,jdbcType=INTEGER},
+      job_name = #{jobName,jdbcType=VARCHAR},
       salary_min = #{salaryMin,jdbcType=INTEGER},
       salary_max = #{salaryMax,jdbcType=INTEGER},
       education = #{education,jdbcType=INTEGER},
@@ -507,7 +508,6 @@
       need_num = #{needNum,jdbcType=INTEGER},
       ctime = #{ctime,jdbcType=DATE},
       job_nature = #{jobNature,jdbcType=INTEGER},
-      company_id = #{companyId,jdbcType=INTEGER},
       welfare = #{welfare,jdbcType=VARCHAR},
       workcity = #{workcity,jdbcType=VARCHAR},
       age_min = #{ageMin,jdbcType=VARCHAR},

@@ -6,6 +6,8 @@ import java.util.Date;
 public class Job implements Serializable {
     private Integer jobId;
 
+    private Integer companyId;
+
     private String jobName;
 
     private Integer salaryMin;
@@ -25,8 +27,6 @@ public class Job implements Serializable {
     private Date ctime;
 
     private Integer jobNature;
-
-    private Integer companyId;
 
     private String welfare;
 
@@ -52,6 +52,14 @@ public class Job implements Serializable {
 
     public void setJobId(Integer jobId) {
         this.jobId = jobId;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public String getJobName() {
@@ -132,14 +140,6 @@ public class Job implements Serializable {
 
     public void setJobNature(Integer jobNature) {
         this.jobNature = jobNature;
-    }
-
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
     }
 
     public String getWelfare() {
