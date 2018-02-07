@@ -19,25 +19,31 @@ public class UserController {
 
     @RequestMapping("register")
     public ModelAndView register(HttpSession session, User user){//注册方法
-        userService.register(user);
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("interest");//注册完成后跳转到用户职位兴趣选择页面
-        session.setAttribute("User", user);//注册完即为登录状态
-        return mav;
+        try {
+            userService.register(user);
+            mav.setViewName("interest");//注册完成后跳转到用户职位兴趣选择页面
+            session.setAttribute("User", user);//注册完即为登录状态
+            return mav;
+        }catch (Exception e){
+            mav.setViewName("error");
+            return mav;
+        }
     }
 
     @RequestMapping("logIn")
     public ModelAndView logIn(HttpSession session, HttpServletRequest request, User user){//登录方法
-        User us = userService.logIn(user);
         ModelAndView mav = new ModelAndView();
-        if(us != null){//返回来的User对象不为空说明登录成功了，跳转到home首页
-            session.setAttribute("User", user);
+        try {
+            User us = userService.logIn(user);
+            session.setAttribute("User",user);
             mav.setViewName("index");
-        }else{//返回来的User对象为空说明登录失败了，跳转到登录界面，并提示用户输入正确信息
-            request.setAttribute("message", "用户名或密码错误");
+            return mav;
+        }catch (Exception e){
+            request.setAttribute("msg", "请检查用户名或密码！");
             mav.setViewName("loginUI");
+            return mav;
         }
-        return mav;
     }
 
     @RequestMapping("logOut")
@@ -50,10 +56,15 @@ public class UserController {
 
     @RequestMapping("setUser")
     public ModelAndView setUser(User user){//修改个人信息
-        userService.setUser(user);
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("userinfo");//修改后回到个人信息页面
-        return mav;
+        try {
+            userService.setUser(user);
+            mav.setViewName("userinfo");//修改后回到个人信息页面
+            return mav;
+        }catch (Exception e){
+            mav.setViewName("error");
+            return mav;
+        }
     }
 }
 

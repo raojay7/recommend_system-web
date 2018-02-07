@@ -17,8 +17,6 @@ public class UserServiceimpl implements UserService {
     @Override
     public void register(User user) {
         userMapper.insert(user);
-        /*if(userMapper == null)System.out.println("UserMapper is null!");
-        else System.out.println("not null~"); */
     }
 
     @Override

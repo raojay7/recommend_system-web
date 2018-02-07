@@ -2,6 +2,7 @@
 package com.recommend_system.user.service;
 
 import com.recommend_system.user.entity.User;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 
