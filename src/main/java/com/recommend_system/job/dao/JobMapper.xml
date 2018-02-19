@@ -25,6 +25,15 @@
   <resultMap id="ResultMapWithBLOBs" type="com.recommend_system.job.entity.Job" extends="BaseResultMap" >
     <result column="specification" property="specification" jdbcType="LONGVARCHAR" />
   </resultMap>
+
+  <resultMap id="ExtResultMap" type="com.recommend_system.job.entity.JobExt">
+    <result column="workcity" property="workcity" jdbcType="VARCHAR"/>
+    <result column="jobnum" property="jobnum" jdbcType="INTEGER"/>
+    <result column="education" property="education" jdbcType="INTEGER"/>
+    <result column="workexperience_min" property="workexperience_min" jdbcType="INTEGER"/>
+    <result column="workexperience_max" property="workexperience_max" jdbcType="INTEGER"/>
+    <result column="ave_salary" property="ave_salary" jdbcType="DOUBLE"/>
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -124,7 +133,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -517,4 +526,25 @@
       tag = #{tag,jdbcType=VARCHAR}
     where job_id = #{jobId,jdbcType=INTEGER}
   </update>
+
+  <select id="getCityAvgSalary"  resultMap="ExtResultMap" >
+     SELECT workcity,AVG((salary_min+SALARY_MAX)/2) as ave_salary
+     FROM t_job
+     GROUP BY workcity
+  </select>
+  <select id="getEducationAvgSalary"  resultMap="ExtResultMap" >
+     SELECT SUM(NEED_NUM) jobnum,AVG((SALARY_MIN+SALARY_MAX)/2) ave_salary,EDUCATION
+     FROM T_JOB
+     GROUP BY EDUCATION;
+  </select>
+  <select id="getJobCity"  resultMap="ExtResultMap" >
+    SELECT WORKCITY,COUNT(need_num) jobnum
+    FROM T_JOB
+    GROUP BY WORKCITY
+  </select>
+  <select id="getExperienceSalary"  resultMap="ExtResultMap" >
+    SELECT WORKEXPERIENCE_MIN,WORKEXPERIENCE_MAX,AVG((SALARY_MIN+SALARY_MAX)/2) as ave_salary
+    FROM T_JOB
+    GROUP BY WORKEXPERIENCE_MIN,WORKEXPERIENCE_MAX;
+  </select>
 </mapper>

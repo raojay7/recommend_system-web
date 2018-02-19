@@ -11,6 +11,16 @@
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
   </resultMap>
+
+  <resultMap id="ExtResultMap" type="com.recommend_system.company.entity.CompanyExt">
+    <result column="city" property="city" jdbcType="VARCHAR"/>
+    <result column="jobnum" property="jobnum" jdbcType="INTEGER"/>
+    <result column="company_industry" property="company_industry" jdbcType="VARCHAR"/>
+    <result column="company_nature" property="company_nature" jdbcType="VARCHAR"/>
+    <result column="company_scale" property="company_scale" jdbcType="VARCHAR"/>
+    <result column="ave_salary" property="ave_salary" jdbcType="DOUBLE"/>
+
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -257,4 +267,40 @@
       city = #{city,jdbcType=VARCHAR}
     where company_id = #{companyId,jdbcType=INTEGER}
   </update>
+
+  <!--统计的方法-->
+  <select id="getCompanyCity"  resultMap="ExtResultMap" >
+    SELECT CITY,COUNT(CITY) AS jobnum
+    FROM
+    T_COMPANY
+    GROUP BY CITY
+  </select>
+  <select id="getCompanyIndustry"  resultMap="ExtResultMap" >
+    SELECT COMPANY_INDUSTRY,COUNT(*) AS jobnum
+    FROM T_COMPANY
+    GROUP BY COMPANY_INDUSTRY
+  </select>
+  <select id="getCompanyNature"  resultMap="ExtResultMap" >
+    SELECT COUNT(*) as jobnum,COMPANY_NATURE
+    FROM T_COMPANY
+    GROUP BY COMPANY_NATURE
+  </select>
+
+  <select id="getCompanyScale"  resultMap="ExtResultMap" >
+    SELECT COUNT(*) AS jobnum,COMPANY_SCALE
+    FROM T_COMPANY
+    GROUP BY COMPANY_SCALE
+  </select>
+  <select id="getCompanyNatureNeedAvg"  resultMap="ExtResultMap" >
+    SELECT SUM(need_num)AS jobnum,c.company_nature AS company_nature,AVG((j.salary_min+j.salary_max)/2) AS ave_salary
+    FROM t_job j,t_company c
+    WHERE j.company_id=c.company_id
+    GROUP BY c.company_nature;
+  </select>
+  <select id="getCompanyIndustryNeedAvg"  resultMap="ExtResultMap" >
+     SELECT SUM(need_num)AS jobnum,c.company_industry as company_industry,AVG((j.salary_min+j.salary_max)/2) AS ave_salary
+     FROM t_job j,t_company c
+     WHERE j.company_id=c.company_id
+     GROUP BY company_industry;
+  </select>
 </mapper>
