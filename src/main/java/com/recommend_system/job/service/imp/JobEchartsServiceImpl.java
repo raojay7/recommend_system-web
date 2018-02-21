@@ -180,6 +180,9 @@ public class JobEchartsServiceImpl implements JobEchartsService{
                     case 3:
                         s = "博士";
                         break;
+                    case 4:
+                        s = "不限";
+                        break;
                         default:
                             s = "本科";
                             break;
