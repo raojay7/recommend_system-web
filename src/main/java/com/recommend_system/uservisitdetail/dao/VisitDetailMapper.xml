@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.recommend_system.uservisitdetail.dao.VisitDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.recommend_system.uservisitdetail.entity.VisitDetail" >
+    <id column="visited_detail_id" property="visitedDetailId" jdbcType="INTEGER" />
+    <result column="web_id" property="webId" jdbcType="VARCHAR" />
+    <result column="job_category" property="jobCategory" jdbcType="INTEGER" />
+    <result column="job_property" property="jobProperty" jdbcType="INTEGER" />
+    <result column="workplace" property="workplace" jdbcType="VARCHAR" />
+    <result column="workyear_min" property="workyearMin" jdbcType="INTEGER" />
+    <result column="workyear_max" property="workyearMax" jdbcType="INTEGER" />
+    <result column="professional" property="professional" jdbcType="VARCHAR" />
+    <result column="salary_min" property="salaryMin" jdbcType="INTEGER" />
+    <result column="salary_max" property="salaryMax" jdbcType="INTEGER" />
+    <result column="education" property="education" jdbcType="INTEGER" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="visit_length" property="visitLength" jdbcType="INTEGER" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="cookie_id" property="cookieId" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="visisted_job_id" property="visistedJobId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    visited_detail_id, web_id, job_category, job_property, workplace, workyear_min, workyear_max, 
+    professional, salary_min, salary_max, education, age, gender, visit_length, user_type, 
+    cookie_id, ip, visisted_job_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.recommend_system.uservisitdetail.entity.VisitDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_visited_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_visited_detail
+    where visited_detail_id = #{visitedDetailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_visited_detail
+    where visited_detail_id = #{visitedDetailId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.recommend_system.uservisitdetail.entity.VisitDetailExample" >
+    delete from t_visited_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.recommend_system.uservisitdetail.entity.VisitDetail" >
+    insert into t_visited_detail (visited_detail_id, web_id, job_category, 
+      job_property, workplace, workyear_min, 
+      workyear_max, professional, salary_min, 
+      salary_max, education, age, 
+      gender, visit_length, user_type, 
+      cookie_id, ip, visisted_job_id
+      )
+    values (#{visitedDetailId,jdbcType=INTEGER}, #{webId,jdbcType=VARCHAR}, #{jobCategory,jdbcType=INTEGER}, 
+      #{jobProperty,jdbcType=INTEGER}, #{workplace,jdbcType=VARCHAR}, #{workyearMin,jdbcType=INTEGER}, 
+      #{workyearMax,jdbcType=INTEGER}, #{professional,jdbcType=VARCHAR}, #{salaryMin,jdbcType=INTEGER}, 
+      #{salaryMax,jdbcType=INTEGER}, #{education,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, 
+      #{gender,jdbcType=INTEGER}, #{visitLength,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER}, 
+      #{cookieId,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{visistedJobId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.recommend_system.uservisitdetail.entity.VisitDetail" >
+    insert into t_visited_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="visitedDetailId != null" >
+        visited_detail_id,
+      </if>
+      <if test="webId != null" >
+        web_id,
+      </if>
+      <if test="jobCategory != null" >
+        job_category,
+      </if>
+      <if test="jobProperty != null" >
+        job_property,
+      </if>
+      <if test="workplace != null" >
+        workplace,
+      </if>
+      <if test="workyearMin != null" >
+        workyear_min,
+      </if>
+      <if test="workyearMax != null" >
+        workyear_max,
+      </if>
+      <if test="professional != null" >
+        professional,
+      </if>
+      <if test="salaryMin != null" >
+        salary_min,
+      </if>
+      <if test="salaryMax != null" >
+        salary_max,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="visitLength != null" >
+        visit_length,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="cookieId != null" >
+        cookie_id,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="visistedJobId != null" >
+        visisted_job_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="visitedDetailId != null" >
+        #{visitedDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="webId != null" >
+        #{webId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCategory != null" >
+        #{jobCategory,jdbcType=INTEGER},
+      </if>
+      <if test="jobProperty != null" >
+        #{jobProperty,jdbcType=INTEGER},
+      </if>
+      <if test="workplace != null" >
+        #{workplace,jdbcType=VARCHAR},
+      </if>
+      <if test="workyearMin != null" >
+        #{workyearMin,jdbcType=INTEGER},
+      </if>
+      <if test="workyearMax != null" >
+        #{workyearMax,jdbcType=INTEGER},
+      </if>
+      <if test="professional != null" >
+        #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryMin != null" >
+        #{salaryMin,jdbcType=INTEGER},
+      </if>
+      <if test="salaryMax != null" >
+        #{salaryMax,jdbcType=INTEGER},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="visitLength != null" >
+        #{visitLength,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="cookieId != null" >
+        #{cookieId,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="visistedJobId != null" >
+        #{visistedJobId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.recommend_system.uservisitdetail.entity.VisitDetailExample" resultType="java.lang.Integer" >
+    select count(*) from t_visited_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_visited_detail
+    <set >
+      <if test="record.visitedDetailId != null" >
+        visited_detail_id = #{record.visitedDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="record.webId != null" >
+        web_id = #{record.webId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobCategory != null" >
+        job_category = #{record.jobCategory,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobProperty != null" >
+        job_property = #{record.jobProperty,jdbcType=INTEGER},
+      </if>
+      <if test="record.workplace != null" >
+        workplace = #{record.workplace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workyearMin != null" >
+        workyear_min = #{record.workyearMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.workyearMax != null" >
+        workyear_max = #{record.workyearMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.professional != null" >
+        professional = #{record.professional,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salaryMin != null" >
+        salary_min = #{record.salaryMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.salaryMax != null" >
+        salary_max = #{record.salaryMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.education != null" >
+        education = #{record.education,jdbcType=INTEGER},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.visitLength != null" >
+        visit_length = #{record.visitLength,jdbcType=INTEGER},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.cookieId != null" >
+        cookie_id = #{record.cookieId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null" >
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visistedJobId != null" >
+        visisted_job_id = #{record.visistedJobId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_visited_detail
+    set visited_detail_id = #{record.visitedDetailId,jdbcType=INTEGER},
+      web_id = #{record.webId,jdbcType=VARCHAR},
+      job_category = #{record.jobCategory,jdbcType=INTEGER},
+      job_property = #{record.jobProperty,jdbcType=INTEGER},
+      workplace = #{record.workplace,jdbcType=VARCHAR},
+      workyear_min = #{record.workyearMin,jdbcType=INTEGER},
+      workyear_max = #{record.workyearMax,jdbcType=INTEGER},
+      professional = #{record.professional,jdbcType=VARCHAR},
+      salary_min = #{record.salaryMin,jdbcType=INTEGER},
+      salary_max = #{record.salaryMax,jdbcType=INTEGER},
+      education = #{record.education,jdbcType=INTEGER},
+      age = #{record.age,jdbcType=INTEGER},
+      gender = #{record.gender,jdbcType=INTEGER},
+      visit_length = #{record.visitLength,jdbcType=INTEGER},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      cookie_id = #{record.cookieId,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      visisted_job_id = #{record.visistedJobId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.recommend_system.uservisitdetail.entity.VisitDetail" >
+    update t_visited_detail
+    <set >
+      <if test="webId != null" >
+        web_id = #{webId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCategory != null" >
+        job_category = #{jobCategory,jdbcType=INTEGER},
+      </if>
+      <if test="jobProperty != null" >
+        job_property = #{jobProperty,jdbcType=INTEGER},
+      </if>
+      <if test="workplace != null" >
+        workplace = #{workplace,jdbcType=VARCHAR},
+      </if>
+      <if test="workyearMin != null" >
+        workyear_min = #{workyearMin,jdbcType=INTEGER},
+      </if>
+      <if test="workyearMax != null" >
+        workyear_max = #{workyearMax,jdbcType=INTEGER},
+      </if>
+      <if test="professional != null" >
+        professional = #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryMin != null" >
+        salary_min = #{salaryMin,jdbcType=INTEGER},
+      </if>
+      <if test="salaryMax != null" >
+        salary_max = #{salaryMax,jdbcType=INTEGER},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="visitLength != null" >
+        visit_length = #{visitLength,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="cookieId != null" >
+        cookie_id = #{cookieId,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="visistedJobId != null" >
+        visisted_job_id = #{visistedJobId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where visited_detail_id = #{visitedDetailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.recommend_system.uservisitdetail.entity.VisitDetail" >
+    update t_visited_detail
+    set web_id = #{webId,jdbcType=VARCHAR},
+      job_category = #{jobCategory,jdbcType=INTEGER},
+      job_property = #{jobProperty,jdbcType=INTEGER},
+      workplace = #{workplace,jdbcType=VARCHAR},
+      workyear_min = #{workyearMin,jdbcType=INTEGER},
+      workyear_max = #{workyearMax,jdbcType=INTEGER},
+      professional = #{professional,jdbcType=VARCHAR},
+      salary_min = #{salaryMin,jdbcType=INTEGER},
+      salary_max = #{salaryMax,jdbcType=INTEGER},
+      education = #{education,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      gender = #{gender,jdbcType=INTEGER},
+      visit_length = #{visitLength,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=INTEGER},
+      cookie_id = #{cookieId,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      visisted_job_id = #{visistedJobId,jdbcType=INTEGER}
+    where visited_detail_id = #{visitedDetailId,jdbcType=INTEGER}
+  </update>
+</mapper>

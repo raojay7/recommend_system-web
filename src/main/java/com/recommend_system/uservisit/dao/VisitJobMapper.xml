@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.recommend_system.uservisit.dao.VisitJobMapper" >
+  <resultMap id="BaseResultMap" type="com.recommend_system.uservisit.entity.VisitJob" >
+    <id column="visisted_job_id" property="visistedJobId" jdbcType="INTEGER" />
+    <result column="web_id" property="webId" jdbcType="VARCHAR" />
+    <result column="server_time" property="serverTime" jdbcType="DATE" />
+    <result column="client_time" property="clientTime" jdbcType="DATE" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="cookie_id" property="cookieId" jdbcType="VARCHAR" />
+    <result column="cookie_ctime" property="cookieCtime" jdbcType="DATE" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="t_job_id" property="tJobId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.recommend_system.uservisit.entity.VisitJob" extends="BaseResultMap" >
+    <result column="userAgent" property="useragent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    visisted_job_id, web_id, server_time, client_time, user_type, cookie_id, cookie_ctime, 
+    ip, user_id, t_job_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    userAgent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.recommend_system.uservisit.entity.VisitJobExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_visited_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.recommend_system.uservisit.entity.VisitJobExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_visited_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_visited_job
+    where visisted_job_id = #{visistedJobId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_visited_job
+    where visisted_job_id = #{visistedJobId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.recommend_system.uservisit.entity.VisitJobExample" >
+    delete from t_visited_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.recommend_system.uservisit.entity.VisitJob" >
+    insert into t_visited_job (visisted_job_id, web_id, server_time, 
+      client_time, user_type, cookie_id, 
+      cookie_ctime, ip, user_id, 
+      t_job_id, userAgent)
+    values (#{visistedJobId,jdbcType=INTEGER}, #{webId,jdbcType=VARCHAR}, #{serverTime,jdbcType=DATE}, 
+      #{clientTime,jdbcType=DATE}, #{userType,jdbcType=INTEGER}, #{cookieId,jdbcType=VARCHAR}, 
+      #{cookieCtime,jdbcType=DATE}, #{ip,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{tJobId,jdbcType=INTEGER}, #{useragent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.recommend_system.uservisit.entity.VisitJob" >
+    insert into t_visited_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="visistedJobId != null" >
+        visisted_job_id,
+      </if>
+      <if test="webId != null" >
+        web_id,
+      </if>
+      <if test="serverTime != null" >
+        server_time,
+      </if>
+      <if test="clientTime != null" >
+        client_time,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="cookieId != null" >
+        cookie_id,
+      </if>
+      <if test="cookieCtime != null" >
+        cookie_ctime,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="tJobId != null" >
+        t_job_id,
+      </if>
+      <if test="useragent != null" >
+        userAgent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="visistedJobId != null" >
+        #{visistedJobId,jdbcType=INTEGER},
+      </if>
+      <if test="webId != null" >
+        #{webId,jdbcType=VARCHAR},
+      </if>
+      <if test="serverTime != null" >
+        #{serverTime,jdbcType=DATE},
+      </if>
+      <if test="clientTime != null" >
+        #{clientTime,jdbcType=DATE},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="cookieId != null" >
+        #{cookieId,jdbcType=VARCHAR},
+      </if>
+      <if test="cookieCtime != null" >
+        #{cookieCtime,jdbcType=DATE},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="tJobId != null" >
+        #{tJobId,jdbcType=INTEGER},
+      </if>
+      <if test="useragent != null" >
+        #{useragent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.recommend_system.uservisit.entity.VisitJobExample" resultType="java.lang.Integer" >
+    select count(*) from t_visited_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_visited_job
+    <set >
+      <if test="record.visistedJobId != null" >
+        visisted_job_id = #{record.visistedJobId,jdbcType=INTEGER},
+      </if>
+      <if test="record.webId != null" >
+        web_id = #{record.webId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serverTime != null" >
+        server_time = #{record.serverTime,jdbcType=DATE},
+      </if>
+      <if test="record.clientTime != null" >
+        client_time = #{record.clientTime,jdbcType=DATE},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.cookieId != null" >
+        cookie_id = #{record.cookieId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cookieCtime != null" >
+        cookie_ctime = #{record.cookieCtime,jdbcType=DATE},
+      </if>
+      <if test="record.ip != null" >
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tJobId != null" >
+        t_job_id = #{record.tJobId,jdbcType=INTEGER},
+      </if>
+      <if test="record.useragent != null" >
+        userAgent = #{record.useragent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_visited_job
+    set visisted_job_id = #{record.visistedJobId,jdbcType=INTEGER},
+      web_id = #{record.webId,jdbcType=VARCHAR},
+      server_time = #{record.serverTime,jdbcType=DATE},
+      client_time = #{record.clientTime,jdbcType=DATE},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      cookie_id = #{record.cookieId,jdbcType=VARCHAR},
+      cookie_ctime = #{record.cookieCtime,jdbcType=DATE},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      t_job_id = #{record.tJobId,jdbcType=INTEGER},
+      userAgent = #{record.useragent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_visited_job
+    set visisted_job_id = #{record.visistedJobId,jdbcType=INTEGER},
+      web_id = #{record.webId,jdbcType=VARCHAR},
+      server_time = #{record.serverTime,jdbcType=DATE},
+      client_time = #{record.clientTime,jdbcType=DATE},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      cookie_id = #{record.cookieId,jdbcType=VARCHAR},
+      cookie_ctime = #{record.cookieCtime,jdbcType=DATE},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      t_job_id = #{record.tJobId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.recommend_system.uservisit.entity.VisitJob" >
+    update t_visited_job
+    <set >
+      <if test="webId != null" >
+        web_id = #{webId,jdbcType=VARCHAR},
+      </if>
+      <if test="serverTime != null" >
+        server_time = #{serverTime,jdbcType=DATE},
+      </if>
+      <if test="clientTime != null" >
+        client_time = #{clientTime,jdbcType=DATE},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="cookieId != null" >
+        cookie_id = #{cookieId,jdbcType=VARCHAR},
+      </if>
+      <if test="cookieCtime != null" >
+        cookie_ctime = #{cookieCtime,jdbcType=DATE},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="tJobId != null" >
+        t_job_id = #{tJobId,jdbcType=INTEGER},
+      </if>
+      <if test="useragent != null" >
+        userAgent = #{useragent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where visisted_job_id = #{visistedJobId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.recommend_system.uservisit.entity.VisitJob" >
+    update t_visited_job
+    set web_id = #{webId,jdbcType=VARCHAR},
+      server_time = #{serverTime,jdbcType=DATE},
+      client_time = #{clientTime,jdbcType=DATE},
+      user_type = #{userType,jdbcType=INTEGER},
+      cookie_id = #{cookieId,jdbcType=VARCHAR},
+      cookie_ctime = #{cookieCtime,jdbcType=DATE},
+      ip = #{ip,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      t_job_id = #{tJobId,jdbcType=INTEGER},
+      userAgent = #{useragent,jdbcType=LONGVARCHAR}
+    where visisted_job_id = #{visistedJobId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.recommend_system.uservisit.entity.VisitJob" >
+    update t_visited_job
+    set web_id = #{webId,jdbcType=VARCHAR},
+      server_time = #{serverTime,jdbcType=DATE},
+      client_time = #{clientTime,jdbcType=DATE},
+      user_type = #{userType,jdbcType=INTEGER},
+      cookie_id = #{cookieId,jdbcType=VARCHAR},
+      cookie_ctime = #{cookieCtime,jdbcType=DATE},
+      ip = #{ip,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      t_job_id = #{tJobId,jdbcType=INTEGER}
+    where visisted_job_id = #{visistedJobId,jdbcType=INTEGER}
+  </update>
+</mapper>
