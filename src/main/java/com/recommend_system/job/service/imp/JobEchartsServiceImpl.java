@@ -154,7 +154,7 @@ public class JobEchartsServiceImpl implements JobEchartsService{
             seArr.add(seObj);
             seArr.add(seObj2);
             jsonObject.put("xAxis", xObj);
-            jsonObject.put("series", seArr);//series是对象数组，所以用seArr存几个对象，每个对象有name,type,data[]
+            jsonObject.put("series", seArr);
             jsonObject.put("grid", gridObject);
 
             return jsonObject.toString();
@@ -179,6 +179,9 @@ public class JobEchartsServiceImpl implements JobEchartsService{
                         break;
                     case 3:
                         s = "博士";
+                        break;
+                    case 4:
+                        s = "不限";
                         break;
                         default:
                             s = "本科";
