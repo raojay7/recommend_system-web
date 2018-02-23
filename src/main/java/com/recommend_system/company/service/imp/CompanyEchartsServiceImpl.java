@@ -4,7 +4,6 @@ import com.recommend_system.company.dao.CompanyMapper;
 import com.recommend_system.company.entity.CompanyExt;
 import com.recommend_system.company.service.CompanyEchartsService;
 import com.recommend_system.utils.JedisClient;
-import com.recommend_system.utils.impl.JedisClientPool;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,9 @@ import org.springframework.stereotype.Service;
 import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 @Service
-public class CompanyEchartsServiceImpl implements CompanyEchartsService{
+public class CompanyEchartsServiceImpl implements CompanyEchartsService {
 
     @Autowired
     private CompanyMapper companyMapper;
@@ -41,7 +39,6 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService{
                 ele.put("value",Integer.parseInt(value));
                 data.add(ele);
             }
-            System.out.println(data.toString());
             return data.toString();
         }else {
             CompanyExt ce;
@@ -242,7 +239,6 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService{
             jsonObject.put("series", seArr);//series是对象数组，所以用seArr存几个对象，每个对象有name,type,data[]
             jsonObject.put("grid", gridObject);
 
-            System.out.println(jsonObject.toString());
             return jsonObject.toString();
         }else {
             CompanyExt ce;

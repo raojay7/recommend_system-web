@@ -23,7 +23,7 @@ public class UserServiceimpl implements UserService {
     public User logIn(User user) {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
-        criteria.andUserIdEqualTo(user.getUserId());
+        criteria.andUserNameEqualTo(user.getUserName());
         criteria.andPasswordEqualTo(user.getPassword());
         List<User> list = userMapper.selectByExample(userExample);
         return list.get(0);

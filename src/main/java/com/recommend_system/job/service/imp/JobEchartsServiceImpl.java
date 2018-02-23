@@ -1,6 +1,5 @@
 package com.recommend_system.job.service.imp;
 
-import com.recommend_system.company.entity.CompanyExt;
 import com.recommend_system.job.dao.JobMapper;
 import com.recommend_system.job.entity.JobExt;
 import com.recommend_system.job.service.JobEchartsService;
@@ -15,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class JobEchartsServiceImpl implements JobEchartsService{
+public class JobEchartsServiceImpl implements JobEchartsService {
 
     @Autowired
     private JobMapper jobMapper;
