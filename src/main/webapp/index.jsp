@@ -1,5 +1,11 @@
 <html>
+<head>
+    <script type="text/javascript">
+        window.onload = function(){
+            window.location = "/homepage";
+        }
+    </script>
+</head>
 <body>
-<h2>Hello World!</h2>
 </body>
 </html>
