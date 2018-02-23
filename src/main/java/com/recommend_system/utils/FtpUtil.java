@@ -20,7 +20,7 @@ import org.apache.commons.net.ftp.FTPReply;
  */
 public class FtpUtil {
 
-	/** 
+	/**
 	 * Description: 向FTP服务器上传文件 
 	 * @param host FTP服务器hostname 
 	 * @param port FTP服务器端口 
@@ -31,7 +31,7 @@ public class FtpUtil {
 	 * @param filename 上传到FTP服务器上的文件名 
 	 * @param input 输入流 
 	 * @return 成功返回true，否则返回false 
-	 */  
+	 */
 	public static boolean uploadFile(String host, int port, String username, String password, String basePath,
 			String filePath, String filename, InputStream input) {
 		boolean result = false;
@@ -85,7 +85,7 @@ public class FtpUtil {
 		return result;
 	}
 	
-	/** 
+	/**
 	 * Description: 从FTP服务器下载文件 
 	 * @param host FTP服务器hostname 
 	 * @param port FTP服务器端口 
@@ -95,7 +95,7 @@ public class FtpUtil {
 	 * @param fileName 要下载的文件名 
 	 * @param localPath 下载后保存到本地的路径 
 	 * @return 
-	 */  
+	 */
 	public static boolean downloadFile(String host, int port, String username, String password, String remotePath,
 			String fileName, String localPath) {
 		boolean result = false;
