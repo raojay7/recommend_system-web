@@ -19,7 +19,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <a href="/search/index">
+        <a href="${pageContext.request.contextPath}/search/index">
             <div class="layui-logo"> 智能职业推荐系统</div>
         </a>
         <!-- 头部区域（可配合layui已有的水平导航） -->
@@ -56,14 +56,14 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a href="user_info">个人信息</a>
+                    <a href="${pageContext.request.contextPath}/user_info">个人信息</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="job_intension">求职意向</a>
+                    <a href="${pageContext.request.contextPath}/job_intension">求职意向</a>
                 </li>
-                <li class="layui-nav-item"><a href="/search/job_search">职位搜索</a></li>
-                <li class="layui-nav-item"><a href="company_detail">公司分析</a></li>
-                <li class="layui-nav-item"><a href="recommended_posts">职位推荐</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/search/job_search">职位搜索</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/company_detail">公司分析</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/recommended_posts">职位推荐</a></li>
             </ul>
         </div>
     </div>

@@ -56,7 +56,8 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             seObj.put("type", "bar");
 
             JSONObject gridObject = new JSONObject();
-            gridObject.put("y2", 150);
+            gridObject.put("y2", 70);
+            gridObject.put("x",45);
 
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
@@ -135,7 +136,8 @@ public class JobEchartsServiceImpl implements JobEchartsService {
 
 
             JSONObject gridObject = new JSONObject();
-            gridObject.put("y2", 150);
+            gridObject.put("y2", 30);
+            gridObject.put("x",50);
 
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
@@ -262,7 +264,8 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             seObj.put("type", "bar");
 
             JSONObject gridObject = new JSONObject();
-            gridObject.put("y2", 150);
+            gridObject.put("y2", 30);
+            gridObject.put("x",50);
 
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();

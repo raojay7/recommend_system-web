@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%String path = request.getContextPath();%>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>智能职业分析系统</title>
+    <title>图表分析</title>
     <link rel="stylesheet" href="../layui-v2.2.5/layui/css/layui.css">
     <script src="../layui-v2.2.5/layui/layui.js"></script>
+    <script type="text/javascript" src="../js/echarts.js"></script>
+    <script type="text/javascript" src="../js/china.js"></script>
     <script>
         //JavaScript代码区域
         layui.use('element', function(){
@@ -15,14 +18,24 @@
         });
     </script>
 </head>
-<body class="layui-layout-body">
+<body class="layui-layout-body"
+      onload="initChart1('<%=path%>/job/cityavgsalary',echarts.init(document.getElementById('my_chart1')));
+              initChart2('<%=path%>/company/companycity',echarts.init(document.getElementById('my_chart2')));
+              initChart3('<%=path%>/company/companyindustry',echarts.init(document.getElementById('my_chart3')));
+              initChart4('<%=path%>/company/companynature',echarts.init(document.getElementById('my_chart4')));
+              initChart5('<%=path%>/company/companyscale',echarts.init(document.getElementById('my_chart5')));
+              initChart6('<%=path%>/company/companyntneedavg',echarts.init(document.getElementById('my_chart6')));
+              initChart7('<%=path%>/job/education',echarts.init(document.getElementById('my_chart7')));
+              initChart8('<%=path%>/company/industryneedavg',echarts.init(document.getElementById('my_chart8')));
+              initChart9('<%=path%>/job/jobcity',echarts.init(document.getElementById('my_chart9')));
+              initChart10('<%=path%>/job/workex',echarts.init(document.getElementById('my_chart10')));">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <a href="${pageContext.request.contextPath}/index"><div class="layui-logo"> 智能职业推荐系统</div></a>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">消息通知<span class="layui-badge">9</span></a></li>
-            <li class="layui-nav-item"><a href="">管理</a></li>
+            <li class="layui-nav-item"><a href="search.html">搜索<i class="layui-icon">&#xe615;</i></a></li>
             <li class="layui-nav-item"><a href="">用户</a></li>
             <li class="layui-nav-item">
                 <a href="javascript:;">其它</a>
@@ -67,60 +80,101 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+            <legend>图表分析</legend>
         </fieldset>
-        <div class="layui-container animated fadeInUp" id="search-body">
-            <div id="search-operate">
-                <div id="search-panel">
-                    <div class="select-none layui-row layui-col-space20">
-                        <div class="layui-inline layui-col-md-offset2 layui-col-md6 layui-col-sm12 layui-col-xs12">
-                            <input :value="sw" @keyup.enter="search()" autocomplete="off" class="layui-input search-box" name="sp" placeholder="搜索公司或职位" />
-                            <b>热门关键词<i class="layui-icon" style="color: red">&#xe756;</i> </b> &nbsp;&nbsp;&nbsp;<a href="#">大数据</a>&nbsp;&nbsp;&nbsp; <a href="#">数据库</a>
-                            &nbsp;&nbsp;&nbsp; <a href="#">Hadoop</a>&nbsp;&nbsp;&nbsp; <a href="#">Java</a>&nbsp;&nbsp;&nbsp; <a href="#">算法</a>
-                            &nbsp;&nbsp;&nbsp; <a href="#">分布式</a>&nbsp;&nbsp;&nbsp; <a href="#">SQL</a>
-                        </div>
-                        <div class="layui-inline layui-col-md3 layui-show-md-inline-block layui-hide-sm layui-hide-xs">
-                            <div class="layui-input-inline">
-                                <button @click="search()" class="layui-btn">搜索</button>
-                            </div>
-                        </div>
-                    </div>
+        <div class="layui-collapse" lay-filter="test">
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">城市平均工资分析</h2>
+                <script src="../js/city_avg_salary.js"></script>
+                <div  class="layui-colla-content">
+
+                    <div id="my_chart1" style="width:1250px;height:500px;"></div>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">企业地域分布分析</h2>
+                <div class="layui-colla-content">
+                        <script src="../js/company_city.js"></script>
+                    <div id="my_chart2" style="width:1000px;height:500px;"></div>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">公司行业分布分析</h2>
+                <div class="layui-colla-content">
+                    <script src="../js/company_industry.js"></script>
+                    <div id="my_chart3" style="width:1000px;height:500px;"></div>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">公司性质分布分析</h2>
+                <div class="layui-colla-content">
+                    <script src="../js/company_nature.js"></script>
+                    <div id="my_chart4" style="width:1000px;height:500px;"></div>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">公司规模分布分析</h2>
+                <div class="layui-colla-content">
+                    <script src="../js/company_scale.js"></script>
+                    <div id="my_chart5" style="width:1000px;height:500px;"></div>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">不同性质公司的平均工资及岗位需求量</h2>
+                <div class="layui-colla-content">
+                    <script src="../js/companynt_need_avg.js"></script>
+                    <div id="my_chart6" style="width:1100px;height:500px;"></div>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">学历工资分布分析</h2>
+                <div class="layui-colla-content">
+                    <script src="../js/education.js"></script>
+                    <div id="my_chart7" style="width:1000px;height:500px;"></div>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">不同行业公司平均工资及岗位需求量</h2>
+                <div class="layui-colla-content">
+                    <script src="../js/industry_need_avg.js"></script>
+                    <div id="my_chart8" style="width:1100px;height:500px;"></div>
+
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">工作地域分布分析</h2>
+                <div class="layui-colla-content">
+                    <script src="../js/job_city.js"></script>
+                    <div id="my_chart9" style="width:1400px;height:500px;"></div>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">工作经验分布分析</h2>
+                <div class="layui-colla-content">
+                    <script src="../js/workex.js"></script>
+                    <div id="my_chart10" style="width:1100px;height:500px;"></div>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">招聘企业画像</h2>
+                <div class="layui-colla-content">
+                    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+                    <div id="main1" style="width:1400px;height: 500px;"></div>
+                    <script src="../js/Business_Portraits.js"></script>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">大数据职位技能需求图谱</h2>
+                <div class="layui-colla-content">
+                    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+                    <div id="main2" style="width:1400px;height: 500px;"></div>
+                    <script src="../js/skills_require.js"></script>
                 </div>
             </div>
         </div>
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>热门职位</legend>
-        </fieldset>
-        <table class="layui-hide" id="test"></table>
-        <script src="../layui-v2.2.5/layui/layui.js" charset="utf-8"></script>
-        <script>
-            layui.use('table', function(){
-                var table = layui.table;
-
-                table.render({
-                    elem: '#test'
-                    ,url:'.json'
-                    ,cols: [[
-                        {field:'company_id', minwidth:150, title: '公司名称', sort: true}
-                        ,{field:'workplace', width:100, title: '工作地点'}
-                        ,{field:'workplace', minwidth:200, title: '工作地点'}
-                        ,{field:'salary_min', width:100, title: '最低薪水'}
-                        ,{field:'salary_max', width:100, title: '最高薪水'}
-                        ,{field:'education', title: '学历要求', width: 100}
-                        ,{field:'need_num', width:100, title: '需要人数'}
-                        ,{field:'language', width:100, title: '语言要求'}
-                        ,{field:'age_min', width:100, title: '最小年龄'}
-                        ,{field:'age_max', width:100, title: '最大年龄'}
-                        ,{field:'welfare', minwidth:80, title: '福利'}
-                        ,{field:'tag', minwidth:80, title: '其他'}
-                    ]]
-                    ,page: true
-                });
-            });
-        </script>
-
-
     </div>
+
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->

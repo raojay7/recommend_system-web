@@ -46,6 +46,7 @@ public class CompanyEchartsController {
         response.setContentType("text/html");
         try {
             String json = companyEchartsService.getCompanyNature();
+            System.out.println("4 visited");
             response.getWriter().write(json);
         } catch (IOException e) {
             e.printStackTrace();

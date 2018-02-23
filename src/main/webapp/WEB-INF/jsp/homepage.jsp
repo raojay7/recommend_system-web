@@ -66,7 +66,16 @@
                     }
                 }
             })
+
+			$("#usernm").keyup(function(){
+			    $("#msg").text("");
+			})
+            $("#userpd").keyup(function(){
+                $("#msg").text("");
+            })
         });
+
+
 	</script>
 
 
@@ -111,8 +120,8 @@
 		<div class="login w3layouts agileits">
 			<h2>登 录</h2>
 			<form id="logInForm" action="/User/logIn" method="post">
-				<input type="text" Name="userName" value="<%=name%>" placeholder="用户名" required=""><div>${msg}</div>
-				<input type="password" Name="password" value="<%=password%>" placeholder="密码" required="">
+				<input type="text" id="usernm" Name="userName" value="<%=name%>" placeholder="用户名" required=""/><div id="msg">${msg}</div>
+				<input type="password" id="userpd" Name="password" value="<%=password%>" placeholder="密码" required="">
 				<ul class="tick w3layouts agileits">
 					<li>
 						<input type="checkbox" id="flag" name="flag" value="1" <%if(flag!=null && flag.equals("1")){%> checked="checked" ; value ="1"; <%}else {%> value="0" <%;}%>/>

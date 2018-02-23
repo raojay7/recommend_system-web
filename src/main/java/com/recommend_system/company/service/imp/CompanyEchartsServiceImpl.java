@@ -159,7 +159,7 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             seObj.put("type", "bar");
 
             JSONObject gridObject = new JSONObject();
-            gridObject.put("y2", 150);
+            gridObject.put("y2", 30);
 
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
@@ -223,7 +223,7 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             seObj.put("type", "bar");
 
             JSONObject gridObject = new JSONObject();
-            gridObject.put("y2", 150);
+            gridObject.put("y2", 30);
 
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
@@ -297,7 +297,8 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
 
 
             JSONObject gridObject = new JSONObject();
-            gridObject.put("y2", 150);
+            gridObject.put("y2", 20);
+            gridObject.put("x",50);
 
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
@@ -385,6 +386,7 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
 
             JSONObject gridObject = new JSONObject();
             gridObject.put("y2", 150);
+            gridObject.put("x",110);
 
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
