@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class CompanyEchartsUIController {
 
     @RequestMapping("company_city")
-    public ModelAndView getcc(){
+    public ModelAndView getcc(){//
         ModelAndView mav = new ModelAndView();
         mav.setViewName("company_city");
         return mav;
