@@ -41,7 +41,6 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService{
                 ele.put("value",Integer.parseInt(value));
                 data.add(ele);
             }
-            System.out.println(data.toString());
             return data.toString();
         }else {
             CompanyExt ce;
@@ -242,7 +241,6 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService{
             jsonObject.put("series", seArr);//series是对象数组，所以用seArr存几个对象，每个对象有name,type,data[]
             jsonObject.put("grid", gridObject);
 
-            System.out.println(jsonObject.toString());
             return jsonObject.toString();
         }else {
             CompanyExt ce;
