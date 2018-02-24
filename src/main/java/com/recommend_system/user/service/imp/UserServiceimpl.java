@@ -20,6 +20,15 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
+    public User getUserByName(String userName) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andUserNameEqualTo(userName);
+        List<User> list = userMapper.selectByExample(userExample);
+        return list.get(0);
+    }
+
+    @Override
     public User logIn(User user) {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();

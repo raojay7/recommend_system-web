@@ -96,5 +96,19 @@ public class UserController {
             return mav;
         }
     }
+
+    @RequestMapping("validate")
+    public void validate(HttpServletResponse response, HttpServletRequest request){
+        try {
+            request.setCharacterEncoding("UTF-8");
+            String name = request.getParameter("name");
+            User user = userService.getUserByName(name);
+            response.setCharacterEncoding("UTF-8");
+            if (user != null) response.getWriter().write("<font color='red'>该用户名已被注册！</font>");
+            else response.getWriter().write("");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
 

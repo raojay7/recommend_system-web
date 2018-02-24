@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%String path = request.getContextPath();%>
 <html>
 
 <!-- Head -->
@@ -72,6 +73,27 @@
 			})
             $("#userpd").keyup(function(){
                 $("#msg").text("");
+            })
+            $("#ru").keyup(function(){
+                $("#msg2").text("");
+            })
+
+            $("#ru").blur(function () {
+                var page = "<%=path%>/User/validate";
+                var value = $(this).val();
+                $.post(
+                    page,
+                    {name:value},
+                    function(result){
+                        if(result != "") {
+                            $("#msg2").html(result);
+                            $("#smt").attr({"disabled":"disabled"});
+                        }else{
+                            $("#msg2").html("");
+                            $("#smt").removeAttr("disabled");
+						}
+                    }
+                );
             })
         });
 
@@ -154,12 +176,12 @@
 
 		<div class="register w3layouts agileits">
 			<h2>注 册</h2>
-			<form id="registerForm" action="/User/register" method="get">
-				<input type="text" Name="userName" placeholder="用户名" required=""><div></div>
-				<input type="password" Name="password" placeholder="密码" required="">
+			<form id="registerForm" action="/User/register" method="post">
+				<input type="text" id="ru" Name="userName" placeholder="用户名" required=""><div id="msg2"></div>
+				<input type="password" id="rp" Name="password" placeholder="密码" required="">
 				<input type="hidden" name="userId"/>
 				<div class="send-button w3layouts agileits">
-					<input type="submit" value="免费注册">
+					<input type="submit" id="smt" value="免费注册">
 				</div>
 			</form>
 

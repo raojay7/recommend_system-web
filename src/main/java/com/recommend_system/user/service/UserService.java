@@ -8,21 +8,28 @@ import com.recommend_system.user.entity.User;
  */
 
 public interface UserService {
-    /*
+    /**
      *注册方法
      * @param user:User对象，插入新的User到数据库表中，空返回值
      */
     void register(User user);
 
-    /*
+    /**
      *登录方法
      * @param user:User对象，根据用户名密码查表
      * @return User:信息核实正确则返回User类，否则返回空值
      */
     User logIn(User user);
-    /*
+    /**
      *修改个人信息方法
      * @param user:用户修改后的用户bean
      */
     public void setUser(User user);
+
+    /**
+     *
+     * @param userName 用户名
+     * @return 返回对应的User对象
+     */
+    User getUserByName(String userName);
 }
