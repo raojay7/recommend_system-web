@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.recommend_system.userlike.entity.UserJobRank" >
     <id column="job_id" property="jobId" jdbcType="INTEGER" />
     <id column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="REAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -103,7 +103,7 @@
   <insert id="insert" parameterType="com.recommend_system.userlike.entity.UserJobRank" >
     insert into tr_user_job_rank (job_id, user_id, grade
       )
-    values (#{jobId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}
+    values (#{jobId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{grade,jdbcType=REAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.recommend_system.userlike.entity.UserJobRank" >
@@ -127,7 +127,7 @@
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="grade != null" >
-        #{grade,jdbcType=INTEGER},
+        #{grade,jdbcType=REAL},
       </if>
     </trim>
   </insert>
@@ -147,7 +147,7 @@
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.grade != null" >
-        grade = #{record.grade,jdbcType=INTEGER},
+        grade = #{record.grade,jdbcType=REAL},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -158,7 +158,7 @@
     update tr_user_job_rank
     set job_id = #{record.jobId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
-      grade = #{record.grade,jdbcType=INTEGER}
+      grade = #{record.grade,jdbcType=REAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -167,7 +167,7 @@
     update tr_user_job_rank
     <set >
       <if test="grade != null" >
-        grade = #{grade,jdbcType=INTEGER},
+        grade = #{grade,jdbcType=REAL},
       </if>
     </set>
     where job_id = #{jobId,jdbcType=INTEGER}
@@ -175,7 +175,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.recommend_system.userlike.entity.UserJobRank" >
     update tr_user_job_rank
-    set grade = #{grade,jdbcType=INTEGER}
+    set grade = #{grade,jdbcType=REAL}
     where job_id = #{jobId,jdbcType=INTEGER}
       and user_id = #{userId,jdbcType=INTEGER}
   </update>
