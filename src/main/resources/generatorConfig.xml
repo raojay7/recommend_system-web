@@ -28,7 +28,7 @@
 		<!-- 生成model模型，对应的包路径，以及文件存放路径(targetProject)，targetProject可以指定具体的路径,如./src/main/java，
             也可以使用“MAVEN”来自动生成，这样生成的代码会在target/generatord-source目录下 -->
 		<!--<javaModelGenerator targetPackage="com.joey.mybaties.test.pojo" targetProject="MAVEN"> -->
-		<javaModelGenerator targetPackage="com.recommend_system.test.entity"
+		<javaModelGenerator targetPackage="com.recommend_system"
 							targetProject="./src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<!-- 从数据库返回的值被清理前后的空格 -->
@@ -43,17 +43,18 @@
 
 		<!-- 对应的Mapper接口类文件 -->
 		<javaClientGenerator type="XMLMAPPER"
-							 targetPackage="com.recommend_system.test.dao" targetProject="./src/main/java">
+							 targetPackage="com.recommend_system" targetProject="./src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 
-		<!-- 列出要生成代码的所有表，这里配置的是不生成Example文件 -->
-		<table tableName="t_User" domainObjectName="User"
-			   enableCountByExample="false" enableUpdateByExample="false"
-			   enableDeleteByExample="false" enableSelectByExample="false"
-			   selectByExampleQueryId="false">
+		<!-- 列出要生成代码的所有表，这里配置的是生成Example文件 -->
+		<table tableName="tr_user_job_rank" domainObjectName="UserJobRank"
+			   enableCountByExample="true" enableUpdateByExample="true"
+			   enableDeleteByExample="true" enableSelectByExample="true"
+			   selectByExampleQueryId="true">
 			<property name="useActualColumnNames" value="false" />
 		</table>
+
 	</context>
 </generatorConfiguration>

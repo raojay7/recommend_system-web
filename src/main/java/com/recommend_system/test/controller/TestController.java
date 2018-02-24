@@ -16,16 +16,12 @@ public class TestController
     @RequestMapping("/index")
     public String show()
     {
-        testService.show();
-        System.out.println("controller的show");
+        testService.showRedis();
         return "index";
     }
 
     @RequestMapping("user/insert")
     public void testUserInsert(){
-        User u=new User();
-        u.setUserName("zhangsan");
-        u.setPassword("123");
-        testService.insert(u);
+        testService.show();
     }
 }
