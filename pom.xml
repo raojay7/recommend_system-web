@@ -17,6 +17,8 @@
 
     <!-- 添加依赖 -->
     <dependencies>
+
+        <!--引入solr-->
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
