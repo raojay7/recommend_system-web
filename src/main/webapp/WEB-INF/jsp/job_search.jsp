@@ -19,7 +19,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <a href="${pageContext.request.contextPath}/search/index">
+        <a href="${pageContext.request.contextPath}/index">
             <div class="layui-logo"> 智能职业推荐系统</div>
         </a>
         <!-- 头部区域（可配合layui已有的水平导航） -->
@@ -47,7 +47,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="/User/logOut">注销</a></li>
+            <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/User/logOut">退出</a></li>
         </ul>
     </div>
 
@@ -61,7 +61,7 @@
                 <li class="layui-nav-item">
                     <a href="${pageContext.request.contextPath}/job_intension">求职意向</a>
                 </li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/search/job_search">职位搜索</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/job_search">职位搜索</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/company_detail">公司分析</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/recommended_posts">职位推荐</a></li>
             </ul>
@@ -114,7 +114,7 @@
             //方法级渲染
             table.render({
                 elem: '#LAY_table_job'
-                , url: '/search/q'
+                , url: '../q'
                 , cellMinWidth: 80
                 , cols: [[
                     {field: 'jobId', minwidth: 250, sort: true, title: '职位id(点击查看职位详情)', fixed: 'left', event: 'getJobDetail'}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.recommend_system.search.dao.ItemMapper">
+	<resultMap id="BaseResultMap" type="com.taotao.common.pojo.SolrItem" >
+		<id column="job_id" property="jobId" jdbcType="INTEGER" />
+		<result column="company_id" property="companyId" jdbcType="INTEGER" />
+		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="job_name" property="jobName" jdbcType="VARCHAR" />
+		<result column="salary_min" property="salaryMin" jdbcType="INTEGER" />
+		<result column="salary_max" property="salaryMax" jdbcType="INTEGER" />
+		<result column="education" property="education" jdbcType="INTEGER" />
+		<result column="workplace" property="workplace" jdbcType="VARCHAR" />
+		<result column="workexperience_min" property="workexperienceMin" jdbcType="INTEGER" />
+		<result column="workexperience_max" property="workexperienceMax" jdbcType="INTEGER" />
+		<result column="need_num" property="needNum" jdbcType="INTEGER" />
+		<result column="ctime" property="ctime" jdbcType="DATE" />
+		<result column="job_nature" property="jobNature" jdbcType="INTEGER" />
+		<result column="welfare" property="welfare" jdbcType="VARCHAR" />
+		<result column="workcity" property="workcity" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="getItemList" resultMap="BaseResultMap">
+		SELECT job_id,job_name,j.company_id,company_name,salary_min,salary_max,education,
+		workplace,workexperience_min,workexperience_max,
+		need_num,ctime,job_nature,specification,welfare,workcity
+		FROM t_job j,t_company  c
+		WHERE j.company_id=c.company_id
+	</select>
+</mapper>
