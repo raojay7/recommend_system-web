@@ -72,7 +72,7 @@
                     <a href="${pageContext.request.contextPath}/job_intension">求职意向</a>
                 </li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/search">职位搜索</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/company_detail">公司分析</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/index">统计分析</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/recommended_posts">职位推荐</a></li>
             </ul>
         </div>
@@ -89,7 +89,7 @@
                 <script src="../js/city_avg_salary.js"></script>
                 <div  class="layui-colla-content">
 
-                    <div id="my_chart1" style="width:1250px;height:500px;"></div>
+                    <div id="my_chart1"  style="width:1250px;height:500px;"></div>
                 </div>
             </div>
             <div class="layui-colla-item">
@@ -103,7 +103,7 @@
                 <h2 class="layui-colla-title">公司行业分布分析</h2>
                 <div class="layui-colla-content">
                     <script src="../js/company_industry.js"></script>
-                    <div id="my_chart3" style="width:1000px;height:500px;"></div>
+                    <div id="my_chart3" style="width:1250px;height:500px;"></div>
                 </div>
             </div>
             <div class="layui-colla-item">
@@ -138,7 +138,7 @@
                 <h2 class="layui-colla-title">不同行业公司平均工资及岗位需求量</h2>
                 <div class="layui-colla-content">
                     <script src="../js/industry_need_avg.js"></script>
-                    <div id="my_chart8" style="width:1100px;height:500px;"></div>
+                    <div id="my_chart8" style="width:1250px;height:500px;"></div>
 
                 </div>
             </div>

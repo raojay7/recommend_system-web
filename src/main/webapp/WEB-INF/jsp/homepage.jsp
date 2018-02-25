@@ -26,7 +26,7 @@
                 rules: {
                     userName: {
                         required: true,
-                        minlength: 3
+                        minlength: 2
                     },
                     password: {
                         required: true,
@@ -36,7 +36,7 @@
                 messages: {
                     userName: {
                         required: "请输入用户名",
-                        minlength: "<font color='red'>用户名至少3个字母或数字</font>"
+                        minlength: "<font color='red'>用户名至少2个字符</font>"
                     },
                     password: {
                         required: "请输入密码",
@@ -49,7 +49,7 @@
                 rules: {
                     userName: {
                         required: true,
-                        minlength: 3
+                        minlength: 2
                     },
                     password: {
                         required: true,
@@ -59,7 +59,7 @@
                 messages: {
                     userName: {
                         required: "请输入用户名",
-                        minlength: "<font color='red'>用户名至少3个字母或数字</font>"
+                        minlength: "<font color='red'>用户名至少2个字符</font>"
                     },
                     password: {
                         required: "请输入密码",

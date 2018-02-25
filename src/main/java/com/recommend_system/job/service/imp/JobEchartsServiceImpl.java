@@ -3,15 +3,16 @@ package com.recommend_system.job.service.imp;
 import com.recommend_system.job.dao.JobMapper;
 import com.recommend_system.job.entity.JobExt;
 import com.recommend_system.job.service.JobEchartsService;
+import com.recommend_system.utils.DataFilter;
 import com.recommend_system.utils.JedisClient;
+import com.recommend_system.utils.impl.SortFilter;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class JobEchartsServiceImpl implements JobEchartsService {
@@ -20,6 +21,14 @@ public class JobEchartsServiceImpl implements JobEchartsService {
     private JobMapper jobMapper;
     @Autowired
     private JedisClient jc;
+    /*static Map<Double,String> map = new TreeMap<>(new Comparator<Double>() {
+        @Override
+        public int compare(Double o1, Double o2) {
+            if(o1 < o2)return 1;
+            else if(o1 > o2)return -1;
+            else return 0;
+        }
+    });*/
 
 
     @Override
@@ -80,14 +89,25 @@ public class JobEchartsServiceImpl implements JobEchartsService {
 
             return jsonObject.toString();
         }else {
-            JobExt je;
+            //map.clear();
+            /*JobExt je;
             List<JobExt> list = jobMapper.getCityAvgSalary();
             Iterator<JobExt> it = list.iterator();
             while(it.hasNext()){
                 je = it.next();
-                jc.appendRightList("cityavgsalary_city", je.getWorkcity());
-                jc.appendRightList("cityavgsalary_avg",String.valueOf(je.getAve_salary()));
-            }
+                map.put(je.getAve_salary(), je.getWorkcity());
+            }*/
+            DataFilter dataFilter = new SortFilter();
+            dataFilter.sort_filter(jobMapper.getCityAvgSalary(),0.6f, jc);
+            /*int size = map.size();
+            size *= 0.6;
+            int count = 0;
+            for(Map.Entry<Double,String> entry : map.entrySet()){
+                jc.appendRightList("cityavgsalary_city", entry.getValue());
+                jc.appendRightList("cityavgsalary_avg", String.valueOf(entry.getKey()));
+                count++;
+                if(count == size)break;
+            }*/
             return getCityAvgSalary();
         }
     }

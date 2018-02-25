@@ -37,7 +37,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    管理员
+                    ${user.getUserName()}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
@@ -59,7 +59,7 @@
                     <a href="${pageContext.request.contextPath}/job_intension">求职意向</a>
                 </li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/search">职位搜索</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/company_detail">公司分析</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/index">统计分析</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/recommended_posts">职位推荐</a></li>
             </ul>
         </div>
