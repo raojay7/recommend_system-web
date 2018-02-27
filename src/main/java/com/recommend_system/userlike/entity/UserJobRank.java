@@ -3,15 +3,15 @@ package com.recommend_system.userlike.entity;
 import java.io.Serializable;
 
 public class UserJobRank extends UserJobRankKey implements Serializable {
-    private Float grade;
+    private Double grade;
 
     private static final long serialVersionUID = 1L;
 
-    public Float getGrade() {
+    public Double getGrade() {
         return grade;
     }
 
-    public void setGrade(Float grade) {
+    public void setGrade(Double grade) {
         this.grade = grade;
     }
 }
