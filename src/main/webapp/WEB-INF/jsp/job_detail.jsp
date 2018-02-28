@@ -1,6 +1,9 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="com.recommend_system.job.entity.Job" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.recommend_system.userlike.entity.UserLikeKey" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Iterator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -9,6 +12,19 @@
     Date time = djob.getCtime();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String ctime = sdf.format(time);
+    /*int flag = 0;
+    List<UserLikeKey> list = (List<UserLikeKey>)request.getAttribute("ull");
+    UserLikeKey ulk;
+    Iterator<UserLikeKey> it = list.iterator();
+    while(it.hasNext()){
+        ulk = it.next();
+        if(ulk.getJobId() == djob.getJobId()){
+            flag = 1;
+            break;
+        }
+    }
+    System.out.println("flag:"+flag);
+    request.setAttribute("flag",flag);*/
 %>
 <html>
 <head>
@@ -124,8 +140,12 @@
                         </div>
                     </div>
                 </div>
-                <button class="layui-btn" onclick="javascript:history.go(-1)" data-type="reload">返回</button>
-
+                <button class="layui-btn" onclick="javascript:window.location.href='../${page}'" data-type="reload">返回</button>
+                <% if(request.getAttribute("flag").equals("0")){%>
+                <button class="layui-btn" onclick="javascript:window.location.href='../action/collect?uid=${user.getUserId()}&jid=${job.getJobId()}'" data-type="reload"><i class="layui-icon">&#xe658;收藏</i></button>
+                <%}else{%>
+                    <button class="layui-btn"  data-type="reload"><i class="layui-icon">已收藏</i></button>
+                <%}%>
 
                 <div class="layui-footer">
         <!-- 底部固定区域 -->

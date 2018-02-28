@@ -35,6 +35,7 @@ public class UserJobRankController {
         Map<Integer,String> map = new HashMap<>();
         Job job;
         String path = session.getServletContext().getRealPath("/")+user.getUserName()+".scv";
+        session.setAttribute("vali", "0");
         try {
             if(!userJobRankService.hasScored(user)) {
                 System.out.println("该用户没有评分");

@@ -1,5 +1,9 @@
+<%@ page import="com.recommend_system.user.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%String path = request.getContextPath();%>
+<%String path = request.getContextPath();
+User user = (User)session.getAttribute("user");
+int uid = user.getUserId();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -157,7 +161,7 @@
                 if (obj.event === 'getJobDetail') {
                     //layer.msg('jobID：'+ data.jobId + ' 的查看操作');
                     //接下来进行ajax请求，根据jobid查询job
-                    window.location.href = "../detail/job?jobId=" + data.jobId + "&companyId=" + data.companyId;
+                    window.location.href = "../detail/job?jobId=" + data.jobId + "&companyId=" + data.companyId + "&userId=<%=uid%>";
                     /*$.post("/detail/job", { jobId: data.jobId, companyId: data.companyId},
                         function(redata){
                             alert("Data Loaded: " + redata);

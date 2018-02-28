@@ -5,6 +5,8 @@ import com.recommend_system.user.entity.User;
 import com.recommend_system.user.entity.UserJobIntension;
 import com.recommend_system.user.service.UserJobIntensionService;
 import com.recommend_system.user.service.UserService;
+import com.recommend_system.userlike.entity.UserLikeKey;
+import com.recommend_system.userlike.service.UserLikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("User")
@@ -22,6 +25,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserJobIntensionService userJobIntensionService;
+    @Autowired
+    private UserLikeService userLikeService;
 
     @RequestMapping("register")
     public ModelAndView register(HttpSession session, User user){//注册方法
