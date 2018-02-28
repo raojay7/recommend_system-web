@@ -91,7 +91,7 @@ public class UserJobRankServiceImpl implements UserJobRankService {
             ItemSimilarity is = RecommendFactory.itemSimilarity(RecommendFactory.SIMILARITY.CITYBLOCK, dm);
             RecommenderBuilder rb = RecommendFactory.itemRecommender(is, true);
 
-            //-----结果评估---------
+            //-----结果评估----------
             //测试该方法平均绝对偏差
             //RecommendFactory.evaluate(RecommendFactory.EVALUATOR.AVERAGE_ABSOLUTE_DIFFERENCE, rb, null, dm, 0.7);
             //测试该方法的Precision(相关的结果集/相关的+不相关的)和Recall(全部相关结果集中 检索到的/检索到的+未检索到的)
