@@ -24,11 +24,12 @@ public interface CompanyEchartsService {
     public String getCompanyNature();
 
     /*
+    ---------------------------------------------修改-----------------------------------------------------
      *企业规模分布
-     * SELECT COUNT(*),COMPANY_SCALE FROM T_COMPANY GROUP BY COMPANY_SCALE
-     * 需要map<Integer,Integer>
+     * SELECT COMPANY_SCALE,COUNT(COMPANY_SCALE) FROM T_COMPANY WHERE COMPANY_INDUSTRY="某行业" GROUP BY COMPANY_SCALE;
+     * 需要map<String,Integer>
      */
-    public String getCompanyScale();
+    public String getCompanyScale(int type);
 
     /*
      *不同性质公司的平均工资及岗位需求量分布
