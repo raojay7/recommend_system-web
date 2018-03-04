@@ -286,7 +286,7 @@
     GROUP BY COMPANY_NATURE
   </select>
 
-  <select id="getCompanyScale"  resultMap="ExtResultMap" >
+  <select id="getCompanyScale" parameterType="String"  resultMap="ExtResultMap" >
     SELECT COMPANY_SCALE,COUNT(COMPANY_SCALE)
     FROM T_COMPANY
     WHERE COMPANY_INDUSTRY=#{company_industry,jdbcType=VARCHAR} GROUP BY COMPANY_SCALE;
