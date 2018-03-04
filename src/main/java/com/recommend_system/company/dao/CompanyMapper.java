@@ -41,13 +41,15 @@ public interface CompanyMapper {
     List<CompanyExt> getCompanyNature();
 
     //企业规模分布
-    List<CompanyExt> getCompanyScale();
+    List<CompanyExt> getCompanyScale(String company_industry);
 
     //不同性质公司的平均工资及岗位需求量分布
     List<CompanyExt> getCompanyNatureNeedAvg();
 
     //不同行业公司平均工资及岗位需求量分布
     List<CompanyExt> getCompanyIndustryNeedAvg();
+
+
 
 
 }

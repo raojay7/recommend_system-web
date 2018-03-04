@@ -287,9 +287,9 @@
   </select>
 
   <select id="getCompanyScale"  resultMap="ExtResultMap" >
-    SELECT COUNT(*) AS jobnum,COMPANY_SCALE
+    SELECT COMPANY_SCALE,COUNT(COMPANY_SCALE)
     FROM T_COMPANY
-    GROUP BY COMPANY_SCALE
+    WHERE COMPANY_INDUSTRY=#{company_industry,jdbcType=VARCHAR} GROUP BY COMPANY_SCALE;
   </select>
   <select id="getCompanyNatureNeedAvg"  resultMap="ExtResultMap" >
     SELECT SUM(need_num)AS jobnum,c.company_nature AS company_nature,AVG((j.salary_min+j.salary_max)/2) AS ave_salary
