@@ -7,6 +7,7 @@ import com.recommend_system.job.entity.Job;
 import com.recommend_system.job.entity.JobExample;
 import com.recommend_system.userlike.entity.UserLikeKey;
 import com.recommend_system.userlike.service.UserLikeService;
+import com.recommend_system.uservisit.service.UserVisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,21 +26,22 @@ public class JobDetailController {
     private CompanyMapper companyMapper;
     @Autowired
     private UserLikeService userLikeService;
+    @Autowired
+    private UserVisitService userVisitService;
 
     @RequestMapping("job")
-    public ModelAndView toJobDetail(HttpSession session, HttpServletRequest request){
+    public ModelAndView toJobDetail(HttpSession session, HttpServletRequest request, String page){
         ModelAndView mav = new ModelAndView();
         int companyId = Integer.parseInt(request.getParameter("companyId"));
         int jobId = Integer.parseInt(request.getParameter("jobId"));
         int uid = Integer.parseInt(request.getParameter("userId"));
+        userVisitService.visit(uid, jobId);
         System.out.println(companyId + " " + jobId);
         Job job = jobMapper.selectByPrimaryKey(jobId);
         Company company = companyMapper.selectByPrimaryKey(companyId);
         request.setAttribute("job", job);
         request.setAttribute("company", company);
-        if(session.getAttribute("vali").equals("1"))
-            request.setAttribute("page", "my_favorites");
-        else request.setAttribute("page","recommended_posts");
+        request.setAttribute("page", page);
         List<UserLikeKey> list = userLikeService.getList(uid);
         if(list.size() == 0)request.setAttribute("flag", "0");
         else {

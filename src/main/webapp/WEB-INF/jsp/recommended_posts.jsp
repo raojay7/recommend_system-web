@@ -108,7 +108,7 @@ int uid = user.getUserId();
             //方法级渲染
             table.render({
                 elem: '#LAY_table_job'
-                , url: '../recommend/work'
+                , url: '../moreIikeByItem'
                 , cellMinWidth: 80
                 , cols: [[
                     {field: 'jobId', width: 90, sort: true, title: '职位id', fixed: 'left',align:'center'}
@@ -161,7 +161,7 @@ int uid = user.getUserId();
                 if (obj.event === 'getJobDetail') {
                     //layer.msg('jobID：'+ data.jobId + ' 的查看操作');
                     //接下来进行ajax请求，根据jobid查询job
-                    window.location.href = "../detail/job?jobId=" + data.jobId + "&companyId=" + data.companyId + "&userId=<%=uid%>";
+                    window.location.href = "../detail/job?jobId=" + data.jobId + "&companyId=" + data.companyId + "&userId=<%=uid%>" +"&page=recommended_posts";
                     /*$.post("/detail/job", { jobId: data.jobId, companyId: data.companyId},
                         function(redata){
                             alert("Data Loaded: " + redata);

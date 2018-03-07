@@ -1,6 +1,8 @@
 package com.recommend_system.utils;
 
 
+import com.recommend_system.company.entity.Company;
+import com.recommend_system.company.entity.CompanyExt;
 import com.recommend_system.job.entity.JobExt;
 
 import java.util.List;
@@ -13,5 +15,7 @@ public interface DataFilter {
      * @param jc jedis客户端
      * @param list
      */
-    public void sort_filter(List<JobExt> list, float fsize, JedisClient jc);
+    public void sort_filter(List<JobExt> list, float fsize, JedisClient jc, String listName1, String listName2);
+    public void sort_filter2(List<CompanyExt> list, float fsize, JedisClient jc, String listName1, String listName2);
+    public void sort_filter3(List<CompanyExt> list, float fsize, JedisClient jc, String listName1, String listName2);
 }

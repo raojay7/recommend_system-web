@@ -2,6 +2,7 @@ package com.recommend_system.userlike.controller;
 
 import com.recommend_system.job.service.JobService;
 import com.recommend_system.userlike.service.UserLikeService;
+import com.recommend_system.uservisit.service.UserVisitService;
 import com.taotao.common.pojo.Layui;
 import com.taotao.common.pojo.SolrItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,20 @@ public class UserLikeController {
     private UserLikeService userLikeService;
     @Autowired
     private JobService jobService;
+    @Autowired
+    private UserVisitService userVisitService;
 
     @RequestMapping("collect")
     public ModelAndView doCollect(HttpSession session, int uid, int jid){
         ModelAndView mav = new ModelAndView();
         userLikeService.collect(uid, jid);
+        userVisitService.visit(uid, jid);
         mav.addObject("job", jobService.getJobById(jid));
         mav.addObject("jobId", jid);
         mav.addObject("companyId", jobService.getCompanyId(jid));
         mav.addObject("userId", uid);
         mav.addObject("ull",userLikeService.getList(uid));
         mav.addObject("flag", "1");
-        if(session.getAttribute("vali").equals("1"))mav.addObject("page", "my_favorites");
-        else mav.addObject("page","recommended_posts");
         mav.setViewName("job_detail");
         return mav;
     }

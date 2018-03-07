@@ -166,7 +166,7 @@
                 if (obj.event === 'getJobDetail') {
                     //layer.msg('jobID：'+ data.jobId + ' 的查看操作');
                     //接下来进行ajax请求，根据jobid查询job
-                    window.location.href = "../detail/job?jobId=" + data.jobId + "&companyId=" + data.companyId + "&userId=<%=uid%>";
+                    window.location.href = "../detail/job?jobId=" + data.jobId + "&companyId=" + data.companyId + "&userId=<%=uid%>" + "&page=my_favorites";
                     /*$.post("/detail/job", { jobId: data.jobId, companyId: data.companyId},
                         function(redata){
                             alert("Data Loaded: " + redata);

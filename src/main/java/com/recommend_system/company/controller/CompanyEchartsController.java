@@ -54,11 +54,11 @@ public class CompanyEchartsController {
     }
 
     @RequestMapping("companyscale")
-    public void getCompanyScale(HttpServletRequest request, HttpServletResponse response){
+    public void getCompanyScale(HttpServletRequest request, HttpServletResponse response, int type){
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html");
         try {
-            String json = companyEchartsService.getCompanyScale();
+            String json = companyEchartsService.getCompanyScale(type);
             response.getWriter().write(json);
         } catch (IOException e) {
             e.printStackTrace();

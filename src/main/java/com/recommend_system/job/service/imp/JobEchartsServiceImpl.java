@@ -10,6 +10,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -98,7 +99,7 @@ public class JobEchartsServiceImpl implements JobEchartsService {
                 map.put(je.getAve_salary(), je.getWorkcity());
             }*/
             DataFilter dataFilter = new SortFilter();
-            dataFilter.sort_filter(jobMapper.getCityAvgSalary(),0.6f, jc);
+            dataFilter.sort_filter(jobMapper.getCityAvgSalary(),0.6f, jc, "cityavgsalary_city", "cityavgsalary_avg");
             /*int size = map.size();
             size *= 0.6;
             int count = 0;
@@ -257,7 +258,7 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             Iterator<String> it_ex = ex.iterator();
             Iterator<String> it_avg = avg.iterator();
 
-            JSONObject jsonObject = new JSONObject();
+            /*JSONObject jsonObject = new JSONObject();
             //标题对象
             JSONObject titleObject = new JSONObject();
             titleObject.put("text", "工作经验对应工资分布");
@@ -287,23 +288,23 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             gridObject.put("y2", 30);
             gridObject.put("x",50);
 
-            JSONArray xDataArr = new JSONArray();
+            JSONArray xDataArr = new JSONArray();*/
             JSONArray seDataArr = new JSONArray();
 
             DecimalFormat df = new DecimalFormat("0.000");
 
             while(it_ex.hasNext() && it_avg.hasNext()){
-                xDataArr.add(it_ex.next());
+                //xDataArr.add(it_ex.next());
                 seDataArr.add(Double.parseDouble(df.format(Double.parseDouble(it_avg.next()))));
             }
-            xObj.put("data", xDataArr);
+            /*xObj.put("data", xDataArr);
             seObj.put("data",seDataArr);
             seArr.add(seObj);
             jsonObject.put("xAxis", xObj);
             jsonObject.put("series", seArr);//series是对象数组，所以用seArr存几个对象，每个对象有name,type,data[]
-            jsonObject.put("grid", gridObject);
+            jsonObject.put("grid", gridObject);*/
 
-            return jsonObject.toString();
+            return seDataArr.toString();
         }else {
             JobExt je;
             List<JobExt> list = jobMapper.getExperienceSalary();

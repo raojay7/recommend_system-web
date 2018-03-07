@@ -51,7 +51,7 @@ public class UserController {
     @RequestMapping("logIn")
     public ModelAndView logIn(HttpSession session, HttpServletResponse response, HttpServletRequest request, User user){//登录方法
         ModelAndView mav = new ModelAndView();
-        String flag = request.getParameter("flag");//set cookie
+        /*String flag = request.getParameter("flag");//set cookie
         System.out.println("flag::::::::::::"+flag);
         if(flag!=null && flag.equals("1")){
             Cookie cookie = new Cookie("cookie_user", user.getUserName()+"-"+user.getPassword());
@@ -63,7 +63,7 @@ public class UserController {
             cookie.setMaxAge(60*60*24*30); //cookie 保存30天
             request.setAttribute("flag", null);
             response.addCookie(cookie);
-        }
+        }*/
 
         try {
             User us = userService.logIn(user);

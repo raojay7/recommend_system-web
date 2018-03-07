@@ -27,7 +27,8 @@ public interface CompanyEchartsService {
     ---------------------------------------------修改-----------------------------------------------------
      *企业规模分布
      * SELECT COMPANY_SCALE,COUNT(COMPANY_SCALE) FROM T_COMPANY WHERE COMPANY_INDUSTRY="某行业" GROUP BY COMPANY_SCALE;
-     * 需要map<String,Integer>
+     * 传入某行业 得出各个company_scale即对应的数量
+     * map<String,Integer>
      */
     public String getCompanyScale(int type);
 

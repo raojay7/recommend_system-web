@@ -110,21 +110,21 @@
                 <h2 class="layui-colla-title">公司性质分布分析</h2>
                 <div class="layui-colla-content">
                     <script src="../js/company_nature.js"></script>
-                    <div id="my_chart4" style="width:1000px;height:500px;"></div>
+                    <div id="my_chart4" style="width:1200px;height:500px;"></div>
                 </div>
             </div>
             <div class="layui-colla-item">
                 <h2 class="layui-colla-title">公司规模分布分析</h2>
                 <div class="layui-colla-content">
                     <script src="../js/company_scale.js"></script>
-                    <div id="my_chart5" style="width:1000px;height:500px;"></div>
+                    <div id="my_chart5" style="width:1205px;height:700px;"></div>
                 </div>
             </div>
             <div class="layui-colla-item">
                 <h2 class="layui-colla-title">不同性质公司的平均工资及岗位需求量</h2>
                 <div class="layui-colla-content">
                     <script src="../js/companynt_need_avg.js"></script>
-                    <div id="my_chart6" style="width:1100px;height:500px;"></div>
+                    <div id="my_chart6" style="width:1200px;height:500px;"></div>
                 </div>
             </div>
             <div class="layui-colla-item">
@@ -153,14 +153,14 @@
                 <h2 class="layui-colla-title">工作经验分布分析</h2>
                 <div class="layui-colla-content">
                     <script src="../js/workex.js"></script>
-                    <div id="my_chart10" style="width:1100px;height:500px;"></div>
+                    <div id="my_chart10" style="width:1000px;height:400px;"></div>
                 </div>
             </div>
             <div class="layui-colla-item">
                 <h2 class="layui-colla-title">招聘企业画像</h2>
                 <div class="layui-colla-content">
                     <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-                    <div id="main1" style="width:1400px;height: 500px;"></div>
+                    <div id="main1" style="width:1000px;height: 500px;"></div>
                     <script src="../js/Business_Portraits.js"></script>
                 </div>
             </div>
@@ -168,7 +168,7 @@
                 <h2 class="layui-colla-title">大数据职位技能需求图谱</h2>
                 <div class="layui-colla-content">
                     <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-                    <div id="main2" style="width:1400px;height: 500px;"></div>
+                    <div id="main2" style="width:1000px;height: 500px;"></div>
                     <script src="../js/skills_require.js"></script>
                 </div>
             </div>

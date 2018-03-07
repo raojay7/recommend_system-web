@@ -1,5 +1,8 @@
+<%@ page import="com.recommend_system.user.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%String path = request.getContextPath();%>
+<%String path = request.getContextPath();
+    User user = (User)session.getAttribute("user");
+    int uid = user.getUserId();%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -117,21 +120,21 @@
                 , url: '../q'
                 , cellMinWidth: 80
                 , cols: [[
-                    {field: 'jobId', minwidth: 250, sort: true, title: '职位id(点击查看职位详情)', fixed: 'left', event: 'getJobDetail'}
-                    , {field: 'jobName', minwidth: 400, title: '工作名字'}
-                    , {field: 'companyId', minwidth: 250, title: '公司id(点击查看公司详情)',event: 'getCompanyDetail'}
-                    , {field: 'companyName', minwidth: 400, title: '公司名字'}
-                    , {field: 'workplace', minwidth: 300, title: '工作地点'}
-                    , {field: 'salaryMin', width: 100, sort: true, title: '最低薪水'}
-                    , {field: 'salaryMax', width: 100, sort: true, title: '最高薪水'}
-                    , {field: 'education', title: '学历要求', width: 20}
-                    , {field: 'workexperienceMin', title: '最低工作年限', width: 10}
-                    , {field: 'workexperienceMax', title: '最高工作年限', width: 10}
+                    {field: 'jobId', width: 90, sort: true, title: '职位id', fixed: 'left',align:'center'}
+                    , {field: 'jobName', width: 185, title: '工作名字(点击查看详情)', event: 'getJobDetail'}
+                    , {field: 'companyId', width: 90, title: '公司id',event: 'getCompanyDetail',align:'center'}
+                    , {field: 'companyName', width: 185, title: '公司名字'}
+                    , {field: 'workplace', width: 185, title: '工作地点'}
+                    , {field: 'salaryMin', width: 100, sort: true, title: '最低薪水',align:'center'}
+                    , {field: 'salaryMax', width: 100, sort: true, title: '最高薪水',align:'center'}
+                    , {field: 'education', title: '学历要求', width: 100,align:'center'}
+                    , {field: 'workexperienceMin', title: '最低工作年限', width: 120,align:'center'}
+                    , {field: 'workexperienceMax', title: '最高工作年限', width: 120,align:'center'}
                     , {field: 'ctime', title: '创建时间', sort: true, width: 100}
-                    , {field: 'jobNature', title: '工作性质', width: 40}
-                    , {field: 'welfare', minwidth: 80, title: '福利'}
-                    , {field: 'workcity', title: '工作城市', width: 100}
-                    , {field: 'needNum', width: 40, sort: true, title: '需要人数', fixed: 'right'}
+                    , {field: 'jobNature', title: '工作性质', width: 100,align:'center'}
+                    , {field: 'welfare', width: 185, title: '福利'}
+                    , {field: 'workcity', title: '工作城市', width: 100,align:'center'}
+                    , {field: 'needNum', width: 100, sort: true, title: '需要人数', fixed: 'right',align:'center'}
                 ]]
                 , id: 'testReload'
                 , page: true
@@ -184,22 +187,23 @@
             table.on('tool(demoEvent)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'getJobDetail') {
-                    layer.msg('jobID：'+ data.jobId + ' 的查看操作');
+                    window.location.href = "../detail/job?jobId=" + data.jobId + "&companyId=" + data.companyId + "&userId=<%=uid%>" +"&page=job_search";
+                    /*layer.msg('jobID：'+ data.jobId + ' 的查看操作');
                     //接下来进行ajax请求，根据jobid查询job
                     $.post("/getJobDetailUI", { jobId: data.jobId},
                         function(redata){
                             alert("Data Loaded: " + redata);
-                        });
+                        });*/
                 }
 
-                if (obj.event === 'getCompanyDetail') {
+                /*if (obj.event === 'getCompanyDetail') {
                     layer.msg('companyID：'+ data.companyId + ' 的查看操作');
                     //接下来进行ajax的请求，根据companyid查询company
                     $.post("/getCompanyDetailUI", { companyId:data.companyId },
                         function(redata){
                             alert("Data Loaded: " + redata);
                         });
-                }
+                }*/
             });
         });
     </script>

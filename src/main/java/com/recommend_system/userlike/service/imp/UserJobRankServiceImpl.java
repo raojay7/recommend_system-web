@@ -87,9 +87,9 @@ public class UserJobRankServiceImpl implements UserJobRankService {
 
             //mahout推荐-------------------------------
             //基于项目的协同过滤
-            DataModel dm = RecommendFactory.buildDataModel(path);
+            /*DataModel dm = RecommendFactory.buildDataModel(path);
             ItemSimilarity is = RecommendFactory.itemSimilarity(RecommendFactory.SIMILARITY.CITYBLOCK, dm);
-            RecommenderBuilder rb = RecommendFactory.itemRecommender(is, true);
+            RecommenderBuilder rb = RecommendFactory.itemRecommender(is, true);*/
 
             //-----结果评估----------
             //测试该方法平均绝对偏差
@@ -97,13 +97,13 @@ public class UserJobRankServiceImpl implements UserJobRankService {
             //测试该方法的Precision(相关的结果集/相关的+不相关的)和Recall(全部相关结果集中 检索到的/检索到的+未检索到的)
             //RecommendFactory.statsEvaluator(rb, null, dm, 2);
 
-            List<RecommendedItem> list = rb.buildRecommender(dm).recommend(user.getUserId(), 10);
+            //List<RecommendedItem> list = rb.buildRecommender(dm).recommend(user.getUserId(), 10);
             //基于用户的协同过滤
-            /*DataModel dm = RecommendFactory.buildDataModel(path);
+            DataModel dm = RecommendFactory.buildDataModel(path);
             UserSimilarity us = RecommendFactory.userSimilarity(RecommendFactory.SIMILARITY.EUCLIDEAN, dm);
             UserNeighborhood un = RecommendFactory.userNeighborhood(RecommendFactory.NEIGHBORHOOD.THRESHOLD, us, dm, 0.2);
             RecommenderBuilder rb = RecommendFactory.userRecommender(us, un, true);
-            List<RecommendedItem> list = rb.buildRecommender(dm).recommend(user.getUserId(),10);*/
+            List<RecommendedItem> list = rb.buildRecommender(dm).recommend(user.getUserId(),10);
             //-------------------------
 
                 List<Job> jlist = new LinkedList<>();
@@ -306,7 +306,7 @@ public class UserJobRankServiceImpl implements UserJobRankService {
             grade = 1 / (1 + Math.pow(E,-count));
             //textMap.put(job.getJobId(), String.valueOf(grade));
             record.setGrade(grade);
-            if(count > 2) userJobRankMapper.insert(record);
+            if(count > 3) userJobRankMapper.insert(record);
 
             propVector[0] = 0;propVector[1] = 0;propVector[2] = 0;propVector[3] = 0;propVector[4] = 0;propVector[5] = 0;count = 0;
 

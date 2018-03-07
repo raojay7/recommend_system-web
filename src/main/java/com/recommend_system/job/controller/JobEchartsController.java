@@ -1,9 +1,11 @@
 package com.recommend_system.job.controller;
 
 import com.recommend_system.job.service.JobEchartsService;
+import com.recommend_system.utils.JedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -14,6 +16,9 @@ public class JobEchartsController {
 
     @Autowired
     private JobEchartsService jobEchartsService;
+    @Autowired
+    private JedisClient jc;
+
 
     @RequestMapping("cityavgsalary")
     public void getCityAvgSalary(HttpServletResponse response){
