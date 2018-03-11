@@ -6,13 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("test")
+
 public class TestController
 {
     @Autowired
     TestService testService;
 
-    @RequestMapping("index")
+    @RequestMapping("/index")
     public String show()
     {
         testService.show();
