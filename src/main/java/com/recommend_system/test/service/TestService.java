@@ -1,4 +1,4 @@
-package com.hlzj.test.service;
+package com.recommend_system.test.service;
 
 import org.springframework.stereotype.Service;
 

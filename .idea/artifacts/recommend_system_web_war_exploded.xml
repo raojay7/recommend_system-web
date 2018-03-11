@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="recommend_system-web:war exploded">
-    <output-path>$PROJECT_DIR$/target/care</output-path>
+    <output-path>$PROJECT_DIR$/target/recommend_system</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -134,7 +134,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/care/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/recommend_system/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="recommend_system-web/web/Web" />
     </root>
