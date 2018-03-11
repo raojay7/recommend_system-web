@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="recommend_system-web:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="recommend_system-web.war">
+      <element id="artifact" artifact-name="recommend_system-web:war exploded" />
+    </root>
+  </artifact>
+</component>
