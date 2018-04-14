@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -29,12 +30,14 @@ public class UserLikeController {
         ModelAndView mav = new ModelAndView();
         userLikeService.collect(uid, jid);
         userVisitService.visit(uid, jid);
+        String page = (String) session.getAttribute("page");
         mav.addObject("job", jobService.getJobById(jid));
         mav.addObject("jobId", jid);
         mav.addObject("companyId", jobService.getCompanyId(jid));
         mav.addObject("userId", uid);
         mav.addObject("ull",userLikeService.getList(uid));
         mav.addObject("flag", "1");
+        mav.addObject("page", page);
         mav.setViewName("job_detail");
         return mav;
     }

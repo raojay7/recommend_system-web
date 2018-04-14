@@ -6,6 +6,7 @@ import com.recommend_system.job.service.JobEchartsService;
 import com.recommend_system.utils.DataFilter;
 import com.recommend_system.utils.JedisClient;
 import com.recommend_system.utils.impl.SortFilter;
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,9 @@ public class JobEchartsServiceImpl implements JobEchartsService {
 
     @Autowired
     private JobMapper jobMapper;
+
     @Autowired
     private JedisClient jc;
-    /*static Map<Double,String> map = new TreeMap<>(new Comparator<Double>() {
-        @Override
-        public int compare(Double o1, Double o2) {
-            if(o1 < o2)return 1;
-            else if(o1 > o2)return -1;
-            else return 0;
-        }
-    });*/
 
 
     @Override
@@ -72,6 +66,24 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
 
+            JSONArray dataZoom = new JSONArray();
+            JSONObject j1 = new JSONObject();
+            j1.put("id", "dataZoomX");
+            j1.put("type", "inside");
+            JSONArray ja1 = new JSONArray();
+            ja1.add(0);
+            j1.put("xAxisIndex", ja1);
+            j1.put("filterMode", "filter");
+            JSONObject j2 = new JSONObject();
+            j2.put("id", "dataZoomY");
+            j2.put("type", "slider");
+            JSONArray ja2 = new JSONArray();
+            ja2.add(0);
+            j2.put("xAxisIndex", ja2);
+            j2.put("filterMode", "filter");
+            dataZoom.add(j1);
+            dataZoom.add(j2);
+
             while(it_city.hasNext() && it_avg.hasNext()){
                 xDataArr.add(it_city.next());
                 seDataArr.add(Double.parseDouble(it_avg.next()));
@@ -84,6 +96,8 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             alobj.put("rotate",45);
             alobj.put("margin",5);
             xObj.put("axisLabel",alobj);
+
+            jsonObject.put("dataZoom", dataZoom);
             jsonObject.put("xAxis", xObj);
             jsonObject.put("series", seArr);//series是对象数组，所以用seArr存几个对象，每个对象有name,type,data[]
             jsonObject.put("grid", gridObject);
@@ -99,7 +113,7 @@ public class JobEchartsServiceImpl implements JobEchartsService {
                 map.put(je.getAve_salary(), je.getWorkcity());
             }*/
             DataFilter dataFilter = new SortFilter();
-            dataFilter.sort_filter(jobMapper.getCityAvgSalary(),0.6f, jc, "cityavgsalary_city", "cityavgsalary_avg");
+            dataFilter.sort_filter(jobMapper.getCityAvgSalary(),1.0f, jc, "cityavgsalary_city", "cityavgsalary_avg");
             /*int size = map.size();
             size *= 0.6;
             int count = 0;

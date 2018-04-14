@@ -290,7 +290,7 @@
                                 type:'scatter',
                                 coordinateSystem:'geo',
                                 data:convertData(data),
-                                symbolSize: 12,
+                                symbolSize: 1,
                                 label: {
                                     normal: {
                                         show: false

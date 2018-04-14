@@ -128,7 +128,7 @@
                         <div class="layui-tab-item">
                             <p class="MsoNormal" style="margin: 5px 0px; line-height: 1.5; font-size: 14px; font-family: sans-serif; text-indent: 24.1pt;"><strong><span style="font-family: 仿宋; color: rgb(25, 0, 0); font-size: 12pt;">
                             公司名称：${company.getCompanyName()}<br/><br/>
-                            &nbsp;&nbsp;&nbsp;&nbsp;公司主页：${company.getCompanyHomepage()}<br/><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;公司主页：<a href="${company.getCompanyHomepage()}">${company.getCompanyHomepage()}</a><br/><br/>
                             &nbsp;&nbsp;&nbsp;&nbsp;公司性质：${company.getCompanyNature()}<br/><br/>
                             &nbsp;&nbsp;&nbsp;&nbsp;公司行业：${company.getCompanyIndustry()}<br/><br/>
                             &nbsp;&nbsp;&nbsp;&nbsp;公司规模：${company.getCompanyScale()}<br/><br/>

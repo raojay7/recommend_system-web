@@ -102,6 +102,24 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
 
+            JSONArray dataZoom = new JSONArray();
+            JSONObject j1 = new JSONObject();
+            j1.put("id", "dataZoomX");
+            j1.put("type", "inside");
+            JSONArray ja1 = new JSONArray();
+            ja1.add(0);
+            j1.put("xAxisIndex", ja1);
+            j1.put("filterMode", "filter");
+            JSONObject j2 = new JSONObject();
+            j2.put("id", "dataZoomY");
+            j2.put("type", "slider");
+            JSONArray ja2 = new JSONArray();
+            ja2.add(0);
+            j2.put("xAxisIndex", ja2);
+            j2.put("filterMode", "filter");
+            dataZoom.add(j1);
+            dataZoom.add(j2);
+
             while(it_industry.hasNext() && it_jobnum.hasNext()){
                 xDataArr.add(it_industry.next());
                 seDataArr.add(it_jobnum.next());
@@ -110,6 +128,7 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             xObj.put("axisLabel",alobj);
             seObj.put("data",seDataArr);
             seArr.add(seObj);
+            jsonObject.put("dataZoom", dataZoom);
             jsonObject.put("xAxis", xObj);
             jsonObject.put("series", seArr);//series是对象数组，所以用seArr存几个对象，每个对象有name,type,data[]
             jsonObject.put("grid", gridObject);
@@ -209,13 +228,13 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             if(type == 2){
                 System.out.println("type=2");
                 ja = new JSONArray();
-                ja.add("100-499人");
-                ja.add("1000-9999人");
+                ja.add("1000-5000人");
                 ja.add("10000人以上");
-                ja.add("20-99人");
-                ja.add("20人以下");
-                ja.add("500-999人");
-                ja.add("保密");
+                ja.add("150-500人");
+                ja.add("50-150人");
+                ja.add("500-1000人");
+                ja.add("5000-10000人");
+                ja.add("少于50人");
                 System.out.println(ja.toString());
                 return ja.toString();
             }else if(type == 1){
@@ -247,13 +266,13 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
                     JSONArray dataArr = new JSONArray();
 
                     Map<String, Integer> map = new LinkedHashMap<>();
-                    map.put("100-499人", 0);//先建立好初始的当前行业所对应的<规模,数量>map
-                    map.put("1000-9999人", 0);
+                    map.put("1000-5000人", 0);//先建立好初始的当前行业所对应的<规模,数量>map
                     map.put("10000人以上", 0);
-                    map.put("20-99人", 0);
-                    map.put("20人以下", 0);
-                    map.put("500-999人", 0);
-                    map.put("保密", 0);
+                    map.put("150-500人", 0);
+                    map.put("50-150人", 0);
+                    map.put("500-1000人", 0);
+                    map.put("5000-10000人", 0);
+                    map.put("少于50人", 0);
 
                     //初始map建立好后开始sql语句查，查出来的对应的行业，对应map数量加上
                     //加完后提取出数量数组即可
@@ -287,7 +306,6 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
 
                     objDataArr.add(jo);
                 }
-                    //System.out.println(objDataArr.toString());
                     //开始筛选，前十个最大的obj
                     String text;
                     int total = 0;
@@ -302,19 +320,14 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
                     for(int i = 0; i < objDataArr.size(); i++){
                         text = objDataArr.get(i).toString();
                         text = text.substring(text.indexOf("[") + 1, text.indexOf("]") - 1);
-                        //System.out.println(text);
                         String[] nums = text.split(",");
-                        //System.out.println(nums[0] + nums[1] + nums[2] + nums[3] + nums[4] + nums[5] + nums[6]);
                         total += (Integer.parseInt(nums[0]) + Integer.parseInt(nums[1]) + Integer.parseInt(nums[2]) + Integer.parseInt(nums[3]) + Integer.parseInt(nums[4]) + Integer.parseInt(nums[5]));
                         smap.put(i, total);
-                        //System.out.println(total);
                         total = 0;
                     }
                     List<Map.Entry<Integer, Integer>> list = new ArrayList<Map.Entry<Integer,Integer>>(smap.entrySet());
                     Collections.sort(list, valueComparator);
                     int count  = 0;
-                    //System.out.println("objsize:" + objDataArr.size());
-                    //System.out.println("listsize:" + list.size());
                     JSONArray mtoarr = new JSONArray();
                     for(Map.Entry<Integer, Integer> entry : list){
                         count++;
@@ -323,8 +336,6 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
                         }
                     }
 
-
-                //System.out.println("final size:" + mtoarr.size());
                 return mtoarr.toString();
             }
 
@@ -387,11 +398,31 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
 
 
             JSONObject gridObject = new JSONObject();
-            gridObject.put("y2", 20);
+            gridObject.put("y2", 50);
             gridObject.put("x",50);
 
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
+
+            JSONArray dataZoom = new JSONArray();
+            JSONObject j1 = new JSONObject();
+            j1.put("id", "dataZoomX");
+            j1.put("type", "inside");
+            JSONArray ja1 = new JSONArray();
+            ja1.add(0);
+            j1.put("xAxisIndex", ja1);
+            j1.put("filterMode", "filter");
+            j1.put("start", 0);
+            j1.put("end", 80);
+            JSONObject j2 = new JSONObject();
+            j2.put("id", "dataZoomY");
+            j2.put("type", "slider");
+            JSONArray ja2 = new JSONArray();
+            ja2.add(0);
+            j2.put("xAxisIndex", ja2);
+            j2.put("filterMode", "filter");
+            dataZoom.add(j1);
+            dataZoom.add(j2);
 
             String n,j,a;
 
@@ -412,6 +443,7 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             seObj2.put("data",dataArr2);
             seArr.add(seObj);
             seArr.add(seObj2);
+            jsonObject.put("dataZoom", dataZoom);
             jsonObject.put("xAxis", xObj);
             jsonObject.put("series", seArr);//series是对象数组，所以用seArr存几个对象，每个对象有name,type,data[]
             jsonObject.put("grid", gridObject);
@@ -481,6 +513,26 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             JSONArray xDataArr = new JSONArray();
             JSONArray seDataArr = new JSONArray();
 
+            JSONArray dataZoom = new JSONArray();
+            JSONObject j1 = new JSONObject();
+            j1.put("id", "dataZoomX");
+            j1.put("type", "inside");
+            JSONArray ja1 = new JSONArray();
+            ja1.add(0);
+            j1.put("xAxisIndex", ja1);
+            j1.put("filterMode", "filter");
+            j1.put("start", 10);
+            j1.put("end", 20);
+            JSONObject j2 = new JSONObject();
+            j2.put("id", "dataZoomY");
+            j2.put("type", "slider");
+            JSONArray ja2 = new JSONArray();
+            ja2.add(0);
+            j2.put("xAxisIndex", ja2);
+            j2.put("filterMode", "filter");
+            dataZoom.add(j1);
+            dataZoom.add(j2);
+
             String n,j,a;
 
             DecimalFormat df = new DecimalFormat("0.000");
@@ -505,6 +557,7 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             alobj.put("rotate",45);
             alobj.put("margin",5);
             xObj.put("axisLabel",alobj);
+            jsonObject.put("dataZoom", dataZoom);
             jsonObject.put("xAxis", xObj);
             jsonObject.put("series", seArr);//series是对象数组，所以用seArr存几个对象，每个对象有name,type,data[]
             jsonObject.put("grid", gridObject);

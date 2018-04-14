@@ -41,7 +41,7 @@ public class JobDetailController {
         Company company = companyMapper.selectByPrimaryKey(companyId);
         request.setAttribute("job", job);
         request.setAttribute("company", company);
-        request.setAttribute("page", page);
+        session.setAttribute("page", page);
         List<UserLikeKey> list = userLikeService.getList(uid);
         if(list.size() == 0)request.setAttribute("flag", "0");
         else {
