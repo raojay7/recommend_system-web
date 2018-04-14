@@ -291,6 +291,12 @@
     FROM T_COMPANY
     WHERE COMPANY_INDUSTRY=#{company_industry,jdbcType=VARCHAR} GROUP BY COMPANY_SCALE;
   </select>
+
+
+  <select id="getCompanyScaleGroupByScale" resultMap="ExtResultMap" >
+    SELECT company_scale FROM t_company GROUP BY company_scale;
+  </select>
+
   <select id="getCompanyNatureNeedAvg"  resultMap="ExtResultMap" >
     SELECT SUM(need_num)AS jobnum,c.company_nature AS company_nature,AVG((j.salary_min+j.salary_max)/2) AS ave_salary
     FROM t_job j,t_company c
@@ -303,4 +309,6 @@
      WHERE j.company_id=c.company_id
      GROUP BY company_industry;
   </select>
+
+
 </mapper>
