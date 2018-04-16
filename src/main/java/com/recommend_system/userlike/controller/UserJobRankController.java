@@ -30,40 +30,41 @@ public class UserJobRankController {
     @ResponseBody
     public Layui recommend(HttpSession session, HttpServletResponse response){
         System.out.println("进入推荐controller");
-        User user = (User)session.getAttribute("user");
-        UserJobIntension userJobIntension = (UserJobIntension)session.getAttribute("uji");
-        Map<Integer,String> map = new HashMap<>();
-        Job job;
-        String path = session.getServletContext().getRealPath("/")+user.getUserName()+".scv";
         session.setAttribute("vali", "0");
         try {
-            if(!userJobRankService.hasScored(user)) {
-                System.out.println("该用户没有评分");
-                userJobRankService.prescore(user, userJobIntension);
-                List<SolrItem> list = userJobRankService.recommend(user, path);
-                /*Iterator<Job> it = list.iterator();
-                while(it.hasNext()){
-                    job = it.next();
-                    map.put(job.getJobId(), "工作名："+job.getJobName()+"学历要求："+job.getEducation()+"工作地："+job.getWorkcity()+"最低薪水"+job.getSalaryMin());
-                }
-                response.getWriter().write(map.toString());*/
+                List<SolrItem> list = userJobRankService.recommend();
                 return Layui.data((long)list.size(), list);
-            }else{
-                List<SolrItem> list = userJobRankService.recommend(user, path);
-                /*Iterator<Job> it = list.iterator();
-                while(it.hasNext()){
-                    job = it.next();
-                    map.put(job.getJobId(), "工作名："+job.getJobName()+"学历要求："+job.getEducation()+"工作地："+job.getWorkcity()+"最低薪水"+job.getSalaryMin());
-                }
-                response.getWriter().write(map.toString());*/
-                return Layui.data((long)list.size(), list);
-            }
         } catch (Exception e) {
             e.printStackTrace();
             return Layui.data((long)0, null);
         }
     }
-    @RequestMapping("wf")
+    @RequestMapping("calculate")
+    public void caculate(HttpSession session, HttpServletResponse response){
+        System.out.println("进入计算controller");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        User user = (User)session.getAttribute("user");
+        UserJobIntension userJobIntension = (UserJobIntension)session.getAttribute("uji");
+        Map<Integer,String> map = new HashMap<>();
+        Job job;
+        String path = session.getServletContext().getRealPath("/")+user.getUserName()+".scv";
+        try {
+            userJobRankService.calculate(user, path);
+            PrintWriter pw = response.getWriter();
+            pw.write("<h2>离线计算完成！</h2>");
+            pw.flush();
+        } catch (Exception e) {
+            try {
+                response.getWriter().write("<h2><font color='red'>离线计算失败！</font></h2>");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    /*@RequestMapping("wf")
     public void writeFile(HttpSession session, HttpServletResponse response, HttpServletRequest request){
         try {
             request.setCharacterEncoding("UTF-8");
@@ -74,7 +75,7 @@ public class UserJobRankController {
         response.setHeader("Content-type", "text/html;charset=UTF-8");
         User user = (User)session.getAttribute("user");
         String path = session.getServletContext().getRealPath("/")+user.getUserName()+".scv";
-        List<SolrItem> jlist = userJobRankService.recommend(user, path);
+        List<SolrItem> jlist = userJobRankService.recommend();
         //System.out.println(jlist.get(0).getJobName());
         try {
             OutputStream os = response.getOutputStream();
@@ -89,12 +90,12 @@ public class UserJobRankController {
                 os.write(rcmd.getBytes("UTF-8"));
                 os.write("<br/>".getBytes());
             }
-            /*BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
+            *//*BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
             String line;
             while((line = br.readLine()) != null){
                 System.out.println(line);
                 //pw.write(line);
-            }*/
+            }*//*
             FileWriter fw = new FileWriter(new File(path));
             fw.write("");
             fw.close();
@@ -104,5 +105,5 @@ public class UserJobRankController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

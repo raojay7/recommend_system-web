@@ -4,6 +4,7 @@
 <%@ page import="com.recommend_system.userlike.entity.UserLikeKey" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page import="com.recommend_system.user.entity.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,19 +13,8 @@
     Date time = djob.getCtime();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String ctime = sdf.format(time);
-    /*int flag = 0;
-    List<UserLikeKey> list = (List<UserLikeKey>)request.getAttribute("ull");
-    UserLikeKey ulk;
-    Iterator<UserLikeKey> it = list.iterator();
-    while(it.hasNext()){
-        ulk = it.next();
-        if(ulk.getJobId() == djob.getJobId()){
-            flag = 1;
-            break;
-        }
-    }
-    System.out.println("flag:"+flag);
-    request.setAttribute("flag",flag);*/
+    User user = (User)session.getAttribute("user");
+    int uid = user.getUserId();
 %>
 <html>
 <head>
@@ -84,7 +74,7 @@
                 <li class="layui-nav-item">
                     <a href="${pageContext.request.contextPath}/job_intension">求职意向</a>
                 </li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/search">职位搜索</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/job_search">职位搜索</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/index">统计分析</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/recommended_posts">职位推荐</a></li>
             </ul>
@@ -116,10 +106,69 @@
                     <li><span>最低学历：</span><strong><c:if test="${job.getEducation() == 0}">大专及以下</c:if><c:if test="${job.getEducation() == 1}">本科</c:if><c:if test="${job.getEducation() == 2}">硕士</c:if><c:if test="${job.getEducation() == 3}">博士</c:if><c:if test="${job.getEducation() == 4}">不限</c:if></strong></li>
                     <li><span>招聘人数：</span><strong>${job.getNeedNum()}人</strong></li>
                 </ul>
+
+                <script>
+                    layui.use('table', function () {
+                        var table = layui.table;
+                        //方法级渲染
+                        table.render({
+                            elem: '#LAY_table_job'
+                            , url: '../recommend/work'
+                            , cellMinWidth: 80
+                            , cols: [[
+                                /*{field: 'jobId', width: 90, sort: true, title: '职位id', fixed: 'left',align:'center'}
+                                ,*/ {field: 'jobName', width: 185, title: '工作名字(点击查看详情)', event: 'getJobDetail'}
+                                , /*{field: 'companyId', width: 90, title: '公司id',event: 'getCompanyDetail',align:'center'}
+                                ,*/ {field: 'companyName', width: 185, title: '公司名字'}
+                                , {field: 'workplace', width: 185, title: '工作地点'}
+                                , {field: 'salaryMin', width: 100, sort: true, title: '最低薪水',align:'center'}
+                                , {field: 'salaryMax', width: 100, sort: true, title: '最高薪水',align:'center'}
+                                , {field: 'education', title: '学历要求', width: 100,align:'center'}
+                                , {field: 'workexperienceMin', title: '最低工作年限', width: 120,align:'center'}
+                                , {field: 'workexperienceMax', title: '最高工作年限', width: 120,align:'center'}
+                                , {field: 'ctime', title: '创建时间', sort: true, width: 100}
+                                , {field: 'jobNature', title: '工作性质', width: 100,align:'center'}
+                                , {field: 'welfare', width: 185, title: '福利'}
+                                , {field: 'workcity', title: '工作城市', width: 100,align:'center'}
+                                , {field: 'needNum', width: 100, sort: true, title: '需要人数', fixed: 'right',align:'center'}
+                            ]]
+                            , id: 'testReload'
+                        });
+
+                        var $ = layui.$, active = {
+                            reload: function () {
+                                var demoReload = $('#demoReload');
+                                //执行重载
+                                table.reload('testReload', {
+                                });
+                            }
+                        };
+
+                        $('.layui-btn').on('click', function () {
+                            var demoReload = $('#demoReload');
+                            var type = $(this).data('type');
+                            active[type] ? active[type].call(this) : '';
+                        });
+                    });
+                </script>
+                <script>
+                    layui.use('table', function () {
+                        var table = layui.table;
+                        //监听单元格事件
+                        table.on('tool(demoEvent)', function (obj) {
+                            var data = obj.data;
+                            if (obj.event === 'getJobDetail') {
+                                window.location.href = "../detail/job?jobId=" + data.jobId + "&companyId=" + data.companyId + "&userId=<%=uid%>" +"&page=${page}";
+                            }
+                        });
+                    });
+                </script>
+
                 <div class="layui-tab">
                     <ul class="layui-tab-title">
                         <li class="layui-this">职位详情</li>
                         <li>公司详情</li>
+                        <li>猜你喜欢</li>
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show">
@@ -137,6 +186,9 @@
                             </strong>
                             </p>
 
+                        </div>
+                        <div class="layui-tab-item">
+                            <table class="layui-hide" id="LAY_table_job" lay-filter="demoEvent"></table>
                         </div>
                     </div>
                 </div>

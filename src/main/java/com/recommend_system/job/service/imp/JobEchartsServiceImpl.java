@@ -74,6 +74,8 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             ja1.add(0);
             j1.put("xAxisIndex", ja1);
             j1.put("filterMode", "filter");
+            j1.put("start", 0);
+            j1.put("end", 40);
             JSONObject j2 = new JSONObject();
             j2.put("id", "dataZoomY");
             j2.put("type", "slider");
@@ -146,7 +148,7 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             //文字提示框对象
             JSONObject tooltipsObj = new JSONObject();
             tooltipsObj.put("trigger", "axis");
-            tooltipsObj.put("label", "平均工资*10");
+            tooltipsObj.put("label", "平均工资");
             jsonObject.put("tooltip", tooltipsObj);
             //各线说明
             JSONObject legendObj = new JSONObject();
@@ -165,7 +167,7 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             seObj.put("name", "需求量");
             seObj.put("type", "bar");
             JSONObject seObj2 = new JSONObject();
-            seObj2.put("name","平均工资*10");
+            seObj2.put("name","平均工资");
             seObj2.put("type","line");
             JSONArray dataArr2 = new JSONArray();
 
@@ -181,7 +183,7 @@ public class JobEchartsServiceImpl implements JobEchartsService {
 
             while(it_education.hasNext() && it_avg.hasNext() && it_jobnum.hasNext()){
                 xDataArr.add(it_education.next());
-                dataArr2.add(Double.parseDouble(df.format(Double.parseDouble(it_avg.next())/10)));
+                dataArr2.add(Double.parseDouble(df.format(Double.parseDouble(it_avg.next()))));
                 seDataArr.add(Integer.parseInt(it_jobnum.next()));
             }
             xObj.put("data", xDataArr);

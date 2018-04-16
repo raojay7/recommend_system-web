@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.recommend_system.search.tempdao.ItemDao;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -39,7 +40,7 @@ public class ItemDaoImpl implements ItemDao
 	public SearchResult searchItem(SolrQuery solrQuery) throws Exception {
 		
 		//根据查询条件查询索引库
-		QueryResponse response = solrServer.query(solrQuery);
+		QueryResponse response = solrServer.query(solrQuery, SolrRequest.METHOD.POST);
 		//从response中取查询结果
 		SolrDocumentList list = response.getResults();
 		//查询结果list
@@ -184,6 +185,21 @@ public class ItemDaoImpl implements ItemDao
 		//查询返回结果的总数量
 		result.setTotal(total);
 		return result;
+	}
+
+	private String transEdu(Integer education) {
+		switch (education){
+			case 0:
+				return "大专及以下";
+			case 1:
+				return "本科";
+			case 2:
+				return "硕士";
+			case 3:
+				return "博士";
+				default:
+					return "不限";
+		}
 	}
 
 }

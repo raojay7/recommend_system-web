@@ -1,8 +1,13 @@
 <%@ page import="com.recommend_system.user.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%String path = request.getContextPath();
-User user = (User)session.getAttribute("user");
-int uid = user.getUserId();
+    int uid = 0;
+    try {
+        User user = (User) session.getAttribute("user");
+        uid = user.getUserId();
+    }catch (NullPointerException e){
+        request.setAttribute("msg","  <font color='red'>用户已过期或未登录请重新登录！</font>");
+    }
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -87,7 +92,7 @@ int uid = user.getUserId();
             </div>
         </div>
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>您可能感兴趣的职位</legend><br/>
+            <legend>您可能感兴趣的职位${msg}</legend><br/>
             <div class="layui-inline layui-col-md3 layui-show-md-inline-block layui-hide-sm layui-hide-xs">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="layui-btn" data-type="reload">换一组</button>
             </div>
@@ -111,10 +116,10 @@ int uid = user.getUserId();
                 , url: '../moreIikeByItem'
                 , cellMinWidth: 80
                 , cols: [[
-                    {field: 'jobId', width: 90, sort: true, title: '职位id', fixed: 'left',align:'center'}
-                    , {field: 'jobName', width: 185, title: '工作名字(点击查看详情)', event: 'getJobDetail'}
-                    , {field: 'companyId', width: 90, title: '公司id',event: 'getCompanyDetail',align:'center'}
-                    , {field: 'companyName', width: 185, title: '公司名字'}
+                    /*{field: 'jobId', width: 90, sort: true, title: '职位id', fixed: 'left',align:'center'}
+                    ,*/ {field: 'jobName', width: 185, title: '工作名字(点击查看详情)', event: 'getJobDetail'}
+                    , /*{field: 'companyId', width: 90, title: '公司id',event: 'getCompanyDetail',align:'center'}
+                    ,*/ {field: 'companyName', width: 185, title: '公司名字'}
                     , {field: 'workplace', width: 185, title: '工作地点'}
                     , {field: 'salaryMin', width: 100, sort: true, title: '最低薪水',align:'center'}
                     , {field: 'salaryMax', width: 100, sort: true, title: '最高薪水',align:'center'}

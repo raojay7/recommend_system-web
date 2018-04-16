@@ -1,8 +1,15 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.recommend_system.user.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%String path = request.getContextPath();
-    User user = (User)session.getAttribute("user");
-    int uid = user.getUserId();%>
+int uid = 0;
+    try {
+        User user = (User) session.getAttribute("user");
+        uid = user.getUserId();
+    }catch (NullPointerException e){
+        request.setAttribute("msg","  <font color='red'>用户已过期或未登录请重新登录！</font>");
+    }
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -83,11 +90,10 @@
                             <input id="demoReload" autocomplete="off" class="layui-input search-box"
                                    name="kw" placeholder="请输入信息如:公司名,职位名,福利,工作地点,学历要求"/>
 
-                            <b>热门关键词<i class="layui-icon" style="color: red">&#xe756;</i> </b> &nbsp;&nbsp;&nbsp;<a
-                                href="#">大数据</a>&nbsp;&nbsp;&nbsp; <a href="#">数据库</a>
-                            &nbsp;&nbsp;&nbsp; <a href="#">Hadoop</a>&nbsp;&nbsp;&nbsp; <a href="#">Java</a>&nbsp;&nbsp;&nbsp;
-                            <a href="#">算法</a>
-                            &nbsp;&nbsp;&nbsp; <a href="#">分布式</a>&nbsp;&nbsp;&nbsp; <a href="#">SQL</a>
+                            <b>热门关键词<i class="layui-icon" style="color: red">&#xe756;</i> </b> &nbsp;&nbsp;&nbsp;
+                            <c:forEach items="${hotList}" var="l" varStatus="status">
+                                <a id="${status.index}" href="#">${l.getContent()}</a>&nbsp;&nbsp;&nbsp;
+                            </c:forEach>
 
                         </div>
 
@@ -99,7 +105,7 @@
             </div>
         </div>
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>热门职位</legend>
+            <legend>热门职位${msg}</legend>
         </fieldset>
         <table class="layui-hide" id="LAY_table_job" lay-filter="demoEvent"></table>
 
@@ -155,13 +161,19 @@
                 }
             };
 
+            <c:forEach items="${hotList}" var="l" varStatus="status">
+                $('#${status.index}').on('click', function () {
+                    $('#demoReload').val("${l.getContent()}");
+                    $('.layui-btn').click();
+                });
+            </c:forEach>
+
             $('.layui-btn').on('click', function () {
                 var demoReload = $('#demoReload');
                 if (demoReload.val().length == 0) {
-                    alert("不能为空");
+                    alert("搜索内容不能为空");
                     return;
                 }
-                alert("点击");
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
@@ -169,9 +181,8 @@
 
                 if (e.keyCode == 13) {
                     var demoReload = $('#demoReload');
-                    alert("回车");
                     if (demoReload.val().length == 0) {
-                        alert("不能为空");
+                        alert("搜索内容不能为空");
                         return;
                     }
                     var type = $('.layui-btn').data('type');

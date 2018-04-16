@@ -39,7 +39,9 @@ public class PageController {
         User user = (User)session.getAttribute("user");
         if(user != null){
             if(page.equals("homepage"))mav.setViewName("index");
-            else mav.setViewName(page);
+            else if(!page.equals("job_search")){
+                mav.setViewName(page);
+            }
         }else{
             if(!page.equals("homepage")) {
                 request.setAttribute("msg", "<font color='red'>请先登录！</font>");

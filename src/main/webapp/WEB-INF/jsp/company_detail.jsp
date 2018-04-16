@@ -58,7 +58,7 @@
                 <li class="layui-nav-item">
                     <a href="${pageContext.request.contextPath}/job_intension">求职意向</a>
                 </li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/search">职位搜索</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/job_search">职位搜索</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/index">统计分析</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/recommended_posts">职位推荐</a></li>
             </ul>

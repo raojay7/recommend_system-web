@@ -1,5 +1,6 @@
 package com.recommend_system.search.controller;
 
+import com.recommend_system.hotsearch.service.HotSearchService;
 import com.recommend_system.search.service.SearchService;
 import com.recommend_system.user.entity.User;
 import com.recommend_system.user.entity.UserJobIntension;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.taotao.common.pojo.SearchResult;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Controller
@@ -26,11 +29,12 @@ public class SearchController {
 	private SearchService searchService;
 	@Autowired
 	private UserVisitService userVisitService;
+	@Autowired
+	private HotSearchService hotSearchService;
 
 	@RequestMapping("/q")
 	@ResponseBody
-	public Layui search(HttpSession session, @RequestParam("kw")String queryString, @RequestParam(defaultValue="1")Long page, @RequestParam(defaultValue="30")Long limit)
-	{
+	public Layui search(HttpSession session, HttpServletRequest request, @RequestParam("kw")String queryString, @RequestParam(defaultValue="1")Long page, @RequestParam(defaultValue="30")Long limit) throws UnsupportedEncodingException {
 		System.out.println("进入了search方法");
 		if (StringUtils.isBlank(queryString))
 		{
@@ -38,6 +42,7 @@ public class SearchController {
 			session.setAttribute("search", "");
 			return Layui.data((long)0, null);
 		}
+		hotSearchService.writeData(queryString);
 		try
 		{
 			//解决get乱码问题
@@ -70,28 +75,28 @@ public class SearchController {
 			SearchResult searchResult = searchService.search(userJobIntension.getJobName(), 1l, 10l, false);
 			return Layui.data(searchResult.getTotal(), searchResult.getItemList());
 		}else {
-			List<VisitJob> vlist2 = userVisitService.getRecentVisit(user.getUserId());
+			List<VisitJob> recentList = userVisitService.getRecentVisit(user.getUserId());
 			List<VisitJob> vlist = new LinkedList<>();
-			System.out.println("vlist2.size = " + vlist2.size());
-			int vsize = vlist2.size();
-			if(vsize > 3){
+			System.out.println("recentList.size = " + recentList.size());
+			int recentListSize = recentList.size();
+			if(recentListSize > 3){
 				Random random = new Random();
 				int validNum = 0, randomNum;
 				List<Integer> removeNumList = new LinkedList<>();
 				while(validNum != 3){
-					randomNum = random.nextInt(vsize);
+					randomNum = random.nextInt(recentListSize);
 					if(!removeNumList.contains(randomNum)){
 						System.out.println("randomNum" + randomNum);
 						validNum++;
 						removeNumList.add(randomNum);
 					}
 				}
-				vlist.add(vlist2.get(removeNumList.get(0)));
-				vlist.add(vlist2.get(removeNumList.get(1)));
-				vlist.add(vlist2.get(removeNumList.get(2)));
+				vlist.add(recentList.get(removeNumList.get(0)));
+				vlist.add(recentList.get(removeNumList.get(1)));
+				vlist.add(recentList.get(removeNumList.get(2)));
 
 			}else{
-				vlist.addAll(vlist2);
+				vlist.addAll(recentList);
 			}
 			Iterator<VisitJob> it = vlist.iterator();
 			List<SearchResult> resultList = new LinkedList<>();
@@ -109,15 +114,16 @@ public class SearchController {
 				List<SolrItem> tempList = searchResult.getItemList();
 				int temp = 0, count = 0;
 				while(count != 3) {
+					if(temp > tempList.size() - 1)break;
 					SolrItem tempsi = tempList.get(temp);
-					if(tempsi.getEducation() <= user.getEducation() && tempsi.getSalaryMin() >= userJobIntension.getSalaryMin()) {
+					if(tempsi.getEducation() <= user.getEducation() && tempsi.getSalaryMin() >= userJobIntension.getSalaryMin() && tempsi.getWorkcity().equals(userJobIntension.getWorkplace())) {
 						finalList.add(tempList.get(temp));
 						count++;
 					}
 					temp++;
 				}
 			}
-			if(vsize == 1){
+			if(finalList.size() <= 3){
 				SearchResult searchResult = searchService.search(userJobIntension.getJobName(), 1l, 10l, false);
 				finalList.add(searchResult.getItemList().get(0));
 				finalList.add(searchResult.getItemList().get(1));
@@ -125,13 +131,18 @@ public class SearchController {
 				finalList.add(searchResult.getItemList().get(3));
 				finalList.add(searchResult.getItemList().get(4));
 				finalList.add(searchResult.getItemList().get(5));
-			}else if(vsize == 2){
+			}else if(finalList.size() > 3 && finalList.size() <= 6){
 				SearchResult searchResult = searchService.search(userJobIntension.getJobName(), 1l, 10l, false);
 				finalList.add(searchResult.getItemList().get(0));
 				finalList.add(searchResult.getItemList().get(1));
 				finalList.add(searchResult.getItemList().get(2));
 			}
-			Collections.shuffle(finalList);
+			List<SolrItem> unduplicated = new LinkedList<>();
+			for(int i = 0; i < finalList.size(); i++){
+				SolrItem tempItem = finalList.get(i);
+				if(!unduplicated.contains(tempItem))unduplicated.add(tempItem);
+			}
+			Collections.shuffle(unduplicated);
 
 			//item = new SolrItem();
 			//item.setJobId(3074);
@@ -140,7 +151,7 @@ public class SearchController {
 //		item.setWorkcity("北京");
 //		item.setWelfare("年终奖金");
 //		item.setSpecification("岗位职责：1、利用机器学习技术，改进头条的推荐、广告系统，优化用户的阅读体验；2、分析基础数据，挖掘用户兴趣、文章价值，增强推荐、广告系统的预测能力；3、分析用户商业意图，挖掘流量潜在商业价值，提升流量变现；4、研究计算机视觉算法，给用户提供更多更酷炫的功能。任职要求：1、3年以上的推荐系统、rank相关工作经验；2、强悍的编码能力，精通spark优先，精通c、c++、python语言优先；3、扎实的数据结构和算法功底；4、熟悉常用的推荐算法，能熟练解决常见的分类和回归问题；5、熟练使用以下任何一个开源工具者优先：xgboost、tensorflow、keras、theano、caffe；6、具备优秀的逻辑思维能力，对解决挑战性问题充满热情，善于解决问题和分析问题；7、具备良好的团队合作精神，较强的沟通能力和学习能力。工作地址：福建省福州市国家863专业软件孵化器510查看职位地图");
-			return Layui.data((long)finalList.size(), finalList);
+			return Layui.data((long)unduplicated.size(), unduplicated);
 			//return TaotaoResult.ok(searchResult);
 		}
 	}

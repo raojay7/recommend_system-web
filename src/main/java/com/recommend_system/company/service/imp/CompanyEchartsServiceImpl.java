@@ -110,6 +110,8 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             ja1.add(0);
             j1.put("xAxisIndex", ja1);
             j1.put("filterMode", "filter");
+            j1.put("start", 0);
+            j1.put("end", 60);
             JSONObject j2 = new JSONObject();
             j2.put("id", "dataZoomY");
             j2.put("type", "slider");
@@ -228,6 +230,7 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             if(type == 2){
                 System.out.println("type=2");
                 ja = new JSONArray();
+                List<CompanyExt> scaleList = companyMapper.getCompanyScaleGroupByScale();
                 ja.add("1000-5000人");
                 ja.add("10000人以上");
                 ja.add("150-500人");

@@ -14,6 +14,7 @@ import com.recommend_system.userlike.dao.UserJobRankMapper;
 import com.recommend_system.userlike.entity.UserJobRank;
 import com.recommend_system.userlike.entity.UserJobRankExample;
 import com.recommend_system.userlike.service.UserJobRankService;
+import com.recommend_system.utils.JedisClient;
 import com.recommend_system.utils.RecommendFactory;
 import com.taotao.common.pojo.SolrItem;
 import org.apache.mahout.cf.taste.common.TasteException;
@@ -27,6 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.lang.Math.E;
@@ -41,6 +44,8 @@ public class UserJobRankServiceImpl implements UserJobRankService {
     private CompanyMapper companyMapper;
     @Autowired
     private UserJobIntensionMapper userJobIntensionMapper;
+    @Autowired
+    private JedisClient jc;
 
     public static void randomSet(int min, int max, int n, HashSet<Integer> set) {
         if (n > (max - min + 1) || max < min) {
@@ -66,8 +71,63 @@ public class UserJobRankServiceImpl implements UserJobRankService {
         }
         return false;
     }
+
     @Override
-    public List<SolrItem> recommend(User user, String path) {
+    public List<SolrItem> recommend() {
+        List<SolrItem> itemList = new LinkedList<>();
+        if(jc.exists("recommend_list")){
+            List<String> list = jc.getList("recommend_list");
+            List<Integer> unduplicated = new ArrayList<>();
+            List<String> list2 = new ArrayList<>();
+            if(list.size() > 5){
+                Random random = new Random();
+                int count = 0;
+                while(count < 5){
+                    int randomIndex = random.nextInt(list.size());
+                    if(!unduplicated.contains(randomIndex)){
+                        unduplicated.add(randomIndex);
+                        list2.add(list.get(randomIndex));
+                        count++;
+                    }
+                }
+            }
+            for(int i = 0; i < list2.size(); i++){
+                String info = list2.get(i);
+                String[] properties = info.split(" ");
+                SolrItem item = new SolrItem();
+
+                item.setCompanyId(Integer.parseInt(properties[0]));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    item.setCtime(sdf.parse(properties[1]));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                item.setEducation(Integer.parseInt(properties[2]));
+                item.setJobName(properties[3]);
+                item.setJobId(Integer.parseInt(properties[4]));
+                item.setJobNature(Integer.parseInt(properties[5]));
+                item.setNeedNum(Integer.parseInt(properties[6]));
+                item.setSalaryMax(Integer.parseInt(properties[7]));
+                item.setSalaryMin(Integer.parseInt(properties[8]));
+                item.setSpecification(properties[9]);
+                item.setWelfare(properties[10]);
+                item.setWorkcity(properties[11]);
+                item.setWorkexperienceMax(Integer.parseInt(properties[12]));
+                item.setWorkexperienceMin(Integer.parseInt(properties[13]));
+                item.setWorkplace(properties[14]);
+                item.setCompanyName(properties[15]);
+
+                itemList.add(item);
+
+            }
+        }
+        else System.out.println("redis缓存为空！");
+        return itemList;
+    }
+
+    @Override
+    public void calculate(User user, String path) {
         try {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path))));
             UserJobRankExample example = new UserJobRankExample();
@@ -127,26 +187,7 @@ public class UserJobRankServiceImpl implements UserJobRankService {
                 ujiCriteria.andUserIdEqualTo(user.getUserId());
                 List<UserJobIntension> ujiList = userJobIntensionMapper.selectByExample(userJobIntensionExample);
                 UserJobIntension userJobIntension = ujiList.get(0);
-                JobExample enhanceExample = new JobExample();
-                JobExample.Criteria enhanceCriteria = enhanceExample.createCriteria();
-                //System.out.println(userJobIntension.getWorkplace()+" "+userJobIntension.getJobName()+" "+user.getEducation()+" "+userJobIntension.getJobNature()+" "+userJobIntension.getSalaryMin());
-                enhanceCriteria.andWorkcityEqualTo(userJobIntension.getWorkplace());
-                enhanceCriteria.andJobNameLike("%" + userJobIntension.getJobName() + "%");
-                enhanceCriteria.andEducationLessThanOrEqualTo(user.getEducation());
-                enhanceCriteria.andJobNatureEqualTo(userJobIntension.getJobNature());
-                enhanceCriteria.andSalaryMinGreaterThanOrEqualTo(userJobIntension.getSalaryMin());
-                List<Job> enhanceJobList = jobMapper.selectByExample(enhanceExample);
-                //jlist.addAll(enhanceJobList);
 
-                /*Iterator<Job> filterIt = jlist.iterator();
-                Job checkJob;
-                while(filterIt.hasNext()){
-                    checkJob = filterIt.next();
-                    if(checkJob.getSalaryMin() < userJobIntension.getSalaryMin())jlist.remove(checkJob);
-                }*/
-
-                //System.out.println(enhanceJobList);
-                jlist.addAll(enhanceJobList);
                 for(int k=0;k<jlist.size();k++){
                     Job tjob = jlist.get(k);
                     System.out.println("jobid:"+tjob.getJobId()+"jobname:"+tjob.getJobName()+" workplace:"+tjob.getWorkcity());
@@ -157,17 +198,39 @@ public class UserJobRankServiceImpl implements UserJobRankService {
                 for (int i = 0; i < jlist.size(); i++) {
                     valijob = jlist.get(i);
                     if (valijob.getSalaryMin() < userJobIntension.getSalaryMin()) {
-                        //System.out.println("不合格的薪水：" + valijob.getSalaryMin());
                         jlist.remove(valijob);
                     }
                 }
             }
-            /*for(int i = 0; i < jlist.size(); i++){
-                    System.out.println("筛选后的薪水："+jlist.get(i).getSalaryMin());
+            for(int i = 0; i < jlist.size(); i++){
+                Job job = jlist.get(i);
+                String companyId = String.valueOf(job.getCompanyId());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String Ctime = sdf.format(job.getCtime());
+                String education = String.valueOf(job.getEducation());
+                String jobName = job.getJobName();
+                String jobId = String.valueOf(job.getJobId());
+                String jobNature = String.valueOf(job.getJobNature());
+                String needNum = String.valueOf(job.getNeedNum());
+                String salaryMax = String.valueOf(job.getSalaryMax());
+                String salaryMin = String.valueOf(job.getSalaryMin());
+                String specification = job.getSpecification();
+                String welfare = job.getWelfare();
+                String workcity = job.getWorkcity();
+                String workExperienceMax = String.valueOf(job.getWorkexperienceMax());
+                String workExperienceMin = String.valueOf(job.getWorkexperienceMin());
+                String workPlace = job.getWorkplace();
 
-            }*/
+                CompanyExample companyExample = new CompanyExample();
+                CompanyExample.Criteria cc = companyExample.createCriteria();
+                cc.andCompanyIdEqualTo(Integer.parseInt(companyId));
+                String companyName = companyMapper.selectByExample(companyExample).get(0).getCompanyName();
+
+                jc.appendRightList("recommend_list", companyId + " " + Ctime + " " + education + " " + jobName + " " + jobId + " " + jobNature + " " + needNum + " " +
+                salaryMax + " " + salaryMin + " " + specification + " " + welfare + " " + workcity + " " + workExperienceMax + " " + workExperienceMin + " " + workPlace + " " + companyName);
+            }
             //每次访问都随机取五个
-            HashSet<Integer> set = new HashSet<>();
+            /*HashSet<Integer> set = new HashSet<>();
             randomSet(0, jlist.size() - 1, 5, set);
             List<Job> randomList = new LinkedList<>();
             for(Integer id : set){
@@ -201,7 +264,7 @@ public class UserJobRankServiceImpl implements UserJobRankService {
                 silist.add(si);
             }
 
-                return silist;
+                return silist;*/
             } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         } catch (IOException e1) {
@@ -209,7 +272,6 @@ public class UserJobRankServiceImpl implements UserJobRankService {
         } catch (TasteException e1) {
             e1.printStackTrace();
         }
-        return null;
     }
 
     @Override
@@ -244,15 +306,6 @@ public class UserJobRankServiceImpl implements UserJobRankService {
         example.setOrderByClause("job_id asc");
         List<Job> jobList = jobMapper.selectByExample(example);
         Iterator<Job> it = jobList.iterator();
-        /*List<SolrItem> searchList;
-        SolrItem solrItem;
-        SearchResult searchResult = searchService.search(userJobIntension.getJobName(), 1l, 3179L);
-        searchList = searchResult.getItemList();*//*
-        JobExample jobExample = new JobExample();
-        JobExample.Criteria criteria12 = jobExample.createCriteria();
-        criteria12.andJobNameLike(userJobIntension.getJobName());
-        List<Job> list = jobMapper.selectByExample(jobExample);
-        Iterator<Job> iterator = list.iterator();*/
 
         while(it.hasNext()){
             job = it.next();
@@ -264,26 +317,6 @@ public class UserJobRankServiceImpl implements UserJobRankService {
             //-----------jobName匹配--------
             if(job.getJobName().contains(userJobIntension.getJobName()))propVector[3] = 1;
 
-            /*while(iterator.hasNext()){
-                job2 = iterator.next();
-                if(){
-                    propVector[3] = 1;
-                    break;
-                }
-            }*/
-            /*Iterator<SolrItem> sit = searchList.iterator();
-            while(sit.hasNext()){
-                solrItem = sit.next();
-                System.out.println(solrItem.getJobId());
-                //System.out.print("jobid:"+job.getJobId()+" "+"sjid:"+solrItem.getJobId()+":");
-                if(solrItem.getCompanyId() == job.getCompanyId()){
-                    System.out.print("jobid:"+job.getCompanyId()+" "+"sjid:"+solrItem.getCompanyId());
-                    propVector[3] = 1;
-                    break;
-                }
-                //System.out.println(propVector[3]);
-            }*/
-            //-------------------------------
 
             //--------professional匹配-----------
             CompanyExample companyExample = new CompanyExample();

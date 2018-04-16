@@ -27,7 +27,8 @@ public interface UserJobRankService {
     /**
      *
      * @param user 要推荐的用户
-     * @return 返回推荐的工作集
      */
-    public List<SolrItem> recommend(User user, String path);
+    public void calculate(User user, String path);
+
+    public List<SolrItem> recommend();
 }
