@@ -118,7 +118,7 @@
                 <h2 class="layui-colla-title">公司规模分布分析</h2>
                 <div class="layui-colla-content">
                     <script src="../js/company_scale.js"></script>
-                    <div id="my_chart5" style="width:1205px;height:700px;"></div>
+                    <div id="my_chart5" style="width:1180px;height:700px;"></div>
                 </div>
             </div>
             <div class="layui-colla-item">

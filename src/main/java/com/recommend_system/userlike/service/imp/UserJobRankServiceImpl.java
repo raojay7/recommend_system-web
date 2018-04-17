@@ -47,6 +47,26 @@ public class UserJobRankServiceImpl implements UserJobRankService {
     @Autowired
     private JedisClient jc;
 
+    @Override
+    public void setScore(int uid, int jid, Double score) {
+        UserJobRank record = new UserJobRank();
+        record.setUserId(uid);
+        record.setJobId(jid);
+        record.setGrade(score);
+        userJobRankMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public Double getScore(int uid, int jid) {
+        UserJobRankExample userJobRankExample = new UserJobRankExample();
+        UserJobRankExample.Criteria criteria = userJobRankExample.createCriteria();
+        criteria.andUserIdEqualTo(uid);
+        criteria.andJobIdEqualTo(jid);
+        List<UserJobRank> list = userJobRankMapper.selectByExample(userJobRankExample);
+        Double score = list.size() == 0 ? 0.0 : list.get(0).getGrade();
+        return score;
+    }
+
     public static void randomSet(int min, int max, int n, HashSet<Integer> set) {
         if (n > (max - min + 1) || max < min) {
             n = max - min + 1;

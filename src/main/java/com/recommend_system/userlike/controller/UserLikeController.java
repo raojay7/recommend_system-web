@@ -3,6 +3,7 @@ package com.recommend_system.userlike.controller;
 import com.recommend_system.company.entity.Company;
 import com.recommend_system.company.service.CompanyService;
 import com.recommend_system.job.service.JobService;
+import com.recommend_system.userlike.service.UserJobRankService;
 import com.recommend_system.userlike.service.UserLikeService;
 import com.recommend_system.uservisit.service.UserVisitService;
 import com.taotao.common.pojo.Layui;
@@ -28,6 +29,8 @@ public class UserLikeController {
     private JobService jobService;
     @Autowired
     private UserVisitService userVisitService;
+    @Autowired
+    private UserJobRankService userJobRankService;
 
     @RequestMapping("collect")
     public ModelAndView doCollect(HttpSession session, int uid, int jid){
@@ -36,6 +39,8 @@ public class UserLikeController {
         userVisitService.visit(uid, jid);
         String page = (String) session.getAttribute("page");
         Company company = companyService.getCompany(jobService.getCompanyId(jid));
+        Double score = userJobRankService.getScore(uid, jid);
+        mav.addObject("score", score);
         mav.addObject("job", jobService.getJobById(jid));
         mav.addObject("jobId", jid);
         mav.addObject("companyId", jobService.getCompanyId(jid));

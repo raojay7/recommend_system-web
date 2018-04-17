@@ -4,6 +4,8 @@ import com.recommend_system.hotsearch.service.HotSearchService;
 import com.recommend_system.search.service.SearchService;
 import com.recommend_system.user.entity.User;
 import com.recommend_system.user.entity.UserJobIntension;
+import com.recommend_system.userlike.entity.UserLikeKey;
+import com.recommend_system.userlike.service.UserLikeService;
 import com.recommend_system.uservisit.entity.VisitJob;
 import com.recommend_system.uservisit.service.UserVisitService;
 import com.taotao.common.pojo.Layui;
@@ -31,6 +33,8 @@ public class SearchController {
 	private UserVisitService userVisitService;
 	@Autowired
 	private HotSearchService hotSearchService;
+	@Autowired
+    private UserLikeService userLikeService;
 
 	@RequestMapping("/q")
 	@ResponseBody
@@ -80,6 +84,11 @@ public class SearchController {
 			System.out.println("recentList.size = " + recentList.size());
 			int recentListSize = recentList.size();
 			if(recentListSize > 3){
+				if(recentListSize > 5) {
+                    List<VisitJob> decRecent = new ArrayList<>();
+                    for(int i = 0; i < 5; i++)decRecent.add(recentList.get(i));
+                    recentList = decRecent;
+                }
 				Random random = new Random();
 				int validNum = 0, randomNum;
 				List<Integer> removeNumList = new LinkedList<>();
@@ -98,6 +107,18 @@ public class SearchController {
 			}else{
 				vlist.addAll(recentList);
 			}
+			List<UserLikeKey> userLikeKeys = userLikeService.getList(user.getUserId());
+			/*int total = 0;
+			List<Integer> ilist = new LinkedList<>();
+			for(int i = (int)(Math.random() * userLikeKeys.size()); total < 3; i = (int)(Math.random() * userLikeKeys.size())){
+			    if(ilist.contains(i))continue;
+			    ilist.add(i);
+			    int jobId = userLikeKeys.get(i).getJobId();
+			    VisitJob vj = new VisitJob();
+			    vj.settJobId(jobId);
+			    vlist.add(vj);
+			    total++;
+            }*/
 			Iterator<VisitJob> it = vlist.iterator();
 			List<SearchResult> resultList = new LinkedList<>();
 			while(it.hasNext()){

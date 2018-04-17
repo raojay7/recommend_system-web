@@ -30,5 +30,25 @@ public interface UserJobRankService {
      */
     public void calculate(User user, String path);
 
+    /**
+     *
+     * @return 返回推荐的项目列表
+     */
     public List<SolrItem> recommend();
+
+    /**
+     *
+     * @param uid 用户id
+     * @param jid 职位id
+     * @return 对应的评分
+     */
+    public Double getScore(int uid, int jid);
+
+    /**
+     *
+     * @param uid 用户id
+     * @param jid 职位id
+     * @param score 评分
+     */
+    public void setScore(int uid, int jid, Double score);
 }

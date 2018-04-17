@@ -6,6 +6,7 @@ import com.recommend_system.job.dao.JobMapper;
 import com.recommend_system.job.entity.Job;
 import com.recommend_system.job.entity.JobExample;
 import com.recommend_system.userlike.entity.UserLikeKey;
+import com.recommend_system.userlike.service.UserJobRankService;
 import com.recommend_system.userlike.service.UserLikeService;
 import com.recommend_system.uservisit.service.UserVisitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class JobDetailController {
     private UserLikeService userLikeService;
     @Autowired
     private UserVisitService userVisitService;
+    @Autowired
+    private UserJobRankService userJobRankService;
 
     @RequestMapping("job")
     public ModelAndView toJobDetail(HttpSession session, HttpServletRequest request, String page){
@@ -39,6 +42,8 @@ public class JobDetailController {
         System.out.println(companyId + " " + jobId);
         Job job = jobMapper.selectByPrimaryKey(jobId);
         Company company = companyMapper.selectByPrimaryKey(companyId);
+        Double score = userJobRankService.getScore(uid, jobId);
+        request.setAttribute("score", score);
         request.setAttribute("job", job);
         request.setAttribute("company", company);
         session.setAttribute("page", page);

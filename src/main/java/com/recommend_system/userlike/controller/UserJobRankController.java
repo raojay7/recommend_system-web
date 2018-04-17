@@ -1,9 +1,14 @@
 package com.recommend_system.userlike.controller;
 
+import com.recommend_system.company.entity.Company;
+import com.recommend_system.company.service.CompanyService;
 import com.recommend_system.job.entity.Job;
+import com.recommend_system.job.service.JobService;
 import com.recommend_system.user.entity.User;
 import com.recommend_system.user.entity.UserJobIntension;
+import com.recommend_system.userlike.entity.UserLikeKey;
 import com.recommend_system.userlike.service.UserJobRankService;
+import com.recommend_system.userlike.service.UserLikeService;
 import com.taotao.common.pojo.Layui;
 import com.taotao.common.pojo.SolrItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +30,34 @@ import java.util.Map;
 public class UserJobRankController {
     @Autowired
     private UserJobRankService userJobRankService;
+    @Autowired
+    private JobService jobService;
+    @Autowired
+    private CompanyService companyService;
+    @Autowired
+    private UserLikeService userLikeService;
+
+    @RequestMapping("feedback")
+    public String feedback(HttpSession session, HttpServletRequest request, int jid, int cid, Double score){
+        Job job = jobService.getJobById(jid);
+        Company company = companyService.getCompany(cid);
+        User user = (User)session.getAttribute("user");
+        userJobRankService.setScore(user.getUserId(), job.getJobId(), score);
+        List<UserLikeKey> list = userLikeService.getList(user.getUserId());
+        if(list.size() == 0)request.setAttribute("flag", "0");
+        else {
+            for (UserLikeKey userLikeKey : list) {
+                if (userLikeKey.getJobId() == jid) {
+                    request.setAttribute("flag", "1");
+                    break;
+                } else request.setAttribute("flag", "0");
+            }
+        }
+        request.setAttribute("score", score);
+        request.setAttribute("job", job);
+        request.setAttribute("company", company);
+        return "job_detail";
+    }
 
     @RequestMapping("work")
     @ResponseBody
