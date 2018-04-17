@@ -30,7 +30,7 @@
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">消息通知<span class="layui-badge">9</span></a></li>
             <li class="layui-nav-item"><a href="">管理</a></li>
-            <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/my_favorites">我的收藏</a></li>
+            <li class="layui-nav-item layui-this"><a href="${pageContext.request.contextPath}/my_favorites">我的收藏</a></li>
             <li class="layui-nav-item">
                 <a href="javascript:">其它</a>
                 <dl class="layui-nav-child">
@@ -68,6 +68,7 @@
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/job_search">职位搜索</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/index">统计分析</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/recommended_posts">职位推荐</a></li>
+                <li class="layui-nav-item"><a href="http://127.0.0.1:8088/login">智能预测</a></li>
             </ul>
         </div>
     </div>

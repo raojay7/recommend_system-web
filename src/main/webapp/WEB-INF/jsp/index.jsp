@@ -31,7 +31,7 @@
               initChart10('<%=path%>/job/workex',echarts.init(document.getElementById('my_chart10')));">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <a href="${pageContext.request.contextPath}/index"><div class="layui-logo"> 智能职业推荐系统</div></a>
+        <a href="${pageContext.request.contextPath}/index"><div class="layui-logo"> 智能职业分析系统</div></a>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">消息通知<span class="layui-badge">9</span></a></li>
@@ -72,8 +72,9 @@
                     <a href="${pageContext.request.contextPath}/job_intension">求职意向</a>
                 </li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/job_search">职位搜索</a></li>
-                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/index">统计分析</a></li>
+                <li class="layui-nav-item layui-this"><a href="${pageContext.request.contextPath}/index">统计分析</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/recommended_posts">职位推荐</a></li>
+                <li class="layui-nav-item"><a href="http://127.0.0.1:8088/login">智能预测</a></li>
             </ul>
         </div>
     </div>

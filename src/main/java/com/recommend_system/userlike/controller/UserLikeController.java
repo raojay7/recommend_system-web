@@ -1,5 +1,7 @@
 package com.recommend_system.userlike.controller;
 
+import com.recommend_system.company.entity.Company;
+import com.recommend_system.company.service.CompanyService;
 import com.recommend_system.job.service.JobService;
 import com.recommend_system.userlike.service.UserLikeService;
 import com.recommend_system.uservisit.service.UserVisitService;
@@ -19,6 +21,8 @@ import java.util.List;
 @RequestMapping("action")
 public class UserLikeController {
     @Autowired
+    private CompanyService companyService;
+    @Autowired
     private UserLikeService userLikeService;
     @Autowired
     private JobService jobService;
@@ -31,9 +35,11 @@ public class UserLikeController {
         userLikeService.collect(uid, jid);
         userVisitService.visit(uid, jid);
         String page = (String) session.getAttribute("page");
+        Company company = companyService.getCompany(jobService.getCompanyId(jid));
         mav.addObject("job", jobService.getJobById(jid));
         mav.addObject("jobId", jid);
         mav.addObject("companyId", jobService.getCompanyId(jid));
+        mav.addObject("company", company);
         mav.addObject("userId", uid);
         mav.addObject("ull",userLikeService.getList(uid));
         mav.addObject("flag", "1");

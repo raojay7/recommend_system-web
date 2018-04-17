@@ -13,7 +13,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public int getCompanyId(int jobId) {
         Job job = jobMapper.selectByPrimaryKey(jobId);
-        return job.getJobId();
+        return job.getCompanyId();
     }
 
     @Override
