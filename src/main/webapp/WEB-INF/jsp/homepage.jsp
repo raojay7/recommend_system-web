@@ -7,7 +7,7 @@
 <!-- Head -->
 <head>
 
-	<title>智能求职推荐系统</title>
+	<title>智能求职分析系统</title>
 
 	<!-- Meta-Tags -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -135,7 +135,7 @@
 %>
 <body>
 
-	<h1>智能职位推荐系统</h1>
+	<h1>智能职位分析系统</h1>
 
 	<div class="container w3layouts agileits">
 
