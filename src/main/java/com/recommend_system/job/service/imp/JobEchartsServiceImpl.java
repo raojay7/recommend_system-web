@@ -1,17 +1,26 @@
 package com.recommend_system.job.service.imp;
 
+import com.recommend_system.cityneed.dao.CityNeedMapper;
+import com.recommend_system.cityneed.entity.CityNeed;
+import com.recommend_system.cityneed.entity.CityNeedExample;
+import com.recommend_system.citysalary.dao.CitySalaryMapper;
+import com.recommend_system.citysalary.entity.CitySalaryExample;
+import com.recommend_system.eduandsalary.dao.EduandSalaryMapper;
+import com.recommend_system.eduandsalary.entity.EduandSalary;
+import com.recommend_system.eduandsalary.entity.EduandSalaryExample;
+import com.recommend_system.expandsalary.dao.ExpandSalaryMapper;
+import com.recommend_system.expandsalary.entity.ExpandSalary;
+import com.recommend_system.expandsalary.entity.ExpandSalaryExample;
 import com.recommend_system.job.dao.JobMapper;
 import com.recommend_system.job.entity.JobExt;
 import com.recommend_system.job.service.JobEchartsService;
 import com.recommend_system.utils.DataFilter;
 import com.recommend_system.utils.JedisClient;
 import com.recommend_system.utils.impl.SortFilter;
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -21,7 +30,14 @@ public class JobEchartsServiceImpl implements JobEchartsService {
 
     @Autowired
     private JobMapper jobMapper;
-
+    @Autowired
+    private CityNeedMapper cityNeedMapper;
+    @Autowired
+    private CitySalaryMapper citySalaryMapper;
+    @Autowired
+    private EduandSalaryMapper eduandSalaryMapper;
+    @Autowired
+    private ExpandSalaryMapper expandSalaryMapper;
     @Autowired
     private JedisClient jc;
 
@@ -115,7 +131,8 @@ public class JobEchartsServiceImpl implements JobEchartsService {
                 map.put(je.getAve_salary(), je.getWorkcity());
             }*/
             DataFilter dataFilter = new SortFilter();
-            dataFilter.sort_filter(jobMapper.getCityAvgSalary(),1.0f, jc, "cityavgsalary_city", "cityavgsalary_avg");
+
+            dataFilter.sort_filter(citySalaryMapper.selectByExample(new CitySalaryExample()),1.0f, jc, "cityavgsalary_city", "cityavgsalary_avg");
             /*int size = map.size();
             size *= 0.6;
             int count = 0;
@@ -197,9 +214,9 @@ public class JobEchartsServiceImpl implements JobEchartsService {
 
             return jsonObject.toString();
         }else {
-            JobExt je;
-            List<JobExt> list = jobMapper.getEducationAvgSalary();
-            Iterator<JobExt> it = list.iterator();
+            EduandSalary je;
+            List<EduandSalary> list = eduandSalaryMapper.selectByExample(new EduandSalaryExample());
+            Iterator<EduandSalary> it = list.iterator();
             int edu;
             String s;
             while(it.hasNext()){
@@ -226,8 +243,8 @@ public class JobEchartsServiceImpl implements JobEchartsService {
                             break;
                 }
                 jc.appendRightList("educationavgsalary_education",s);
-                jc.appendRightList("educationavgsalary_jobnum",String.valueOf(je.getJobnum()));
-                jc.appendRightList("educationavgsalary_avg",String.valueOf(je.getAve_salary()));
+                jc.appendRightList("educationavgsalary_jobnum",String.valueOf(je.getNeedNum()));
+                jc.appendRightList("educationavgsalary_avg",String.valueOf(je.getAvgSalary()));
             }
             return getEducationAvgSalary();
         }
@@ -253,13 +270,13 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             }
             return data.toString();
         }else {
-            JobExt je;
-            List<JobExt> list = jobMapper.getJobCity();
-            Iterator<JobExt> it = list.iterator();
+            CityNeed je;
+            List<CityNeed> list = cityNeedMapper.selectByExample(new CityNeedExample());
+            Iterator<CityNeed> it = list.iterator();
             while(it.hasNext()){
                 je = it.next();
-                jc.appendRightList("jobcity_city", je.getWorkcity());
-                jc.appendRightList("jobcity_jobnum",String.valueOf(je.getJobnum()));
+                jc.appendRightList("jobcity_city", je.getCity());
+                jc.appendRightList("jobcity_jobnum",String.valueOf(je.getNum()));
             }
             return getJobCity();
         }
@@ -274,37 +291,37 @@ public class JobEchartsServiceImpl implements JobEchartsService {
             Iterator<String> it_ex = ex.iterator();
             Iterator<String> it_avg = avg.iterator();
 
-            /*JSONObject jsonObject = new JSONObject();
+            /*JSONObject jsonObject = fix JSONObject();
             //标题对象
-            JSONObject titleObject = new JSONObject();
+            JSONObject titleObject = fix JSONObject();
             titleObject.put("text", "工作经验对应工资分布");
             jsonObject.put("title", titleObject);
             //文字提示框对象
-            JSONObject tooltipsObj = new JSONObject();
+            JSONObject tooltipsObj = fix JSONObject();
             tooltipsObj.put("trigger", "axis");
             tooltipsObj.put("label", "工作经验");
             jsonObject.put("tooltip", tooltipsObj);
             //各线说明
-            JSONObject legendObj = new JSONObject();
-            JSONArray lgd = new JSONArray();
+            JSONObject legendObj = fix JSONObject();
+            JSONArray lgd = fix JSONArray();
             lgd.add("工资");
             legendObj.put("data", lgd);
             jsonObject.put("legend", legendObj);
             //y轴，一般空
-            jsonObject.put("yAxis", new JSONObject());
+            jsonObject.put("yAxis", fix JSONObject());
 
-            JSONObject xObj = new JSONObject();
-            JSONArray seArr = new JSONArray();
+            JSONObject xObj = fix JSONObject();
+            JSONArray seArr = fix JSONArray();
 
-            JSONObject seObj = new JSONObject();
+            JSONObject seObj = fix JSONObject();
             seObj.put("name", "工资");
             seObj.put("type", "bar");
 
-            JSONObject gridObject = new JSONObject();
+            JSONObject gridObject = fix JSONObject();
             gridObject.put("y2", 30);
             gridObject.put("x",50);
 
-            JSONArray xDataArr = new JSONArray();*/
+            JSONArray xDataArr = fix JSONArray();*/
             JSONArray seDataArr = new JSONArray();
 
             DecimalFormat df = new DecimalFormat("0.000");
@@ -322,15 +339,15 @@ public class JobEchartsServiceImpl implements JobEchartsService {
 
             return seDataArr.toString();
         }else {
-            JobExt je;
-            List<JobExt> list = jobMapper.getExperienceSalary();
-            Iterator<JobExt> it = list.iterator();
+            ExpandSalary je;
+            List<ExpandSalary> list = expandSalaryMapper.selectByExample(new ExpandSalaryExample());
+            Iterator<ExpandSalary> it = list.iterator();
             int ex_max, ex_min;
             String s;
             while(it.hasNext()){
                 je = it.next();
-                ex_max = je.getWorkexperience_max();
-                ex_min = je.getWorkexperience_min();
+                ex_max = je.getExperienceMax();
+                ex_min = je.getExperienceMin();
                 if(ex_min == 1 && ex_max == 3){
                     s = "1到3年";
                 }else if(ex_min == 3 && ex_max == 5){
@@ -339,7 +356,7 @@ public class JobEchartsServiceImpl implements JobEchartsService {
                     s = "5到10年";
                 }
                 jc.appendRightList("workex_ex",s);
-                jc.appendRightList("workex_avg",String.valueOf(je.getAve_salary()));
+                jc.appendRightList("workex_avg",String.valueOf(je.getAvgSalary()));
             }
             return getExperienceSalary();
         }

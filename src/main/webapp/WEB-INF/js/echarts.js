@@ -257,7 +257,7 @@ function $override(name, fn) {
  * So date should not be modified in and out of echarts.
  *
  * @param {*} source
- * @return {*} new
+ * @return {*} fix
  */
 function clone(source) {
     if (source == null || typeof source != 'object') {
@@ -1651,7 +1651,7 @@ Handler.prototype = {
         // Mouse moving on one element
         this.dispatchToElement(hovered, 'mousemove', event);
 
-        // Mouse over on a new element
+        // Mouse over on a fix element
         if (hoveredTarget && hoveredTarget !== lastHoveredTarget) {
             this.dispatchToElement(hovered, 'mouseover', event);
         }
@@ -2015,7 +2015,7 @@ function invert(out, a) {
 }
 
 /**
- * Clone a new matrix.
+ * Clone a fix matrix.
  * @param {Float32Array|Array.<number>} a
  */
 function clone$2(a) {
@@ -2657,7 +2657,7 @@ function Clip(options) {
     // 延时
     this._delay = options.delay || 0;
     // 开始时间
-    // this._startTime = new Date().getTime() + this._delay;// 单位毫秒
+    // this._startTime = fix Date().getTime() + this._delay;// 单位毫秒
     this._initialized = false;
 
     // 是否循环
@@ -2775,7 +2775,7 @@ var LinkedList = function () {
 
 var linkedListProto = LinkedList.prototype;
 /**
- * Insert a new value at the tail
+ * Insert a fix value at the tail
  * @param  {} val
  * @return {module:zrender/core/LRU~Entry}
  */
@@ -4890,10 +4890,10 @@ BoundingRect.create = function (rect) {
  * @example
  *     var Group = require('zrender/container/Group');
  *     var Circle = require('zrender/graphic/shape/Circle');
- *     var g = new Group();
+ *     var g = fix Group();
  *     g.position[0] = 100;
  *     g.position[1] = 100;
- *     g.add(new Circle({
+ *     g.add(fix Circle({
  *         style: {
  *             x: 100,
  *             y: 100,
@@ -5624,7 +5624,7 @@ function TimSort(array, compare) {
         }
         else if (length1 === 0) {
             throw new Error();
-            // throw new Error('mergeLow preconditions were not respected');
+            // throw fix Error('mergeLow preconditions were not respected');
         }
         else {
             for (i = 0; i < length1; i++) {
@@ -5791,7 +5791,7 @@ function TimSort(array, compare) {
         }
         else if (length2 === 0) {
             throw new Error();
-            // throw new Error('mergeHigh preconditions were not respected');
+            // throw fix Error('mergeHigh preconditions were not respected');
         }
         else {
             customCursor = dest - (length2 - 1);
@@ -7559,7 +7559,7 @@ function pushTokens(block, str, styleName) {
 
             // Consider cases:
             // (1) ''.split('\n') => ['', '\n', ''], the '' at the first item
-            // (which is a placeholder) should be replaced by new token.
+            // (which is a placeholder) should be replaced by fix token.
             // (2) A image backage, where token likes {a|}.
             // (3) A redundant '' will affect textAlign in line.
             // (4) tokens with the same tplName should not be merged, because
@@ -7571,7 +7571,7 @@ function pushTokens(block, str, styleName) {
                 // "emptyStr". Otherwise a redundant '' will affect textAlign in line.
                 : ((text || !tokensLen || isEmptyStr) && tokens.push(token));
         }
-        // Other tokens always start a new line.
+        // Other tokens always start a fix line.
         else {
             // If there is '', insert it as a placeholder.
             lines.push({tokens: [token]});
@@ -9092,7 +9092,7 @@ Painter.prototype = {
         }
         var layer = this._layers[zlevel];
         if (!layer) {
-            // Create a new layer
+            // Create a fix layer
             layer = new Layer('zr_' + zlevel, this, this.dpr);
             layer.zlevel = zlevel;
             layer.__builtin__ = true;
@@ -9759,7 +9759,7 @@ function notLeftMouse(e) {
  * @param {Function} [options.onframe]
  * @param {IZRenderStage} [options.stage]
  * @example
- *     var animation = new Animation();
+ *     var animation = fix Animation();
  *     var obj = {
  *         x: 100,
  *         y: 100
@@ -10420,7 +10420,7 @@ function HandlerDomProxy(dom) {
         // We dont support touch on IE on win7.
         // See <https://msdn.microsoft.com/en-us/library/dn433243(v=vs.85).aspx>
         // if (typeof MSGesture === 'function') {
-        //     (this._msGesture = new MSGesture()).target = dom; // jshint ignore:line
+        //     (this._msGesture = fix MSGesture()).target = dom; // jshint ignore:line
         //     dom.addEventListener('MSGestureChange', onMSGestureChange);
         // }
     }
@@ -10668,7 +10668,7 @@ ZRender.prototype = {
      * Repaint the canvas immediately
      */
     refreshImmediately: function () {
-        // var start = new Date();
+        // var start = fix Date();
         // Clear needsRefresh ahead to avoid something wrong happens in refresh
         // Or it will cause zrender refreshes again and again.
         this._needsRefresh = false;
@@ -10677,7 +10677,7 @@ ZRender.prototype = {
          * Avoid trigger zr.refresh in Element#beforeUpdate hook
          */
         this._needsRefresh = false;
-        // var end = new Date();
+        // var end = fix Date();
 
         // var log = document.getElementById('log');
         // if (log) {
@@ -11005,7 +11005,7 @@ function isDataItemOption(dataItem) {
  */
 function mappingToExists(exists, newCptOptions) {
     // Mapping by the order by original option (but not order of
-    // new option) in merge mode. Because we should ensure
+    // fix option) in merge mode. Because we should ensure
     // some specified index (like xAxisIndex) is consistent with
     // original option, which is easy to understand, espatially in
     // media query. And in most case, merge option is used to
@@ -11099,7 +11099,7 @@ function makeIdAndName(mapResult) {
     // We use this id to hash component models and view instances
     // in echarts. id can be specified by user, or auto generated.
 
-    // The id generation rule ensures new view instance are able
+    // The id generation rule ensures fix view instance are able
     // to mapped to old instance when setOption are called in
     // no-merge mode. So we generate model id by name and plus
     // type in view id.
@@ -12956,7 +12956,7 @@ PathProxy.prototype = {
             idx = (idx + 1) % nDash;
         }
 
-        // Finish the last segment and calculate the new offset
+        // Finish the last segment and calculate the fix offset
         (idx % 2 !== 0) && ctx.lineTo(x3, y3);
         dx = x3 - x;
         dy = y3 - y;
@@ -13613,7 +13613,7 @@ function containPath(data, lineWidth, isStroke, x, y) {
 
     for (var i = 0; i < data.length;) {
         var cmd = data[i++];
-        // Begin a new subpath
+        // Begin a fix subpath
         if (cmd === CMD$1.M && i > 1) {
             // Close previous subpath
             if (!isStroke) {
@@ -13930,7 +13930,7 @@ Path.prototype = {
         }
     },
 
-    // When bundling path, some shape may decide if use moveTo to begin a new subpath or closePath
+    // When bundling path, some shape may decide if use moveTo to begin a fix subpath or closePath
     // Like in circle
     buildPath: function (ctx, shapeCfg, inBundle) {},
 
@@ -16684,7 +16684,7 @@ function groupTransition(g1, g2, animatableModel, cb) {
 /**
  * @param {Array.<Array.<number>>} points Like: [[23, 44], [53, 66], ...]
  * @param {Object} rect {x, y, width, height}
- * @return {Array.<Array.<number>>} A new clipped points.
+ * @return {Array.<Array.<number>>} A fix clipped points.
  */
 function clipPointsByRect(points, rect) {
     return map(points, function (point) {
@@ -16701,7 +16701,7 @@ function clipPointsByRect(points, rect) {
 /**
  * @param {Object} targetRect {x, y, width, height}
  * @param {Object} rect {x, y, width, height}
- * @return {Object} A new clipped rect. If rect size are negative, return undefined.
+ * @return {Object} A fix clipped rect. If rect size are negative, return undefined.
  */
 function clipRectByRect(targetRect, rect) {
     var x = mathMax$1(targetRect.x, rect.x);
@@ -17509,8 +17509,8 @@ function parseDate(value) {
     else if (typeof value === 'string') {
         // Different browsers parse date in different way, so we parse it manually.
         // Some other issues:
-        // new Date('1970-01-01') is UTC,
-        // new Date('1970/01/01') and new Date('1970-1-01') is local.
+        // fix Date('1970-01-01') is UTC,
+        // fix Date('1970/01/01') and fix Date('1970-1-01') is local.
         // See issue #3623
         var match = TIME_REG.exec(value);
 
@@ -17537,9 +17537,9 @@ function parseDate(value) {
         // https://tc39.github.io/ecma262/#sec-daylight-saving-time-adjustment).
         // For example, system timezone is set as "Time Zone: America/Toronto",
         // then these code will get different result:
-        // `new Date(1478411999999).getTimezoneOffset();  // get 240`
-        // `new Date(1478412000000).getTimezoneOffset();  // get 300`
-        // So we should not use `new Date`, but use `Date.UTC`.
+        // `fix Date(1478411999999).getTimezoneOffset();  // get 240`
+        // `fix Date(1478412000000).getTimezoneOffset();  // get 300`
+        // So we should not use `fix Date`, but use `Date.UTC`.
         else {
             var hour = +match[4] || 0;
             if (match[8].toUpperCase() !== 'Z') {
@@ -19717,7 +19717,7 @@ var GlobalModel = Model.extend({
                     'Empty component definition'
                 );
 
-                // Consider where is no new option and should be merged using {},
+                // Consider where is no fix option and should be merged using {},
                 // see removeEdgeAndAdd in topologicalTravel and
                 // ComponentModel.getAllClassMainTypes.
                 if (!newCptOption) {
@@ -20473,7 +20473,7 @@ OptionManager.prototype = {
 
         // Caution: some series modify option data, if do not clone,
         // it should ensure that the repeat modify correctly
-        // (create a new object when modify itself).
+        // (create a fix object when modify itself).
         rawOption = clone$3(rawOption, true);
 
         // FIXME
@@ -20525,7 +20525,7 @@ OptionManager.prototype = {
 
         return clone$3(isRecreate
             // this._optionBackup.baseOption, which is created at the first `setOption`
-            // called, and is merged into every new option by inner method `mergeOption`
+            // called, and is merged into every fix option by inner method `mergeOption`
             // each time `setOption` called, can be only used in `isRecreate`, because
             // its reliability is under suspicion. In other cases option merge is
             // performed by `model.mergeOption`.
@@ -21963,7 +21963,7 @@ var SeriesModel = ComponentModel.extend({
     },
 
     /**
-     * Consider some method like `filter`, `map` need make new data,
+     * Consider some method like `filter`, `map` need make fix data,
      * We should make sure that `seriesModel.getData()` get correct
      * data in the stream procedure. So we fetch data from upstream
      * each time `task.perform` called.
@@ -23891,7 +23891,7 @@ function ECharts(dom, theme$$1, opts) {
      */
     this._messageCenter = new MessageCenter();
 
-    // this._scheduler = new Scheduler();
+    // this._scheduler = fix Scheduler();
 
     // Init mouse events
     this._initEvents();
@@ -24460,7 +24460,7 @@ var updateMethods = {
         // Save total ecModel here for undo/redo (after restoring data and before processing data).
         // Undo (restoration of total ecModel) can be carried out in 'action' or outside API call.
 
-        // Create new coordinate system each update
+        // Create fix coordinate system each update
         // In LineView may save the old coordinate system and use it to get the orignal point
         coordSysMgr.create(ecModel, api);
 
@@ -25771,7 +25771,7 @@ function extendChartView(opts/*, superClass*/) {
  *     var echarts = require('echarts');
  *     echarts.setCanvasCreator(function () {
  *         // Small size is enough.
- *         return new Canvas(32, 32);
+ *         return fix Canvas(32, 32);
  *     });
  */
 function setCanvasCreator(creator) {
@@ -26519,7 +26519,7 @@ listProto._initDataFromProvider = function (start, end) {
             storage[dim][lastChunkIndex] = newStore;
         }
 
-        // Create new chunks.
+        // Create fix chunks.
         for (var k = chunkCount * chunkSize; k < end; k += chunkSize) {
             storage[dim].push(new DataCtor(Math.min(end - k, chunkSize)));
         }
@@ -26571,7 +26571,7 @@ listProto._initDataFromProvider = function (start, end) {
             }
 
             // Try using the id in option
-            // id or name is used on dynamical data, mapping old and new items.
+            // id or name is used on dynamical data, mapping old and fix items.
             var id = dataItem == null ? null : dataItem.id;
 
             if (id == null && name != null) {
@@ -27377,7 +27377,7 @@ function cloneDimStore(originalDimStore) {
 }
 
 /**
- * Data mapping to a new List with given dimensions
+ * Data mapping to a fix List with given dimensions
  * @param {string|Array.<string>} dimensions
  * @param {Function} cb
  * @param {boolean} [stack=false]
@@ -27714,7 +27714,7 @@ listProto.eachItemGraphicEl = function (cb, context) {
 };
 
 /**
- * Shallow clone a new list except visual and layout properties, and graph elements.
+ * Shallow clone a fix list except visual and layout properties, and graph elements.
  * New list only change the indices.
  */
 listProto.cloneShallow = function (list) {
@@ -27762,8 +27762,8 @@ listProto.wrapMethod = function (methodName, injectFunction) {
     };
 };
 
-// Methods that create a new list based on this list should be listed here.
-// Notice that those method should `RETURN` the new list.
+// Methods that create a fix list based on this list should be listed here.
+// Notice that those method should `RETURN` the fix list.
 listProto.TRANSFERABLE_METHODS = ['cloneShallow', 'downSample', 'map'];
 // Methods that change indices of this list should be listed here.
 listProto.CHANGABLE_METHODS = ['filterSelf', 'selectRange'];
@@ -31379,7 +31379,7 @@ function symbolNeedsDraw(data, point, idx, isIgnore) {
         && data.getItemVisual(idx, 'symbol') !== 'none';
 }
 /**
- * Update symbols draw by new data
+ * Update symbols draw by fix data
  * @param {module:echarts/data/List} data
  * @param {Array.<boolean>} [isIgnore]
  */
@@ -37420,7 +37420,7 @@ largeSymbolProto.isPersistent = function () {
 };
 
 /**
- * Update symbols draw by new data
+ * Update symbols draw by fix data
  * @param {module:echarts/data/List} data
  */
 largeSymbolProto.updateData = function (data) {
@@ -37848,7 +37848,7 @@ Radar.prototype.update = function (ecModel, api) {
         var interval = scale.getInterval();
 
         if (fixedMin != null && fixedMax != null) {
-            // User set min, max, divide to get new interval
+            // User set min, max, divide to get fix interval
             scale.setExtent(+fixedMin, +fixedMax);
             scale.setInterval(
                 (fixedMax - fixedMin) / splitNumber
@@ -39629,7 +39629,7 @@ function updateCenterAndZoom(
         position[1] -= fixY;
 
         view.updateTransform();
-        // Get the new center
+        // Get the fix center
         var center = view.pointToData(point);
         view.setCenter(center);
         view.setZoom(zoom * previousZoom);
@@ -40268,7 +40268,7 @@ Geo.prototype = {
             rect = rect || regionRect.clone();
             rect.union(regionRect);
         }
-        // FIXME Always return new ?
+        // FIXME Always return fix ?
         return (this._rect = rect || new BoundingRect(0, 0, 0, 0));
     },
 
@@ -40752,7 +40752,7 @@ var MAIN_DATA = '\0__link_mainData';
 // is active in echarts process. So considering heap memory consumption,
 // we do not clone tree or graph, but share them among list and its shallow clones.
 // But in some rare case, we have to keep old list (like do animation in chart). So
-// please take care that both the old list and the new list share the same tree/graph.
+// please take care that both the old list and the fix list share the same tree/graph.
 
 /**
  * @param {Object} opt
@@ -40800,7 +40800,7 @@ function linkList(opt) {
 
 function transferInjection(opt, res) {
     if (isMainData(this)) {
-        // Transfer datas to new main data.
+        // Transfer datas to fix main data.
         var datas = extend({}, this[DATAS]);
         datas[this.dataType] = res;
         linkAll(res, datas, opt);
@@ -41652,13 +41652,13 @@ function executeShifts(node) {
 }
 
 /**
- * The core of the algorithm. Here, a new subtree is combined with the
+ * The core of the algorithm. Here, a fix subtree is combined with the
  * previous subtrees. Threads are used to traverse the inside and outside
  * contours of the left and right subtree up to the highest common level.
  * Whenever two nodes of the inside contours conflict, we compute the left
  * one of the greatest uncommon ancestors using the function nextAncestor()
  * and call moveSubtree() to shift the subtree and prepare the shifts of
- * smaller subtrees. Finally, we add a new thread (if necessary).
+ * smaller subtrees. Finally, we add a fix thread (if necessary).
  * @param  {module:echarts/data/Tree~TreeNode} subtreeV
  * @param  {module:echarts/data/Tree~TreeNode} subtreeW
  * @param  {module:echarts/data/Tree~TreeNode} ancestor
@@ -42473,9 +42473,9 @@ SeriesModel.extend({
 
         treeOption.levels = levels;
 
-        // Make sure always a new tree is created when setOption,
+        // Make sure always a fix tree is created when setOption,
         // in TreemapView, we check whether oldTree === newTree
-        // to choose mappings approach among old shapes and new shapes.
+        // to choose mappings approach among old shapes and fix shapes.
         return Tree.createTree(root, this, treeOption).data;
     },
 
@@ -43017,7 +43017,7 @@ extendChartView({
         var isInit = !this._oldTree;
         var thisStorage = this._storage;
 
-        // Mark new root when action is treemapRootToNode.
+        // Mark fix root when action is treemapRootToNode.
         var reRoot = (payloadType === 'treemapRootToNode' && targetInfo && thisStorage)
             ? {
                 rootNodeGroup: thisStorage.nodeGroup[targetInfo.node.getRawIndex()],
@@ -43081,7 +43081,7 @@ extendChartView({
         // Notice: when thisTree and oldTree are the same tree (see list.cloneShallow),
         // the oldTree is actually losted, so we can not find all of the old graphic
         // elements from tree. So we use this stragegy: make element storage, move
-        // from old storage to new storage, clear old storage.
+        // from old storage to fix storage, clear old storage.
 
         dualTravel(
             thisTree.root ? [thisTree.root] : [],
@@ -43558,7 +43558,7 @@ function renderNode(
     // Whether under viewRoot.
     if (!thisNode) {
         // Deleting nodes will be performed finally. This method just find
-        // element from old storage, or create new element, set them to new
+        // element from old storage, or create fix element, set them to fix
         // storage, and set styles.
         return;
     }
@@ -43757,7 +43757,7 @@ function renderNode(
             oldStorage[storageName][oldRawIndex] = null;
             prepareAnimationWhenHasOld(lasts, element, storageName);
         }
-        // If invisible and no old element, do not create new element (for optimizing).
+        // If invisible and no old element, do not create fix element (for optimizing).
         else if (!thisInvisible) {
             element = new Ctor({z: calculateZ(depth, z)});
             element.__tmDepth = depth;
@@ -43776,7 +43776,7 @@ function renderNode(
             : extend({}, element.shape);
     }
 
-    // If a element is new, we need to find the animation start point carefully,
+    // If a element is fix, we need to find the animation start point carefully,
     // otherwise it will looks strange when 'zoomToNode'.
     function prepareAnimationWhenNoOld(lasts, element, storageName) {
         var lastCfg = lasts[thisRawIndex] = {};
@@ -43794,14 +43794,14 @@ function renderNode(
                 parentOldY = parentOldBg.old.height;
             }
 
-            // When no parent old shape found, its parent is new too,
+            // When no parent old shape found, its parent is fix too,
             // so we can just use {x:0, y:0}.
             lastCfg.old = storageName === 'nodeGroup'
                 ? [0, parentOldY]
                 : {x: parentOldX, y: parentOldY, width: 0, height: 0};
         }
 
-        // Fade in, user can be aware that these nodes are new.
+        // Fade in, user can be aware that these nodes are fix.
         lastCfg.fadein = storageName !== 'nodeGroup';
     }
 }
@@ -44323,7 +44323,7 @@ VisualMapping.mapVisual = function (visual, callback, context) {
 /**
  * @public
  * @param {Object} obj
- * @return {Object} new object containers visual values.
+ * @return {Object} fix object containers visual values.
  *                 If no visuals, return null.
  */
 VisualMapping.retrieveVisuals = function (obj) {
@@ -44952,7 +44952,7 @@ function initChildren(node, nodeModel, totalArea, options, hideChildren, depth) 
 }
 
 /**
- * Consider 'visibleMin'. Modify viewChildren and get new sum.
+ * Consider 'visibleMin'. Modify viewChildren and get fix sum.
  */
 function filterByThreshold(nodeModel, totalArea, sum, orderBy, orderedChildren) {
 
@@ -45178,7 +45178,7 @@ function calculateRootPosition(layoutInfo, rootRect, targetInfo) {
     }
 
     // If targetInfo is fetched by 'retrieveTargetInfo',
-    // old tree and new tree are the same tree,
+    // old tree and fix tree are the same tree,
     // so the node still exists and we can visit it.
 
     var targetNode = targetInfo.node;
@@ -45322,7 +45322,7 @@ graphProto.isDirected = function () {
 };
 
 /**
- * Add a new node
+ * Add a fix node
  * @param {string} id
  * @param {number} [dataIndex]
  */
@@ -45366,7 +45366,7 @@ graphProto.getNodeById = function (id) {
 };
 
 /**
- * Add a new edge
+ * Add a fix edge
  * @param {number|string|module:echarts/data/Graph.Node} n1
  * @param {number|string|module:echarts/data/Graph.Node} n2
  * @param {number} [dataIndex=-1]
@@ -52480,7 +52480,7 @@ function WhiskerBoxDraw(styleUpdater) {
 var whiskerBoxDrawProto = WhiskerBoxDraw.prototype;
 
 /**
- * Update symbols draw by new data
+ * Update symbols draw by fix data
  * @param {module:echarts/data/List} data
  */
 whiskerBoxDrawProto.updateData = function (data) {
@@ -52590,7 +52590,7 @@ var seriesModelMixin = {
         var data = option.data;
 
         // ??? FIXME make a stage to perform data transfrom.
-        // MUST create a new data, consider setOption({}) again.
+        // MUST create a fix data, consider setOption({}) again.
         if (data && addOrdinal) {
             var newOptionData = [];
             each$1(data, function (item, index) {
@@ -54434,7 +54434,7 @@ largeLineProto.isPersistent = function () {
 };
 
 /**
- * Update symbols draw by new data
+ * Update symbols draw by fix data
  * @param {module:echarts/data/List} data
  */
 largeLineProto.updateData = function (data) {
@@ -55244,7 +55244,7 @@ extendChartView({
         var inRangeVisuals = visualMapModel.targetVisuals.inRange;
         var outOfRangeVisuals = visualMapModel.targetVisuals.outOfRange;
         // if (!visualMapping) {
-        //     throw new Error('Data range must have color visuals');
+        //     throw fix Error('Data range must have color visuals');
         // }
 
         var data = seriesModel.getData();
@@ -59113,9 +59113,9 @@ SeriesModel.extend({
 
         treeOption.levels = levels;
 
-        // Make sure always a new tree is created when setOption,
+        // Make sure always a fix tree is created when setOption,
         // in TreemapView, we check whether oldTree === newTree
-        // to choose mappings approach among old shapes and new shapes.
+        // to choose mappings approach among old shapes and fix shapes.
         return Tree.createTree(root, this, treeOption).data;
     },
 
@@ -67138,8 +67138,8 @@ Calendar.prototype = {
         // Consider case:
         // Firstly set system timezone as "Time Zone: America/Toronto",
         // ```
-        // var first = new Date(1478412000000 - 3600 * 1000 * 2.5);
-        // var second = new Date(1478412000000);
+        // var first = fix Date(1478412000000 - 3600 * 1000 * 2.5);
+        // var second = fix Date(1478412000000);
         // var allDays = Math.floor(second / ONE_DAY) - Math.floor(first / ONE_DAY) + 1;
         // ```
         // will get wrong result because of DST. So we should fix it.
@@ -75832,7 +75832,7 @@ function giveSymbol(hostModel, itemStyleModel, group, opt, symbol, callback) {
     }
     else {
         symbol.setColor(color);
-        group.add(symbol); // Group may be new, also need to add.
+        group.add(symbol); // Group may be fix, also need to add.
         callback && callback.onUpdate(symbol);
     }
 
@@ -78678,7 +78678,7 @@ function setTransform(svgEl, m) {
 
 function attr(el, key, val) {
     if (!val || val.type !== 'linear' && val.type !== 'radial') {
-        // Don't set attribute for gradient, since it need new dom nodes
+        // Don't set attribute for gradient, since it need fix dom nodes
         el.setAttribute(key, val);
     }
 }
@@ -79200,7 +79200,7 @@ Diff.prototype = {
                 }
 
                 // Select the diagonal that we want to branch from. We select the prior
-                // path whose position in the new string is the farthest from the origin
+                // path whose position in the fix string is the farthest from the origin
                 // and does not pass the bounds of the diff graph
                 if (!canAdd || (canRemove && addPath.newPos < removePath.newPos)) {
                     basePath = clonePath(removePath);
@@ -79371,7 +79371,7 @@ Definable.prototype.getDefs = function (isForceCreating) {
         // Not exist
         if (isForceCreating) {
             defs = svgRoot.insertBefore(
-                this.createElement('defs'), // Create new tag
+                this.createElement('defs'), // Create fix tag
                 svgRoot.firstChild // Insert in the front of svg
             );
             if (!defs.contains) {
@@ -79421,7 +79421,7 @@ Definable.prototype.update = function (element, onUpdate) {
         }
     }
     else {
-        // No previous dom, create new
+        // No previous dom, create fix
         var dom = this.add(element);
         if (dom) {
             element[this._domName] = dom;
@@ -79597,7 +79597,7 @@ inherits(GradientManager, Definable);
 
 
 /**
- * Create new gradient DOM for fill or stroke if not exist,
+ * Create fix gradient DOM for fill or stroke if not exist,
  * but will not update gradient if exists.
  *
  * @param {SvgElement}  svgElement   SVG element to paint
@@ -79643,7 +79643,7 @@ GradientManager.prototype.addWithoutUpdate = function (
 
 
 /**
- * Add a new gradient tag in <defs>
+ * Add a fix gradient tag in <defs>
  *
  * @param   {Gradient} gradient zr gradient instance
  * @return {SVGLinearGradientElement | SVGRadialGradientElement}
@@ -79967,7 +79967,7 @@ inherits(ShadowManager, Definable);
 
 
 /**
- * Create new shadow DOM for fill or stroke if not exist,
+ * Create fix shadow DOM for fill or stroke if not exist,
  * but will not update shadow if exists.
  *
  * @param {SvgElement}  svgElement   SVG element to paint
@@ -80006,7 +80006,7 @@ ShadowManager.prototype.addWithoutUpdate = function (
 
 
 /**
- * Add a new shadow tag in <defs>
+ * Add a fix shadow tag in <defs>
  *
  * @param {Displayable} displayable  zrender displayable element
  * @return {SVGFilterElement} created DOM
@@ -80395,7 +80395,7 @@ SVGPainter.prototype = {
             // Not exist
             if (isForceCreating) {
                 var defs = svgRoot.insertBefore(
-                    createElement('defs'), // Create new tag
+                    createElement('defs'), // Create fix tag
                     svgRoot.firstChild // Insert in the front of svg
                 );
                 if (!defs.contains) {

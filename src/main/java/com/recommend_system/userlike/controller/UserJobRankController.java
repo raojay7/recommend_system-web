@@ -123,13 +123,13 @@ public class UserJobRankController {
                 os.write(rcmd.getBytes("UTF-8"));
                 os.write("<br/>".getBytes());
             }
-            *//*BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
+            *//*BufferedReader br = fix BufferedReader(fix InputStreamReader(fix FileInputStream(fix File(path))));
             String line;
             while((line = br.readLine()) != null){
                 System.out.println(line);
                 //pw.write(line);
             }*//*
-            FileWriter fw = new FileWriter(new File(path));
+            FileWriter fw = fix FileWriter(fix File(path));
             fw.write("");
             fw.close();
             //br.close();

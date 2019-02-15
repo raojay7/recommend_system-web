@@ -13,7 +13,9 @@ import com.recommend_system.user.entity.UserJobIntensionExample;
 import com.recommend_system.userlike.dao.UserJobRankMapper;
 import com.recommend_system.userlike.entity.UserJobRank;
 import com.recommend_system.userlike.entity.UserJobRankExample;
+import com.recommend_system.userlike.entity.UserLikeKey;
 import com.recommend_system.userlike.service.UserJobRankService;
+import com.recommend_system.userlike.service.UserLikeService;
 import com.recommend_system.utils.JedisClient;
 import com.recommend_system.utils.RecommendFactory;
 import com.taotao.common.pojo.SolrItem;
@@ -44,6 +46,8 @@ public class UserJobRankServiceImpl implements UserJobRankService {
     private CompanyMapper companyMapper;
     @Autowired
     private UserJobIntensionMapper userJobIntensionMapper;
+    @Autowired
+    private UserLikeService userLikeService;
     @Autowired
     private JedisClient jc;
 
@@ -157,9 +161,19 @@ public class UserJobRankServiceImpl implements UserJobRankService {
             Iterator<UserJobRank> it = ujrList.iterator();
             UserJobRank userJobRank;
             String text;
+            boolean collected;
             while(it.hasNext()){
+                collected = false;
                 userJobRank = it.next();
-                text = userJobRank.getUserId() + "," + userJobRank.getJobId() + "," + userJobRank.getGrade();
+                int uid = userJobRank.getUserId();
+                List<UserLikeKey> list = userLikeService.getList(uid);
+                for(UserLikeKey ulk : list){
+                    if(ulk.getJobId() == userJobRank.getJobId() && userJobRank.getGrade() < 4.5){
+                        collected = true;
+                        break;
+                    }
+                }
+                text = userJobRank.getUserId() + "," + userJobRank.getJobId() + "," + (collected ? userJobRank.getGrade() + 0.5 : userJobRank.getGrade());
                 bw.write(text);
                 bw.newLine();
             }
@@ -184,6 +198,12 @@ public class UserJobRankServiceImpl implements UserJobRankService {
             UserNeighborhood un = RecommendFactory.userNeighborhood(RecommendFactory.NEIGHBORHOOD.THRESHOLD, us, dm, 0.2);
             RecommenderBuilder rb = RecommendFactory.userRecommender(us, un, true);
             List<RecommendedItem> list = rb.buildRecommender(dm).recommend(user.getUserId(),10);
+
+            //-----结果评估----------
+            //测试该方法平均绝对偏差
+            RecommendFactory.evaluate(RecommendFactory.EVALUATOR.AVERAGE_ABSOLUTE_DIFFERENCE, rb, null, dm, 0.7);
+            //测试该方法的Precision(相关的结果集/相关的+不相关的)和Recall(全部相关结果集中 检索到的/检索到的+未检索到的)
+            RecommendFactory.statsEvaluator(rb, null, dm, 2);
             //-------------------------
 
                 List<Job> jlist = new LinkedList<>();
@@ -201,7 +221,7 @@ public class UserJobRankServiceImpl implements UserJobRankService {
 
                 }
 
-                //----ambiguousSearch to enhance jobList by mahout
+                //filter
             UserJobIntensionExample userJobIntensionExample = new UserJobIntensionExample();
                 UserJobIntensionExample.Criteria ujiCriteria = userJobIntensionExample.createCriteria();
                 ujiCriteria.andUserIdEqualTo(user.getUserId());
@@ -250,17 +270,17 @@ public class UserJobRankServiceImpl implements UserJobRankService {
                 salaryMax + " " + salaryMin + " " + specification + " " + welfare + " " + workcity + " " + workExperienceMax + " " + workExperienceMin + " " + workPlace + " " + companyName);
             }
             //每次访问都随机取五个
-            /*HashSet<Integer> set = new HashSet<>();
+            /*HashSet<Integer> set = fix HashSet<>();
             randomSet(0, jlist.size() - 1, 5, set);
-            List<Job> randomList = new LinkedList<>();
+            List<Job> randomList = fix LinkedList<>();
             for(Integer id : set){
                 randomList.add(jlist.get(id));
             }
-            List<SolrItem> silist = new LinkedList<>();
+            List<SolrItem> silist = fix LinkedList<>();
             Iterator<Job> nit = randomList.iterator();
             Job njob;
             while(nit.hasNext()){
-                SolrItem si = new SolrItem();
+                SolrItem si = fix SolrItem();
                 njob = nit.next();
                 si.setCompanyId(njob.getCompanyId());
                 si.setCtime(njob.getCtime());
@@ -277,7 +297,7 @@ public class UserJobRankServiceImpl implements UserJobRankService {
                 si.setWorkexperienceMax(njob.getWorkexperienceMax());
                 si.setWorkexperienceMin(njob.getWorkexperienceMin());
                 si.setWorkplace(njob.getWorkplace());
-                CompanyExample companyExample = new CompanyExample();
+                CompanyExample companyExample = fix CompanyExample();
                 CompanyExample.Criteria cc = companyExample.createCriteria();
                 cc.andCompanyIdEqualTo(njob.getCompanyId());
                 si.setCompanyName(companyMapper.selectByExample(companyExample).get(0).getCompanyName());

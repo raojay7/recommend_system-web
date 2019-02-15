@@ -1,9 +1,21 @@
 package com.recommend_system.company.service.imp;
 
+import com.recommend_system.cnaturetreat.dao.CNatureTreatMapper;
+import com.recommend_system.cnaturetreat.entity.CNatureTreat;
+import com.recommend_system.cnaturetreat.entity.CNatureTreatExample;
 import com.recommend_system.company.dao.CompanyMapper;
-import com.recommend_system.company.entity.CompanyExample;
 import com.recommend_system.company.entity.CompanyExt;
 import com.recommend_system.company.service.CompanyEchartsService;
+import com.recommend_system.cindustrytreat.dao.CIndustryTreatMapper;
+import com.recommend_system.cindustrytreat.entity.CIndustryTreat;
+import com.recommend_system.cindustrytreat.entity.CIndustryTreatExample;
+import com.recommend_system.companyarea.dao.CompanyAreaMapper;
+import com.recommend_system.companyarea.entity.CompanyArea;
+import com.recommend_system.companyarea.entity.CompanyAreaExample;
+import com.recommend_system.companyindustry.dao.CompanyIndustryMapper;
+import com.recommend_system.companyindustry.entity.CompanyIndustryExample;
+import com.recommend_system.companyscale.dao.CompanyScaleMapper;
+import com.recommend_system.companyscale.entity.CompanyScale;
 import com.recommend_system.utils.DataFilter;
 import com.recommend_system.utils.JedisClient;
 import com.recommend_system.utils.impl.SortFilter;
@@ -20,6 +32,16 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
 
     @Autowired
     private CompanyMapper companyMapper;
+    @Autowired
+    private CIndustryTreatMapper cIndustryTreatMapper;
+    @Autowired
+    private CNatureTreatMapper cNatureTreatMapper;
+    @Autowired
+    private CompanyAreaMapper companyAreaMapper;
+    @Autowired
+    private CompanyIndustryMapper companyIndustryMapper;
+    @Autowired
+    private CompanyScaleMapper companyScaleMapper;
     @Autowired
     JedisClient jc;
 
@@ -43,13 +65,13 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
             }
             return data.toString();
         }else {
-            CompanyExt ce;
-            List<CompanyExt> list = companyMapper.getCompanyCity();
-            Iterator<CompanyExt> it = list.iterator();
+            CompanyArea ce;
+            List<CompanyArea> list = companyAreaMapper.selectByExample(new CompanyAreaExample());
+            Iterator<CompanyArea> it = list.iterator();
             while(it.hasNext()){
                 ce = it.next();
                 jc.appendRightList("companycity_city", ce.getCity());
-                jc.appendRightList("companycity_jobnum",String.valueOf(ce.getJobnum()));
+                jc.appendRightList("companycity_jobnum",String.valueOf(ce.getCompanynum()));
             }
             return getCompanyCity();
         }
@@ -146,7 +168,7 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
                 jc.appendRightList("companyindustry_jobnum",String.valueOf(ce.getJobnum()));
             }*/
             DataFilter dataFilter = new SortFilter();
-            dataFilter.sort_filter2(companyMapper.getCompanyIndustry(),1f, jc, "companyindustry_industry", "companyindustry_jobnum");
+            dataFilter.sort_filter2(companyIndustryMapper.selectByExample(new CompanyIndustryExample()),1f, jc, "companyindustry_industry", "companyindustry_jobnum");
             return getCompanyIndustry();
         }
     }
@@ -214,7 +236,7 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
                 jc.appendRightList("companynature_jobnum",String.valueOf(ce.getJobnum()));
             }*/
             DataFilter dataFilter = new SortFilter();
-            dataFilter.sort_filter3(companyMapper.getCompanyNature(),1f, jc, "companynature_nature", "companynature_jobnum");
+            dataFilter.sort_filter3(cNatureTreatMapper.selectByExample(new CNatureTreatExample()),1f, jc, "companynature_nature", "companynature_jobnum");
             return getCompanyNature();
         }
     }
@@ -223,9 +245,6 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
     public String getCompanyScale(int type) {
         if(jc.exists("companyscale_industry")){
             List<String> industry = jc.getList("companyscale_industry");
-
-
-
             JSONArray ja;
             if(type == 2){
                 System.out.println("type=2");
@@ -341,9 +360,6 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
 
                 return mtoarr.toString();
             }
-
-
-
         }else {
             CompanyExt ce;
             List<CompanyExt> list2  = companyMapper.getCompanyIndustry();
@@ -453,14 +469,14 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
 
             return jsonObject.toString();
         }else {
-            CompanyExt ce;
-            List<CompanyExt> list = companyMapper.getCompanyNatureNeedAvg();
-            Iterator<CompanyExt> it = list.iterator();
+            CNatureTreat ce;
+            List<CNatureTreat> list = cNatureTreatMapper.selectByExample(new CNatureTreatExample());
+            Iterator<CNatureTreat> it = list.iterator();
             while(it.hasNext()){
                 ce = it.next();
-                jc.appendRightList("companyntna_nature", ce.getCompany_nature());
-                jc.appendRightList("companyntna_jobnum",String.valueOf(ce.getJobnum()));
-                jc.appendRightList("companyntna_avg",String.valueOf(ce.getAve_salary()));
+                jc.appendRightList("companyntna_nature", ce.getCompanyNature());
+                jc.appendRightList("companyntna_jobnum",String.valueOf(ce.getWorknum()));
+                jc.appendRightList("companyntna_avg",String.valueOf(ce.getAvgSalary()));
             }
             return getCompanyNatureNeedAvg();
         }
@@ -567,14 +583,14 @@ public class CompanyEchartsServiceImpl implements CompanyEchartsService {
 
             return jsonObject.toString();
         }else {
-            CompanyExt ce;
-            List<CompanyExt> list = companyMapper.getCompanyIndustryNeedAvg();
-            Iterator<CompanyExt> it = list.iterator();
+            CIndustryTreat ce;
+            List<CIndustryTreat> list = cIndustryTreatMapper.selectByExample(new CIndustryTreatExample());
+            Iterator<CIndustryTreat> it = list.iterator();
             while(it.hasNext()){
                 ce = it.next();
-                jc.appendRightList("companyina_industry", ce.getCompany_industry());
-                jc.appendRightList("companyina_jobnum",String.valueOf(ce.getJobnum()));
-                jc.appendRightList("companyina_avg",String.valueOf(ce.getAve_salary()));
+                jc.appendRightList("companyina_industry", ce.getCompanyIndustry());
+                jc.appendRightList("companyina_jobnum",String.valueOf(ce.getWorknum()));
+                jc.appendRightList("companyina_avg",String.valueOf(ce.getAvgSalary()));
             }
             return getCompanyIndustryNeedAvg();
         }

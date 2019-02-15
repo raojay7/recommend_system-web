@@ -102,7 +102,7 @@ public class UserLikeServiceImpl implements UserLikeService {
         List<UserJobRank> userJobRankList = userJobRankMapper.selectByExample(userJobRankExample);
         if(userJobRankList.size() != 0) {
             UserJobRank userJobRank = userJobRankList.get(0);
-            userJobRank.setGrade(userJobRank.getGrade() + 0.5);
+            userJobRank.setGrade(userJobRank.getGrade());
             userJobRankMapper.updateByPrimaryKeySelective(userJobRank);
         }else{
             UserJobRank record = new UserJobRank();

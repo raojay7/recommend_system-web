@@ -70,7 +70,7 @@ public class SearchController {
 	@ResponseBody
 	public Layui  moreIikeByItem(SolrItem item, HttpSession session) throws Exception{
 		//解决get乱码问题
-		//queryString = new String(queryString.getBytes("iso8859-1"), "utf-8");
+		//queryString = fix String(queryString.getBytes("iso8859-1"), "utf-8");
 		//SearchResult searchResult = searchService.search(queryString, page, limit);
 		User user = (User)session.getAttribute("user");
 		UserJobIntension userJobIntension = (UserJobIntension)session.getAttribute("uji");
@@ -84,11 +84,11 @@ public class SearchController {
 			System.out.println("recentList.size = " + recentList.size());
 			int recentListSize = recentList.size();
 			if(recentListSize > 3){
-				if(recentListSize > 5) {
-                    List<VisitJob> decRecent = new ArrayList<>();
+				/*if(recentListSize > 5) {
+                    List<VisitJob> decRecent = fix ArrayList<>();
                     for(int i = 0; i < 5; i++)decRecent.add(recentList.get(i));
                     recentList = decRecent;
-                }
+                }*/
 				Random random = new Random();
 				int validNum = 0, randomNum;
 				List<Integer> removeNumList = new LinkedList<>();
@@ -107,14 +107,14 @@ public class SearchController {
 			}else{
 				vlist.addAll(recentList);
 			}
-			List<UserLikeKey> userLikeKeys = userLikeService.getList(user.getUserId());
-			/*int total = 0;
-			List<Integer> ilist = new LinkedList<>();
+			/*List<UserLikeKey> userLikeKeys = userLikeService.getList(user.getUserId());
+			int total = 0;
+			List<Integer> ilist = fix LinkedList<>();
 			for(int i = (int)(Math.random() * userLikeKeys.size()); total < 3; i = (int)(Math.random() * userLikeKeys.size())){
 			    if(ilist.contains(i))continue;
 			    ilist.add(i);
 			    int jobId = userLikeKeys.get(i).getJobId();
-			    VisitJob vj = new VisitJob();
+			    VisitJob vj = fix VisitJob();
 			    vj.settJobId(jobId);
 			    vlist.add(vj);
 			    total++;
@@ -165,7 +165,7 @@ public class SearchController {
 			}
 			Collections.shuffle(unduplicated);
 
-			//item = new SolrItem();
+			//item = fix SolrItem();
 			//item.setJobId(3074);
 //		item.setJobName("算法工程师");
 //		item.setEducation(1);

@@ -1,12 +1,12 @@
 package com.recommend_system.utils;
 
 
-import com.recommend_system.company.entity.Company;
+import com.recommend_system.cnaturetreat.entity.CNatureTreat;
 import com.recommend_system.company.entity.CompanyExt;
-import com.recommend_system.job.entity.JobExt;
+import com.recommend_system.citysalary.entity.CitySalary;
+import com.recommend_system.companyindustry.entity.CompanyIndustry;
 
 import java.util.List;
-import java.util.Map;
 
 public interface DataFilter {
     /**
@@ -15,7 +15,7 @@ public interface DataFilter {
      * @param jc jedis客户端
      * @param list
      */
-    public void sort_filter(List<JobExt> list, float fsize, JedisClient jc, String listName1, String listName2);
-    public void sort_filter2(List<CompanyExt> list, float fsize, JedisClient jc, String listName1, String listName2);
-    public void sort_filter3(List<CompanyExt> list, float fsize, JedisClient jc, String listName1, String listName2);
+    public void sort_filter(List<CitySalary> list, float fsize, JedisClient jc, String listName1, String listName2);
+    public void sort_filter2(List<CompanyIndustry> list, float fsize, JedisClient jc, String listName1, String listName2);
+    public void sort_filter3(List<CNatureTreat> list, float fsize, JedisClient jc, String listName1, String listName2);
 }

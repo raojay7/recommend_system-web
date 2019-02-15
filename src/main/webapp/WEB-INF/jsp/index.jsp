@@ -35,8 +35,9 @@
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">消息通知<span class="layui-badge">9</span></a></li>
-            <li class="layui-nav-item"><a href="search.html">搜索<i class="layui-icon">&#xe615;</i></a></li>
+            <li class="layui-nav-item"><a href="">管理</a></li>
             <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/my_favorites">我的收藏</a></li>
+            <li class="layui-nav-item"><a href="http://localhost:9099">实时分析系统</a></li>
             <li class="layui-nav-item">
                 <a href="javascript:;">其它</a>
                 <dl class="layui-nav-child">
